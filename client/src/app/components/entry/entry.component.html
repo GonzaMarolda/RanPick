@@ -1,0 +1,30 @@
+<li class="entry-container">
+    <div class="config-button-container">
+        <button class="config-button">
+            <div>-o-</div>
+            <div>--o</div>
+            <div>o--</div>
+        </button>
+    </div>
+
+    <div class="entry-info">
+        <input 
+            class="name-input" 
+            type="text" 
+            [value]="entryData().name" 
+            (input)="onNameInput($event)"
+        >
+        <button 
+            class="remove-button"
+            (click)="onRemove()"
+        >
+            ×
+        </button>
+    </div>
+
+    <div class="open-button-container">
+        <button class="open-button">
+            ->
+        </button>
+    </div>
+</li>

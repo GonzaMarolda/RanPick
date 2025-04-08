@@ -1,0 +1,41 @@
+:host {
+    position: fixed;
+    background: #222;
+    font-size: medium;
+    color: #fff;
+    width: 100%;
+    height: 4rem;
+}
+
+.header-container {
+    display: flex;
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    gap: 1rem;
+    padding: 0rem 1rem;
+}
+
+.title-container {
+    display: flex;
+    gap: 0.5rem;
+    justify-items: center;
+}
+
+.header-title {
+   display: flex;
+   align-items: center;
+   font-size: larger;
+   font-weight: bold;
+}
+
+.header-button {
+
+}
+
+.buttons-container {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}

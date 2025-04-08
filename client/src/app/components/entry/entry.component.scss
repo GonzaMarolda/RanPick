@@ -1,0 +1,63 @@
+.entry-container {
+    display: flex;
+    align-items: center;
+    height: 4rem;
+}
+
+.entry-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+    padding-left: 1rem;
+    padding-right: 0.2rem;
+    height: 100%;
+    background: #ddd;
+    border-radius: 10px;
+}
+
+.name-input {
+    height: 60%;
+    width: 80%;
+    font-size: large;
+    text-align: center;
+    text-overflow: ellipsis;
+    border: none;
+    background: #ffffff00;
+}
+
+.name-input:focus {
+    outline: none;
+}
+
+.remove-button {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    font-size: larger;
+    font-weight: bold;
+    line-height: 1;
+    padding: 0 1px;
+}
+
+.config-button-container {
+    padding: 1rem;
+    margin-left: auto;
+}
+
+.config-button {
+    font-size: 8px;
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
+.open-button-container {
+    padding: 1rem;
+}
+
+.open-button {
+    height: 2.5rem;
+    width: 2.5rem;
+}

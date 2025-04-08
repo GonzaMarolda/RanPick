@@ -1,0 +1,21 @@
+<div class="sidebar-container">
+    <div class="back-container">
+        <button class="back-button">
+            <-----
+        </button>
+    </div>
+    <ul class="entries-container">
+        @for (entry of entryService.entries(); track entry.id) {
+            <entry
+                [entryData]="entry"
+                (removeEntry)="removeEntry($event)"
+                (updateEntry)="updateEntry($event)"
+            />
+        }
+    </ul>
+    <div class="add-entry-container">
+        <button class="add-entry-button" (click)="addEntry()">
+            Add Entry
+        </button>
+    </div>
+</div>
