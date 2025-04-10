@@ -1,6 +1,7 @@
 import { Component, computed, inject, input, OnInit, signal } from '@angular/core'
 import { EntryService } from '../../services/EntryService'
 import { Entry } from '../../models/entry'
+import { ContrastHelperService } from '../../services/ContrastHelperService'
 
 @Component({
     selector: 'wheel-screen',
@@ -9,13 +10,14 @@ import { Entry } from '../../models/entry'
 })
 export class WheelScreen {
     entryService = inject(EntryService)
+    contrastHelperService = inject(ContrastHelperService)
     selected = signal<string>('')
-    colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEEAD']
+    colors = ['#3369E8', '#D50F25', '#EEB211', '#009925']
   
     segments = computed(() => {
       const entries = this.entryService.entries()
       const totalWeight = entries.reduce((acc, e) => acc + e.weight, 0)
-      
+
       let startAngle = 0
       const unprocessedSegments = entries.map((entry, i) => {
         const angle = (entry.weight / totalWeight) * 360
@@ -55,19 +57,52 @@ export class WheelScreen {
       // Text positioning
       const middleAngle = startAngle + angle / 2
       const middleAngleRad = (middleAngle - 90) * Math.PI / 180
-      const textRadius = radius * 0.5
+      const textRadius = radius * 0.9
       const textX = center + textRadius * Math.cos(middleAngleRad)
       const textY = center + textRadius * Math.sin(middleAngleRad)
 
       const rotate = middleAngle + 270
-      const fontSize = Math.min(10, Math.max(4, angle * 0.1));
+
+      // Adjust general font size on angle
+      let fontSize = Math.min(20, Math.max(2, angle * 0.1));
+
+      // Adjust font size on text width
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text')
+      text.textContent = entry.name
+      svg.appendChild(text)
+      document.body.appendChild(svg)
+
+      text.setAttribute('font-size', fontSize + 'px')
+      let textWidth = text.getComputedTextLength()
+      if (textWidth >= radius * 0.65) {
+        fontSize *= 0.75
+        text.setAttribute('font-size', fontSize + 'px')
+        textWidth = text.getComputedTextLength()
+      }
+
+      // Crop text if it's too big
+      text.setAttribute('font-size', fontSize + 'px')
+      textWidth = text.getComputedTextLength()
+      let nameText = entry.name
+      if (textWidth >= radius * 0.65) {
+        const pxByChar = textWidth / entry.name.length
+        const pxToRemove = (textWidth - radius * 0.65) / pxByChar
+        nameText = entry.name.slice(0, entry.name.length - 1 - pxToRemove).concat('...')
+      }
+      svg.remove();
+
+      // Adjust text color for contrast
+      const color = this.colors[index % this.colors.length]
+      const textColor = this.contrastHelperService.getContrastTextColor(color)
 
       return {
         path,
-        name: entry.name,
-        color: this.colors[index % this.colors.length],
+        name: nameText,
+        color: color,
+        textColor: textColor,
         textTransform: `translate(${textX},${textY}) rotate(${rotate})`,
-        fontSize: fontSize
+        fontSize: fontSize,
       }
     }
   

@@ -1,8 +1,8 @@
 :host {
     position: fixed;
-    background: #222;
+    background: var(--color-surface);
     font-size: medium;
-    color: #fff;
+    color: var(--color-text);
     width: 100%;
     height: 4rem;
 }
@@ -12,6 +12,7 @@
     box-sizing: border-box;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid #ffffff55;
     height: 100%;
     gap: 1rem;
     padding: 0rem 1rem;
@@ -20,14 +21,14 @@
 .title-container {
     display: flex;
     gap: 0.5rem;
-    justify-items: center;
 }
 
 .header-title {
-   display: flex;
-   align-items: center;
-   font-size: larger;
-   font-weight: bold;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    font-size: larger;
+    font-weight: bold;
 }
 
 .header-button {

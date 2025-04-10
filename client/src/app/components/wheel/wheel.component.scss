@@ -1,7 +1,8 @@
-
 :host {
     width: 70%;
     height: 100%;
+    background: var(--color-background);
+    color: var(--color-text)
 }
 
 .wheel-container {
@@ -20,7 +21,7 @@
 .wheel {
     display: flex;
     justify-content: center;
-    color: #333;
+    color: var(--color-text)
 }
 
 .segment-text {

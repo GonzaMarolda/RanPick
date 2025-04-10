@@ -1,7 +1,6 @@
 :host {
     width: 30%;
-    background: #222;
-    border-top: 1px solid #ffffff55;
+    background: var(--color-surface);
 }
 
 .sidebar-container {
@@ -20,6 +19,7 @@
 }
 
 .back-button {
+    background: linear-gradient(180deg, var(--color-secondary) 0%, var(--color-secondary-grad) 100%);
     width: 10rem;
     height: 2rem;
     border-radius: 8px;
@@ -49,9 +49,19 @@
 }
 
 .add-entry-button {
+    background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary-grad) 100%);
+    color: var(--color-text);
     width: 10rem;
     height: 2rem;
     border-radius: 8px;
+    border: none;
     font-size: large;
+    transform: all 0.2s ease;
+    cursor: pointer;
+}
+
+.add-entry-button:hover {
+    transform: scale(1.02);
+    filter: brightness(1.1);
 }
 

@@ -9,6 +9,7 @@
             </div>
         } @else {
             <svg viewBox="0 0 120 120" weight="450x" height="450px" fill="currentColor">
+                <circle cx="60" cy="60" r="51" fill="#ffffff"/>
                 <g>
                     @for (segment of segments(); track $index) {
                         <path
@@ -19,14 +20,16 @@
                         <text
                             class="segment-text"
                             [attr.transform]="segment.textTransform"
+                            [attr.fill]="segment.textColor"
                             [style.font-size.px]="segment.fontSize" 
-                            text-anchor="middle"
+                            text-anchor="end"
                             dominant-baseline="central"
                         >
                             {{ segment.name }}
                         </text>
                     }
                 </g>
+                <circle cx="60" cy="60" r="7" fill="#121212"/> 
             </svg>
         }
     </div>
