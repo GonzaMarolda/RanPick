@@ -13,7 +13,7 @@ export class WheelScreen {
     contrastHelperService = inject(ContrastHelperService)
     @ViewChild('wheelGroup') wheelGroup!: ElementRef<SVGGElement>
 
-    selected = signal<string>('')
+    selected = signal<string>('Click the wheel to start')
     spinClasses = { continuous: "spin-continuous", active: "spin" }
     spinClass = signal<String>(this.spinClasses.continuous)
     colors = ['#3369E8', '#D50F25', '#EEB211', '#009925']
@@ -52,8 +52,8 @@ export class WheelScreen {
       const radius = 50
       
       // Degrees to Rad
-      const start = (startAngle - 90) * Math.PI / 180
-      const end = (startAngle + angle - 90) * Math.PI / 180
+      const start = (startAngle) * Math.PI / 180
+      const end = (startAngle + angle) * Math.PI / 180
       
       // Arc initial and final coords
       const x1 = center + radius * Math.cos(start)
@@ -66,12 +66,12 @@ export class WheelScreen {
       
       // Text positioning
       const middleAngle = startAngle + angle / 2
-      const middleAngleRad = (middleAngle - 90) * Math.PI / 180
+      const middleAngleRad = (middleAngle) * Math.PI / 180
       const textRadius = radius * 0.9
       const textX = center + textRadius * Math.cos(middleAngleRad)
       const textY = center + textRadius * Math.sin(middleAngleRad)
 
-      const rotate = middleAngle + 270
+      const rotate = middleAngle
 
       // Adjust general font size on angle
       let fontSize = Math.min(20, Math.max(2, angle * 0.1))
@@ -138,18 +138,12 @@ export class WheelScreen {
       this.intervalId = setInterval(() => {
         const currentAngle = this.getCurrentRotation();
 
-        console.log(currentAngle)
-
-        let acumAngle = 0
         let foundIt = false
-        const segments = this.segments()
-        const aVerLaCon = [segments[0], ...segments.slice(1).reverse()]
-        aVerLaCon.forEach(segment => {
+        let acumAngle = 0
+        const reversedSegments = this.segments().slice().reverse()
+        reversedSegments.forEach(segment => {
           if (foundIt) return
 
-          console.log("acumAngle: " + acumAngle)
-          console.log("segment angle: " + segment.angle)
-          console.log("segment name: " + segment.name)
           acumAngle += segment.angle
           if (acumAngle >= currentAngle) {
             this.selected.update(prev => segment.name)

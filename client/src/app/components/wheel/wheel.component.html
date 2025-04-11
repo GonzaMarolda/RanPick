@@ -1,7 +1,16 @@
 <div class="wheel-container">
     <div class="selected-text">
-        {{ selected() }}
+        @if (entryService.entries().length >= 2) {
+            @if (spinClass() === spinClasses.active) {
+                {{ selected() }}
+            } @else if (spinClass() === spinClasses.continuous) {
+                <div class="click-the-wheel">
+                    {{ selected() }}
+                </div>
+            }
+        }
     </div>
+
     <div class="wheel">
         @if (entryService.entries().length < 2) {
             <div class="not-enough-entries">
