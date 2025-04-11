@@ -2,43 +2,80 @@
     width: 70%;
     height: 100%;
     background: var(--color-background);
-    color: var(--color-text)
-}
+    color: var(--color-text);
 
-.wheel-container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
+    .wheel-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
-.not-enough-entries {
-    width: 50%;
-    font-size: 30px;
-    text-align: center;
-}
+        .selected-text {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            width: 100%;
+            height: 27px;
+            font-size: x-large;
+        }
 
-.wheel {
-    display: flex;
-    justify-content: center;
-    color: var(--color-text)
-}
+        .wheel {
+            display: flex;
+            justify-content: center;
+            color: var(--color-text);
 
-.segment-text {
-    max-width: 60px;
-    overflow: hidden;
-}
+            .not-enough-entries {
+                width: 50%;
+                font-size: 30px;
+                text-align: center;
+                opacity: 0.25;
+            }
+    
+            .segment-text {
+                max-width: 60px;
+                overflow: hidden;
+            }          
 
-.selected-text {
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
-    width: 100%;
-    font-size: x-large;
-}
+            .spin-continuous {
+                animation: spin-continuous 20s linear infinite;
+                transform-origin: 60px 60px;
+                cursor: pointer;
+            }
 
-.wheel-name-text {
-    padding: 0.5rem;
-    font-weight: bold;
-    font-size: larger;
+            .spin {
+                animation: spin 4s cubic-bezier(0.25, 0.1, 0.25, 1);
+                transform-origin: 60px 60px;
+                animation-fill-mode: forwards
+            }
+
+            .stop {
+                transform: rotate(--initial-rotation);
+            }
+
+            @keyframes spin-continuous {
+                from {
+                  transform: rotate(var(--initial-rotation));
+                }
+                to {
+                  transform: rotate(360deg);
+                }
+            }
+        
+            @keyframes spin {
+                from {
+                  transform: rotate(var(--initial-rotation));
+                }
+                to {
+                  transform: rotate(var(--total-rotation));
+                }
+            }
+        }
+
+        .wheel-name-text {
+            padding: 0.5rem;
+            font-weight: bold;
+            font-size: larger;
+        }
+    }
+
 }

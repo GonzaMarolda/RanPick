@@ -8,9 +8,20 @@
                 You need at least 2 entries to start using the wheel
             </div>
         } @else {
-            <svg viewBox="0 0 120 120" weight="450x" height="450px" fill="currentColor">
+            <svg 
+                viewBox="0 0 120 120" 
+                weight="450x" 
+                height="450px" 
+                fill="currentColor"
+            >
                 <circle cx="60" cy="60" r="51" fill="#ffffff"/>
-                <g>
+                <g #wheelGroup
+                    [class]="spinClass()"
+                    (click)="onSpin()"
+                    [style.--total-rotation]="totalRotation()"
+                    [style.--initial-rotation]="initialRotation()"
+                    (animationend)="animationFinished()"
+                >
                     @for (segment of segments(); track $index) {
                         <path
                             [attr.d]="segment.path"
@@ -30,6 +41,7 @@
                     }
                 </g>
                 <circle cx="60" cy="60" r="7" fill="#121212"/> 
+                <path fill="#999999" d="M4 8 L12 4 L12 12 Z" transform="translate(102,52)"/>
             </svg>
         }
     </div>

@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, OnInit, signal } from '@angular/core'
+import { Component, computed, ElementRef, inject, input, OnInit, signal, ViewChild } from '@angular/core'
 import { EntryService } from '../../services/EntryService'
 import { Entry } from '../../models/entry'
 import { ContrastHelperService } from '../../services/ContrastHelperService'
@@ -11,8 +11,18 @@ import { ContrastHelperService } from '../../services/ContrastHelperService'
 export class WheelScreen {
     entryService = inject(EntryService)
     contrastHelperService = inject(ContrastHelperService)
+    @ViewChild('wheelGroup') wheelGroup!: ElementRef<SVGGElement>
+
     selected = signal<string>('')
+    spinClasses = { continuous: "spin-continuous", active: "spin" }
+    spinClass = signal<String>(this.spinClasses.continuous)
     colors = ['#3369E8', '#D50F25', '#EEB211', '#009925']
+
+    initialRotation = signal("0deg")
+    totalRotation = signal("0deg")
+
+    private intervalId: any;
+    private updateInterval = 100; 
   
     segments = computed(() => {
       const entries = this.entryService.entries()
@@ -64,7 +74,7 @@ export class WheelScreen {
       const rotate = middleAngle + 270
 
       // Adjust general font size on angle
-      let fontSize = Math.min(20, Math.max(2, angle * 0.1));
+      let fontSize = Math.min(20, Math.max(2, angle * 0.1))
 
       // Adjust font size on text width
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
@@ -90,7 +100,7 @@ export class WheelScreen {
         const pxToRemove = (textWidth - radius * 0.65) / pxByChar
         nameText = entry.name.slice(0, entry.name.length - 1 - pxToRemove).concat('...')
       }
-      svg.remove();
+      svg.remove()
 
       // Adjust text color for contrast
       const color = this.colors[index % this.colors.length]
@@ -103,10 +113,77 @@ export class WheelScreen {
         textColor: textColor,
         textTransform: `translate(${textX},${textY}) rotate(${rotate})`,
         fontSize: fontSize,
+        angle: angle,
       }
     }
+
+    getCurrentRotation(): number {
+      const group = this.wheelGroup.nativeElement
+      const style = window.getComputedStyle(group)
+      const transform = style.transform
+
+      const values = transform.split('(')[1].split(')')[0].split(',');
+      const a = parseFloat(values[0]);
+      const b = parseFloat(values[1]);
+    
+      const angleRad = Math.atan2(b, a);
+      const angleDeg = (angleRad * 180) / Math.PI;
+    
+      return(angleDeg + 360) % 360
+    }
+
+    startTrackRotation() {
+      this.stopTrackRotation();
   
+      this.intervalId = setInterval(() => {
+        const currentAngle = this.getCurrentRotation();
+
+        console.log(currentAngle)
+
+        let acumAngle = 0
+        let foundIt = false
+        const segments = this.segments()
+        const aVerLaCon = [segments[0], ...segments.slice(1).reverse()]
+        aVerLaCon.forEach(segment => {
+          if (foundIt) return
+
+          console.log("acumAngle: " + acumAngle)
+          console.log("segment angle: " + segment.angle)
+          console.log("segment name: " + segment.name)
+          acumAngle += segment.angle
+          if (acumAngle >= currentAngle) {
+            this.selected.update(prev => segment.name)
+            foundIt = true
+          }
+        });
+        
+      }, this.updateInterval);
+    }
+
+    stopTrackRotation() {
+      if (this.intervalId) {
+        clearInterval(this.intervalId);
+      }
+    }
+
+    onSpin() {
+      this.initialRotation.update (prev => this.getCurrentRotation().toString() + "deg")
+      this.totalRotation.update(prev => (5 * 360 + Math.random() * 360).toString() + "deg")
+      this.spinClass.update(prev => this.spinClasses.active)
+      this.startTrackRotation()
+    }
+
+    animationFinished() {
+      this.stopTrackRotation();
+      this.initialRotation.update(prev => this.getCurrentRotation().toString() + "deg")
+      
+    }
+
     selectEntry(segment: any) {
       this.selected.set(segment.label)
+    }
+
+    ngOnDestroy() {
+      this.stopTrackRotation()
     }
 }
