@@ -1,0 +1,62 @@
+:host {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.25);
+    height: 100vh;
+    width: 100vw;
+    z-index: 2;
+
+    .modal-container {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .selected-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-background);
+            height: 30%;
+            width: 30%;
+            border-radius: 10px;
+            animation: appear 0.25s linear;
+
+            @keyframes appear {
+                from {
+                  transform: scale(0);
+                }
+                to {
+                  transform: scale(1);
+                }
+            }
+
+            .selected-header {
+                display: flex;
+                justify-content: end;
+                background: var(--selected-color);
+                border-radius: 10px 10px 0px 0px;
+                width: 100%;
+                flex: 1;
+
+                .close-button {
+                    background: rgba(0, 0, 0, 0);
+                    border: none;
+                    outline: none;
+                    font-size: large;
+                    color: var(--color-text);
+                    margin-right: 0.5rem;
+                    cursor: pointer;
+                }
+            }
+
+            .selected-text {
+                height: 80%;
+                display: flex;
+                align-items: center;
+                font-size: xx-large;
+                color: var(--color-text);
+            }
+        }
+    }
+}

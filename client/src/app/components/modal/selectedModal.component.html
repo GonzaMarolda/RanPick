@@ -1,0 +1,17 @@
+<div class="modal-container" (click)="onClickOutside($event)">
+    <div class="selected-container">
+        <div class="selected-header" [style.--selected-color]="selectedModalService.selectedColor()">
+            <button 
+                class="close-button" 
+                [style.color]="contrastHelperService.getContrastTextColor(selectedModalService.selectedColor())"
+                (click)="close($event)"
+            >
+                x
+            </button>
+        </div>
+        <div class="selected-text">
+            {{selectedModalService.selected()}}
+        </div>
+    </div>
+</div>
+

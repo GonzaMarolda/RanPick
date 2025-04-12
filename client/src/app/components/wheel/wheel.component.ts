@@ -2,6 +2,7 @@ import { Component, computed, ElementRef, inject, input, OnInit, signal, ViewChi
 import { EntryService } from '../../services/EntryService'
 import { Entry } from '../../models/entry'
 import { ContrastHelperService } from '../../services/ContrastHelperService'
+import { SelectedModalService } from '../../services/SelectedModalService'
 
 @Component({
     selector: 'wheel-screen',
@@ -10,6 +11,7 @@ import { ContrastHelperService } from '../../services/ContrastHelperService'
 })
 export class WheelScreen {
     entryService = inject(EntryService)
+    selectedModalService = inject(SelectedModalService)
     contrastHelperService = inject(ContrastHelperService)
     @ViewChild('wheelGroup') wheelGroup!: ElementRef<SVGGElement>
 
@@ -170,7 +172,8 @@ export class WheelScreen {
     animationFinished() {
       this.stopTrackRotation();
       this.initialRotation.update(prev => this.getCurrentRotation().toString() + "deg")
-      
+      const selectedColor = this.segments().find(segment => segment.name === this.selected())!.color
+      this.selectedModalService.open(this.selected(), selectedColor)
     }
 
     selectEntry(segment: any) {
