@@ -47,7 +47,7 @@
             }
 
             .spin {
-                animation: spin 6s cubic-bezier(0, 0.1, 0.25, 1);
+                animation: spin 6s cubic-bezier(0.14, 0.87, 0.33, 1);
                 transform-origin: 60px 60px;
                 animation-fill-mode: forwards
             }
