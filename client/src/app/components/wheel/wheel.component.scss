@@ -1,5 +1,5 @@
 :host {
-    width: 70%;
+    flex: 1;
     height: 100%;
     background: var(--color-background);
     color: var(--color-text);
@@ -47,7 +47,7 @@
             }
 
             .spin {
-                animation: spin 4s cubic-bezier(0.25, 0.1, 0.25, 1);
+                animation: spin 6s cubic-bezier(0, 0.1, 0.25, 1);
                 transform-origin: 60px 60px;
                 animation-fill-mode: forwards
             }
@@ -76,9 +76,11 @@
         }
 
         .wheel-name-text {
-            padding: 0.5rem;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
             font-weight: bold;
-            font-size: larger;
+            font-size: 1.4rem;
         }
     }
 

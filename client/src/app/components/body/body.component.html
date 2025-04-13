@@ -1,4 +1,4 @@
 <div class="body-container">
     <wheel-screen/>
-    <app-sidebar/>
+    <app-sidebar [class.closed]="!sidebarVisibilityService.isOpen()"/>
 </div>

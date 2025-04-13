@@ -1,14 +1,15 @@
 import { Injectable, signal } from '@angular/core';
+import { Entry } from '../models/entry';
 
 @Injectable({ providedIn: 'root' })
 export class SelectedModalService {
   isOpen = signal<boolean>(false)
-  selected = signal<string>('')
+  selected = signal<Entry>(new Entry(''))
   selectedColor = signal<string>('')
 
-  open(selected: string, selectedColor: string) {
-    this.selected.update(prev => selected)
-    this.selectedColor.update(prev => selectedColor)
-    this.isOpen.update(prev => true)
+  open(selected: Entry, selectedColor: string) {
+    this.selected.set(selected)
+    this.selectedColor.set(selectedColor)
+    this.isOpen.set(true)
   }
 }

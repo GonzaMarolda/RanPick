@@ -1,6 +1,7 @@
-import { Component, input, OnInit, signal } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { Sidebar } from "../sidebar/sidebar.component";
 import { WheelScreen } from "../wheel/wheel.component";
+import { SidebarVisibilityService } from '../../services/SidebarVisibilityService';
 
 @Component({
     selector: 'app-body',
@@ -9,4 +10,5 @@ import { WheelScreen } from "../wheel/wheel.component";
     imports: [Sidebar, WheelScreen]
 })
 export class BodyComponent {
+    sidebarVisibilityService = inject(SidebarVisibilityService)
 }

@@ -7,9 +7,13 @@
     --color-primary-grad: #2a57c0;
     --color-secondary: #363636;
     --color-secondary-grad: #1E1E1E;
+
+    --font: "Markazi Text", serif
 }
 
 html, body {
     height: 100vh;
     margin: 0;
+    font-family: var(--font);
+    background: var(--color-background);
 }

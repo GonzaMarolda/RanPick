@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { Component, inject, input, OnInit, output, signal } from '@angular/core';
 import { EntryComponent } from "../entry/entry.component";
 import { Entry } from '../../models/entry';
 import { EntryService } from '../../services/EntryService';
@@ -11,7 +11,7 @@ import { EntryService } from '../../services/EntryService';
 })
 export class Sidebar {
     entryService = inject(EntryService)
-
+    
     addEntry() {
         this.entryService.createEmpty()
     }

@@ -1,8 +1,9 @@
-import { Component, computed, ElementRef, inject, input, OnInit, signal, ViewChild } from '@angular/core'
+import { Component, computed, ElementRef, inject, effect, OnInit, signal, ViewChild } from '@angular/core'
 import { EntryService } from '../../services/EntryService'
 import { Entry } from '../../models/entry'
 import { ContrastHelperService } from '../../services/ContrastHelperService'
 import { SelectedModalService } from '../../services/SelectedModalService'
+import { SidebarVisibilityService } from '../../services/SidebarVisibilityService'
 
 @Component({
     selector: 'wheel-screen',
@@ -13,12 +14,13 @@ export class WheelScreen {
     entryService = inject(EntryService)
     selectedModalService = inject(SelectedModalService)
     contrastHelperService = inject(ContrastHelperService)
+    sidebarVisibilityService = inject(SidebarVisibilityService)
     @ViewChild('wheelGroup') wheelGroup!: ElementRef<SVGGElement>
 
-    selected = signal<string>('Click the wheel to start')
+    selected = signal<{name: string, id: string}>({name: 'Click the wheel to start', id: ""})
     spinClasses = { continuous: "spin-continuous", active: "spin" }
     spinClass = signal<String>(this.spinClasses.continuous)
-    colors = ['#3369E8', '#D50F25', '#EEB211', '#009925']
+    colors = ['#51CC0A', '#CC9D10', '#CC4021', '#9200CC', '#236FCC']
 
     initialRotation = signal("0deg")
     totalRotation = signal("0deg")
@@ -26,6 +28,16 @@ export class WheelScreen {
     private intervalId: any;
     private updateInterval = 100; 
   
+    constructor() {
+      effect(() => {
+        if (this.sidebarVisibilityService.isOpen() === false) return 
+
+        this.initialRotation.set("0deg")
+        this.spinClass.set(this.spinClasses.continuous)
+        this.selected.set({name: 'Click the wheel to start', id: ""})
+      })
+    }
+
     segments = computed(() => {
       const entries = this.entryService.entries()
       const totalWeight = entries.reduce((acc, e) => acc + e.weight, 0)
@@ -76,7 +88,7 @@ export class WheelScreen {
       const rotate = middleAngle
 
       // Adjust general font size on angle
-      let fontSize = Math.min(20, Math.max(2, angle * 0.1))
+      let fontSize = Math.min(15, Math.max(4, angle * 0.15))
 
       // Adjust font size on text width
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
@@ -88,7 +100,7 @@ export class WheelScreen {
       text.setAttribute('font-size', fontSize + 'px')
       let textWidth = text.getComputedTextLength()
       if (textWidth >= radius * 0.65) {
-        fontSize *= 0.75
+        fontSize *= 0.65
         text.setAttribute('font-size', fontSize + 'px')
         textWidth = text.getComputedTextLength()
       }
@@ -109,6 +121,7 @@ export class WheelScreen {
       const textColor = this.contrastHelperService.getContrastTextColor(color)
 
       return {
+        id: entry.id,
         path,
         name: nameText,
         color: color,
@@ -148,7 +161,9 @@ export class WheelScreen {
 
           acumAngle += segment.angle
           if (acumAngle >= currentAngle) {
-            this.selected.update(prev => segment.name)
+            const selectedEntry = this.entryService.entries().find(e => e.id === segment.id)!
+
+            this.selected.set({name: selectedEntry.name, id: selectedEntry.id})
             foundIt = true
           }
         });
@@ -164,16 +179,18 @@ export class WheelScreen {
 
     onSpin() {
       this.initialRotation.update (prev => this.getCurrentRotation().toString() + "deg")
-      this.totalRotation.update(prev => (5 * 360 + Math.random() * 360).toString() + "deg")
+      this.totalRotation.update(prev => (10 * 360 + Math.random() * 360).toString() + "deg")
       this.spinClass.update(prev => this.spinClasses.active)
       this.startTrackRotation()
+      this.sidebarVisibilityService.setIsOpen(false)
     }
 
     animationFinished() {
       this.stopTrackRotation();
       this.initialRotation.update(prev => this.getCurrentRotation().toString() + "deg")
-      const selectedColor = this.segments().find(segment => segment.name === this.selected())!.color
-      this.selectedModalService.open(this.selected(), selectedColor)
+      const selectedEntry = this.entryService.entries().find(e => e.id === this.selected().id)!
+      const selectedColor = this.segments().find(segment => segment.id === selectedEntry.id)!.color
+      this.selectedModalService.open(selectedEntry, selectedColor)
     }
 
     selectEntry(segment: any) {

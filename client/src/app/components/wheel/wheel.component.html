@@ -2,10 +2,10 @@
     <div class="selected-text">
         @if (entryService.entries().length >= 2) {
             @if (spinClass() === spinClasses.active) {
-                {{ selected() }}
+                {{ selected().name }}
             } @else if (spinClass() === spinClasses.continuous) {
                 <div class="click-the-wheel">
-                    {{ selected() }}
+                    {{ selected().name }}
                 </div>
             }
         }
@@ -55,6 +55,6 @@
         }
     </div>
     <div class="wheel-name-text">
-        Wheel name
+        Comida
     </div>
 </div>
