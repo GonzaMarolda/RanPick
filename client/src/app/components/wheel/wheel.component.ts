@@ -20,7 +20,7 @@ export class WheelScreen {
     selected = signal<{name: string, id: string}>({name: 'Click the wheel to start', id: ""})
     spinClasses = { continuous: "spin-continuous", active: "spin" }
     spinClass = signal<String>(this.spinClasses.continuous)
-    colors = ['#51CC0A', '#CC9D10', '#CC4021', '#9200CC', '#236FCC']
+    colors = ['#51CC0A', '#CC9D10', '#CC4021', '#9200CC', '#1DA0CC']
 
     initialRotation = signal("0deg")
     totalRotation = signal("0deg")
