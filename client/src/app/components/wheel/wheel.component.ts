@@ -2,8 +2,9 @@ import { Component, computed, ElementRef, inject, effect, OnInit, signal, ViewCh
 import { EntryService } from '../../services/EntryService'
 import { Entry } from '../../models/entry'
 import { ContrastHelperService } from '../../services/ContrastHelperService'
-import { SelectedModalService } from '../../services/SelectedModalService'
 import { SidebarVisibilityService } from '../../services/SidebarVisibilityService'
+import { ModalService } from '../../services/ModalService'
+import { SelectedModalComponent } from '../modal/selected-modal/selectedModal.component'
 
 @Component({
     selector: 'wheel-screen',
@@ -12,9 +13,9 @@ import { SidebarVisibilityService } from '../../services/SidebarVisibilityServic
 })
 export class WheelScreen {
     entryService = inject(EntryService)
-    selectedModalService = inject(SelectedModalService)
     contrastHelperService = inject(ContrastHelperService)
     sidebarVisibilityService = inject(SidebarVisibilityService)
+    modalService = inject(ModalService)
     @ViewChild('wheelGroup') wheelGroup!: ElementRef<SVGGElement>
 
     selected = signal<{name: string, id: string}>({name: 'Click the wheel to start', id: ""})
@@ -178,6 +179,8 @@ export class WheelScreen {
     }
 
     onSpin() {
+      if (this.spinClass() == this.spinClasses.active) return
+
       this.initialRotation.update (prev => this.getCurrentRotation().toString() + "deg")
       this.totalRotation.update(prev => (10 * 360 + Math.random() * 360).toString() + "deg")
       this.spinClass.update(prev => this.spinClasses.active)
@@ -188,9 +191,10 @@ export class WheelScreen {
     animationFinished() {
       this.stopTrackRotation();
       this.initialRotation.update(prev => this.getCurrentRotation().toString() + "deg")
+
       const selectedEntry = this.entryService.entries().find(e => e.id === this.selected().id)!
       const selectedColor = this.segments().find(segment => segment.id === selectedEntry.id)!.color
-      this.selectedModalService.open(selectedEntry, selectedColor)
+      this.modalService.open<SelectedModalComponent>(SelectedModalComponent, { selectedEntry: selectedEntry, selectedColor: selectedColor })
     }
 
     selectEntry(segment: any) {

@@ -1,4 +1,6 @@
-import { Component, input, OnInit, signal } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { ModalService } from '../../services/ModalService';
+import { AuthModalComponent } from '../modal/auth-modal/authModal.component';
 
 @Component({
     selector: 'app-header',
@@ -6,5 +8,9 @@ import { Component, input, OnInit, signal } from '@angular/core';
     styleUrl: 'header.component.scss'
 })
 export class HeaderComponent {
-    title = input('[?]');
+    modalService = inject(ModalService)
+
+    openAuth(isLogin: boolean) {
+        this.modalService.open<AuthModalComponent>(AuthModalComponent, { isLogin: isLogin })
+    }
 }

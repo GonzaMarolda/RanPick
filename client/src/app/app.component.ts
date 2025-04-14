@@ -1,19 +1,24 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./components/header/header.component";
-import { SelectedModalComponent } from "./components/modal/selectedModal.component";
-import { SelectedModalService } from './services/SelectedModalService';
+import { ModalService } from './services/ModalService';
+import { NgComponentOutlet } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, SelectedModalComponent],
+  imports: [RouterOutlet, HeaderComponent, NgComponentOutlet],
   template: `
     <app-header/>
-    @if (selectedModalService.isOpen()) {<selected-modal selected="Pizza" selectedColor="#fa1b5c"/>}
+    @if (modalService.modalComponent()) {
+      <ng-container 
+        *ngComponentOutlet="modalService.modalComponent();
+          inputs: modalService.modalProps()"
+      />
+    }
     <router-outlet />
   `,
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  selectedModalService = inject(SelectedModalService)
+  modalService = inject(ModalService)
 }

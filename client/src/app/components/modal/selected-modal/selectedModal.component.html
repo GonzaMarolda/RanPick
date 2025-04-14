@@ -1,16 +1,16 @@
 <div class="modal-container" (click)="onClickOutside($event)">
     <div class="selected-container">
-        <div class="selected-header" [style.--selected-color]="selectedModalService.selectedColor()">
+        <div class="selected-header" [style.--selected-color]="selectedColor()">
             <button 
                 class="mini-close-button" 
-                [style.color]="contrastHelperService.getContrastTextColor(selectedModalService.selectedColor())"
+                [style.color]="contrastHelperService.getContrastTextColor(selectedColor())"
                 (click)="close($event)"
             >
                 x
             </button>
         </div>
         <div class="selected-text">
-            {{selectedModalService.selected().name}}
+            {{selectedEntry().name}}
         </div>
         <div class="buttons-container">
             <button class="close-button" (click)="close($event)">

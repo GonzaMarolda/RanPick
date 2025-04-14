@@ -1,8 +1,9 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
-import { ContrastHelperService } from '../../services/ContrastHelperService';
-import { SelectedModalService } from '../../services/SelectedModalService';
-import { SidebarVisibilityService } from '../../services/SidebarVisibilityService';
-import { EntryService } from '../../services/EntryService';
+import { ContrastHelperService } from '../../../services/ContrastHelperService';
+import { SidebarVisibilityService } from '../../../services/SidebarVisibilityService';
+import { EntryService } from '../../../services/EntryService';
+import { ModalService } from '../../../services/ModalService';
+import { Entry } from '../../../models/entry';
 
 @Component({
   selector: 'selected-modal',
@@ -11,24 +12,26 @@ import { EntryService } from '../../services/EntryService';
   styleUrl: './selectedModal.component.scss'
 })
 export class SelectedModalComponent {
-  selectedModalService = inject(SelectedModalService)
   contrastHelperService = inject(ContrastHelperService)
-  entryService = inject(EntryService)
   sidebarVisibilityService = inject(SidebarVisibilityService)
+  modalService = inject(ModalService)
+  entryService = inject(EntryService)
+  selectedEntry = input.required<Entry>()
+  selectedColor = input.required<string>()
 
   onClickOutside(event: Event) {
     if (event.target !== event.currentTarget) return
-    this.selectedModalService.isOpen.set(false)
+    this.modalService.close()
     this.sidebarVisibilityService.setIsOpen(true)
   }
 
   close(event: Event) {
-    this.selectedModalService.isOpen.set(false)
+    this.modalService.close()
     this.sidebarVisibilityService.setIsOpen(true)
   }
 
   remove(event: Event) {
-    this.entryService.removeEntry(this.selectedModalService.selected().id)
+    this.entryService.removeEntry(this.selectedEntry().id)
     this.close(event)
   }
 }
