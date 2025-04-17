@@ -7,6 +7,7 @@ export class AuthService {
     modalService = inject(ModalService)
     user = signal<User | null>(null)
     accessToken = signal<string | null>(null)
+    errorMessage = signal<string>("")
 
     private clientId = '994113848333-n03u91rdbbnnhbom0t0au4s4bt4gb87h.apps.googleusercontent.com'
     private storageKeyUser = 'auth_user'
@@ -23,7 +24,7 @@ export class AuthService {
         }
     }
 
-    loginWithGoogle() {
+    loginWithGoogle(loadingFunc: (arg0: boolean) => void) {
         const google = (window as any).google
     
         if (!google) {
@@ -34,19 +35,18 @@ export class AuthService {
             client_id: this.clientId,
             scope: 'profile email',
             callback: async (response: any) => {
+                loadingFunc(true)
                 const googleToken = response.access_token
                 const res = await fetch('http://localhost:3001/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ googleToken }),
                 })
-                if (!res.ok) {
-                    const err = await res.json();
-                    throw new Error(JSON.stringify(err));
-                } 
+                this.processError(res)
 
                 const data = await res.json()
                 this.saveData(data.user, data.token)
+                loadingFunc(false)
             },
         })
 
@@ -63,10 +63,7 @@ export class AuthService {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ formData }),
         })
-        if (!res.ok) {
-            const err = await res.json();
-            throw new Error(JSON.stringify(err));
-        } 
+        this.processError(res)
     
         const data = await res.json();
         this.saveData(data.user, data.token)
@@ -78,10 +75,7 @@ export class AuthService {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password }),
         });
-        if (!res.ok) {
-            const err = await res.json();
-            throw new Error(JSON.stringify(err));
-        } 
+        this.processError(res)
     
         const data = await res.json();
         this.saveData(data.user, data.token)
@@ -105,5 +99,13 @@ export class AuthService {
         localStorage.setItem(this.storageKeyToken, token)
 
         this.modalService.close()
+    }
+
+    private async processError(res: any) {
+        if (!res.ok) {
+            const err = await res.json();
+            res.status === 400 ? this.errorMessage.set(err.error) : this.errorMessage.set("There was an error")
+            throw new Error(JSON.stringify(err));
+        } 
     }
 }

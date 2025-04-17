@@ -18,7 +18,7 @@
             align-items: center;
             background: var(--color-background);
             height: auto;
-            width: 30%;
+            width: 30vw;
             border-radius: 10px;
             animation: appear 0.25s linear;
 
@@ -74,6 +74,8 @@
                 gap: 0.8rem;
 
                 .form-input-container {
+                    display: flex;
+                    flex-direction: column;
                     width: 70%;
 
                     .input-header {
@@ -84,6 +86,7 @@
                         width: 100%;
                         height: 1.8rem;
                         padding: 0 0.5rem;
+                        box-sizing: border-box;
                         border: none;
                         outline: none;
                         border-radius: 3px;
@@ -111,10 +114,12 @@
 
             .submit-container {
                 display: flex;
-                align-items: start;
-                justify-content: center;
-                padding-top: 0.8rem;
-                height: 2rem;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.2rem;
+                padding-top: 1rem;
+                height: fit-content;
                 width: 100%;
 
                 .submit-button {
@@ -133,6 +138,15 @@
                     &:hover {
                         filter: brightness(1.1);
                     }
+
+                    &:disabled {
+                        opacity: 0.5;
+                    }
+                }
+
+                .submit-error-message {
+                    color: rgb(255, 61, 61);
+                    font-size: 0.9rem;
                 }
             }
 

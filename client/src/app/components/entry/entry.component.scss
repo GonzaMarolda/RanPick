@@ -53,6 +53,7 @@
             font-size: 8px;
             height: 2.5rem;
             width: 2.5rem;
+            cursor: pointer;
         }
     }
 
@@ -63,6 +64,7 @@
             background: linear-gradient(180deg, var(--color-secondary) 0%, var(--color-secondary-grad) 100%);
             height: 2.5rem;
             width: 2.5rem;
+            cursor: pointer;
         
             .open-char {
                 font-size: 1.5rem;

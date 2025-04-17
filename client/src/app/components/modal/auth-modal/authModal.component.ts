@@ -12,6 +12,8 @@ export class AuthModalComponent {
   authService = inject(AuthService)
   modalService = inject(ModalService)
   isLogin = input.required<boolean>()
+  isLoading = signal<boolean>(false)
+  submitErrorMessage = signal<string>("")
   formData = signal({
     firstName: '',
     lastName: '',
@@ -59,11 +61,26 @@ export class AuthModalComponent {
 
   submit() {
     if (!this.isSubmitValid()) return
+    this.isLoading.set(true)
     if (this.isLogin()) {
       this.authService.login(this.formData().email, this.formData().password)
+        .then()
+        .catch(() => {
+          this.isLoading.set(false)
+          this.submitErrorMessage.set(this.authService.errorMessage())
+        })
     } else {
       this.authService.signup(this.formData())
+        .then()
+        .catch(() => {
+          this.isLoading.set(false)
+          this.submitErrorMessage.set(this.authService.errorMessage())
+        })
     }
+  }
+
+  loginWithGoogle() {
+    this.authService.loginWithGoogle(this.isLoading.set)
   }
 
   updateValue(type: string, event: Event) {
@@ -73,10 +90,19 @@ export class AuthModalComponent {
   }
 
   isSubmitValid() {
+    const formData = this.formData()
     if (this.isLogin()) {
-      return true
+      let failed = false
+      if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        this.invalidatedSubmit.update(prev => ({...prev, email: true}))
+        failed = true
+      }
+      if (!formData.password) {
+        this.invalidatedSubmit.update(prev => ({...prev, password: true}))
+        failed = true
+      }
+      if (failed) return false
     } else {
-      const formData = this.formData()
       let failed = false
       if (formData.firstName.length < 3 || /[0-9]/.test(formData.firstName)) {
         this.invalidatedSubmit.update(prev => ({...prev, firstName: true}))
