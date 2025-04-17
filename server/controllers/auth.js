@@ -1,6 +1,7 @@
 const authRouter = require("express").Router()
 const jwt = require('jsonwebtoken')
 const prisma = require('../utils/prisma')
+const bcrypt = require('bcrypt')
 
 async function verifyGoogleToken(googleToken) {
     const resp = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
@@ -24,7 +25,8 @@ function generateToken(user) {
 authRouter.post('/signup', async (request, response) => {
     const reqUser  = request.body.formData
 
-    let user = { email: reqUser.email, name: reqUser.firstName + " " + reqUser.lastName, password: reqUser.password }
+    const hashedPassword = await bcrypt.hash(reqUser.password, 10)
+    let user = { email: reqUser.email, name: reqUser.firstName + " " + reqUser.lastName, password: hashedPassword }
 
     const savedUser = await prisma.user.create({data: user})
     const token = generateToken(savedUser)
@@ -58,10 +60,10 @@ authRouter.post('/login', async (request, response) => {
             }
         }
     } else {
-        user = await prisma.user.findUnique({
-            where: { email: email, password: password }
-        })
+        user = await prisma.user.findUnique({where: { email: email, password: password }})
         if (!user) return response.status(400).send({ error: "Wrong email or password" })
+        const passwordMatch = await bcrypt.compare(password, user.password)
+        if (!passwordMatch) return response.status(400).send({ error: "Wrong email or password" })
     }
 
     const token = generateToken(user)
