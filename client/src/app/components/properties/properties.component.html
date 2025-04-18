@@ -1,0 +1,45 @@
+<div class="properties-container">
+    <div class="entry-title">
+        {{entry().name ? entry().name : "?"}}
+    </div>
+    <div class="section-container">
+        <div class="section-title">
+            Color
+        </div>
+        <div class="color-picker-container">
+            <button 
+                class="color-picker-button"
+                [style.background]="getEntryColor()"
+                (click)="toggleColorPickerVisible()"
+            ></button>
+            @if (colorPickerVisible()) {
+                <color-sketch 
+                    [color]="entry().color"
+                    (onChangeComplete)="updateColor($event)" 
+                    [presetColors]="[]"
+                    [disableAlpha]="true"
+                    class="color-picker"
+                    (clickOutside)="toggleColorPickerVisible()"
+                ></color-sketch>
+            }
+        </div>
+    </div>
+    <div class="section-container">
+        <div class="section-title">
+            Weight
+        </div>
+        <div class="weight-input-container">
+            <button class="weight-button" (click)="updateWeightByButton(-1)">-</button>
+            <input 
+                class="weight-input" 
+                type="text" 
+                [value]="entry().weight" 
+                (input)="updateWeight($event)"
+            >
+            <button class="weight-button" (click)="updateWeightByButton(1)">+</button>
+        </div>
+    </div>
+    <div class="entry-probabilty">
+        Probability {{entryService.getProbability(entry().id)}}%
+    </div>
+</div>

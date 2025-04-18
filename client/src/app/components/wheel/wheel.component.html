@@ -34,7 +34,7 @@
                     @for (segment of segments(); track $index) {
                         <path
                             [attr.d]="segment.path"
-                            [attr.fill]="segment.color"
+                            [attr.fill]="getColor(segment.id)"
                             (click)="selectEntry(segment)"
                         />
                         <text

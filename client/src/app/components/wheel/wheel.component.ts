@@ -50,16 +50,27 @@ export class WheelScreen {
         startAngle += angle
         return segment
       })
-      const colorFixedSegments = unprocessedSegments.map((segment, index) => {
+      const colorFixedSegments = unprocessedSegments.length > 1 ? unprocessedSegments.map((segment, index) => {
         const lastSegmentIndex = unprocessedSegments.length - 1
         if (index === lastSegmentIndex && 
             segment.color === unprocessedSegments[0].color &&
             unprocessedSegments[lastSegmentIndex - 1].color) {
-            return {...segment, color: this.colors[1]}
+              return {...segment, color: this.colors[1]}
         }  
         else return segment
-      })
+      }) : unprocessedSegments
       return colorFixedSegments
+    })
+
+    updateEntryColor = effect(() => {
+      const segments = this.segments()
+      if (segments.length === 0) return 
+      console.log(segments)
+      segments.forEach(segment => {
+        const entry = this.entryService.getEntry(segment.id)
+        if (entry.defaultColor === segment.color) return
+        this.entryService.updateEntry({...entry, defaultColor: segment.color})
+      })
     })
   
     private calculateSegment(entry: Entry, startAngle: number, angle: number, index: number) {
@@ -118,7 +129,7 @@ export class WheelScreen {
       svg.remove()
 
       // Adjust text color for contrast
-      const color = this.colors[index % this.colors.length]
+      const color = entry.color ? entry.color : this.colors[index % this.colors.length]
       const textColor = this.contrastHelperService.getContrastTextColor(color)
 
       return {
@@ -199,6 +210,11 @@ export class WheelScreen {
 
     selectEntry(segment: any) {
       this.selected.set(segment.label)
+    }
+
+    getColor(entryId: string) {
+      const entry = this.entryService.getEntry(entryId)
+      return entry.color ? entry.color : entry.defaultColor
     }
 
     ngOnDestroy() {

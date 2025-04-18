@@ -1,0 +1,111 @@
+:host {
+    position: absolute;
+    transform: translate(1rem, 3rem);
+    top: 0;
+    width: 15rem;
+    background: var(--color-surface);
+    border: 1px solid rgba(255, 255, 255, 0.226);
+    color: var(--color-text);
+    border-radius: 10px;
+    font-size: large;
+    z-index: 2;
+
+    .properties-container {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.7rem;
+
+        .entry-title {
+            width: 100%;
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            font-size: 1.6rem;
+        }
+
+        .section-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+
+            .color-picker-container {
+                position: relative;
+                width: 17px;
+                height: 17px;
+                padding: 3px;
+                border: 1px solid rgba(255, 255, 255, 0.384);
+
+                .color-picker-button {
+                    width: 100%;
+                    height: 100%;
+                    outline: none;
+                    border: none;
+                    cursor: pointer;
+
+                    &:active {
+                        opacity: 0.8;
+                    }
+                }
+
+                .color-picker {
+                    position: absolute;
+                    right: 0;
+                    top: 30px;
+
+                    ::ng-deep .sketch-picker {
+                        width: 125px !important;
+                        height: 115px !important;
+                        padding: 10px !important;
+                        background: var(--color-surface) !important;
+                        border: 1px solid rgba(255, 255, 255, 0.226) !important;
+                        overflow: hidden !important;
+                    }
+                }
+            }
+
+            .weight-input-container {
+                display: flex;
+                justify-content: end;
+                align-items: center;
+                gap: 0.25rem;
+    
+                .weight-input {
+                    width: 20%;
+                    outline: 1px solid rgba(255, 255, 255, 0.384);
+                    color: var(--color-text);
+                    border: none;
+                    background: none;
+                    text-align: center;
+                }
+    
+                .weight-button {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 1.2rem;
+                    height: 1.2rem;
+                    border: none;
+                    cursor: pointer;
+                    color: var(--color-text);
+                    background: rgba(255, 255, 255, 0.1);
+    
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.2);
+                    }
+                }
+            }
+        }
+
+        .entry-probabilty {
+            display: flex;
+            justify-content: center;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+        }
+    }
+}
