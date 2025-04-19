@@ -33,6 +33,23 @@ export class WheelService {
         return data
     }
 
+    async saveWheel() {
+        const token = this.authService.accessToken()
+        const res = await fetch('http://localhost:3001/api/wheel', {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json' , 
+            },
+            body: JSON.stringify(this.wheel()),
+        })
+        this.processError(res)
+    
+        const data = await res.json();
+        console.log(data)
+        return data
+    }
+
     private async processError(res: any) {
         if (!res.ok) {
             const err = await res.json();

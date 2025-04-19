@@ -18,9 +18,9 @@ model User {
 }
 
 model Wheel {
-  id        Int     @id @default(autoincrement())
+  id        String   @id 
   userId    Int     
-  user      User    @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -28,9 +28,9 @@ model Wheel {
 }
 
 model Entry {
-  id        Int     @id @default(autoincrement())
+  id        String  @id 
   name      String
-  wheelId   Int     
+  wheelId   String     
   wheel     Wheel   @relation(fields: [wheelId], references: [id])
   weight    Float
   color     String 

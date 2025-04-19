@@ -3,6 +3,7 @@ import { ModalService } from '../../services/ModalService';
 import { AuthModalComponent } from '../modal/auth-modal/authModal.component';
 import { AuthService } from '../../services/AuthService';
 import { OpenModalComponent } from '../modal/open-modal/openModal.component';
+import { WheelService } from '../../services/WheelService';
 
 @Component({
     selector: 'app-header',
@@ -10,6 +11,7 @@ import { OpenModalComponent } from '../modal/open-modal/openModal.component';
     styleUrl: 'header.component.scss'
 })
 export class HeaderComponent {
+    wheelService = inject(WheelService)
     modalService = inject(ModalService)
     authService = inject(AuthService)
 
@@ -25,7 +27,9 @@ export class HeaderComponent {
 
     saveWheel() {
         this.authService.user() ?
-            console.log("Not implemented yet.") :
+            this.wheelService.saveWheel().then((wheel) => {
+                console.log("The wheel has been saved successfully!: " + JSON.stringify(wheel))
+            }) :
             this.openAuth(true)
     }
 }
