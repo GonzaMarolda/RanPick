@@ -81,6 +81,47 @@
             margin-bottom: 1rem;
             font-weight: bold;
             font-size: 1.4rem;
+
+            .name-edit-container {
+                display: flex;
+                align-items: center;
+                position: relative;
+                width: fit-content;
+
+                .name-input {
+                    width: 20rem;
+                    background: none;
+                    color: var(--color-text);
+                    text-align: center;
+                    border: 1px solid rgba(255, 255, 255, 0.226);
+                    border-radius: 4px;
+
+                    &:focus {
+                        border: 1px solid rgba(255, 255, 255, 0.507); 
+                        outline: 0;
+                    }
+                }
+
+                .edit-name-icon {
+                    position: absolute;
+                    width: 18px;
+                    height: 18px;
+                    right: 0;
+                    transform: translate(2rem, -1px);
+                    opacity: 0.25;
+                    cursor: pointer;
+                }
+
+                .confirm-edit-icon {
+                    position: absolute;
+                    width: 35px;
+                    height: 35px;
+                    right: 0;
+                    transform: translate(2.5rem);
+                    opacity: 0.25;
+                    cursor: pointer;
+                }
+            }
         }
     }
 

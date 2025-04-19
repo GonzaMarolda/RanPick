@@ -9,6 +9,7 @@ export class AuthService {
     accessToken = signal<string | null>(null)
     errorMessage = signal<string>("")
 
+
     private clientId = '994113848333-n03u91rdbbnnhbom0t0au4s4bt4gb87h.apps.googleusercontent.com'
     private storageKeyUser = 'auth_user'
     private storageKeyToken = 'auth_token'

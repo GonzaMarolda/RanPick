@@ -21,6 +21,7 @@
             width: 30vw;
             border-radius: 10px;
             animation: appear 0.25s linear;
+            border: 1px solid var(--color-popup-border);
 
             @keyframes appear {
                 from {

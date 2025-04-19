@@ -5,6 +5,7 @@ import { ContrastHelperService } from '../../services/ContrastHelperService'
 import { SidebarVisibilityService } from '../../services/SidebarVisibilityService'
 import { ModalService } from '../../services/ModalService'
 import { SelectedModalComponent } from '../modal/selected-modal/selectedModal.component'
+import { WheelService } from '../../services/WheelService'
 
 @Component({
     selector: 'wheel-screen',
@@ -15,6 +16,7 @@ export class WheelScreen {
     entryService = inject(EntryService)
     contrastHelperService = inject(ContrastHelperService)
     sidebarVisibilityService = inject(SidebarVisibilityService)
+    wheelService = inject(WheelService)
     modalService = inject(ModalService)
     @ViewChild('wheelGroup') wheelGroup!: ElementRef<SVGGElement>
 
@@ -22,6 +24,8 @@ export class WheelScreen {
     spinClasses = { continuous: "spin-continuous", active: "spin" }
     spinClass = signal<String>(this.spinClasses.continuous)
     colors = ['#51CC0A', '#CC9D10', '#CC4021', '#9200CC', '#1DA0CC']
+    editNameActive = signal<boolean>(false)
+    tempEditedName = signal<string>("")
 
     initialRotation = signal("0deg")
     totalRotation = signal("0deg")
@@ -65,7 +69,6 @@ export class WheelScreen {
     updateEntryColor = effect(() => {
       const segments = this.segments()
       if (segments.length === 0) return 
-      console.log(segments)
       segments.forEach(segment => {
         const entry = this.entryService.getEntry(segment.id)
         if (entry.defaultColor === segment.color) return
@@ -215,6 +218,19 @@ export class WheelScreen {
     getColor(entryId: string) {
       const entry = this.entryService.getEntry(entryId)
       return entry.color ? entry.color : entry.defaultColor
+    }
+
+    switchEditName() {
+      if (this.editNameActive()) {
+        this.wheelService.updateName(this.tempEditedName())
+      } 
+      this.editNameActive.update(prev => !prev)
+    }
+
+    updateTempName(event: Event) {
+      const input = event.target as HTMLInputElement
+      const value = input.value
+      this.tempEditedName.set(value)
     }
 
     ngOnDestroy() {

@@ -4,7 +4,7 @@
     top: 0;
     width: 15rem;
     background: var(--color-surface);
-    border: 1px solid rgba(255, 255, 255, 0.226);
+    border: 1px solid var(--color-popup-border);
     color: var(--color-text);
     border-radius: 10px;
     font-size: large;
@@ -38,7 +38,7 @@
                 width: 17px;
                 height: 17px;
                 padding: 3px;
-                border: 1px solid rgba(255, 255, 255, 0.384);
+                border: 1px solid rgba(255, 255, 255, 0.3);
 
                 .color-picker-button {
                     width: 100%;
@@ -62,7 +62,7 @@
                         height: 115px !important;
                         padding: 10px !important;
                         background: var(--color-surface) !important;
-                        border: 1px solid rgba(255, 255, 255, 0.226) !important;
+                        border: 1px solid var(--color-popup-border) !important;
                         overflow: hidden !important;
                     }
                 }
@@ -76,7 +76,7 @@
     
                 .weight-input {
                     width: 20%;
-                    outline: 1px solid rgba(255, 255, 255, 0.384);
+                    outline: 1px solid var(--color-popup-border);
                     color: var(--color-text);
                     border: none;
                     background: none;

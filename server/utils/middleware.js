@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken')
+
 const requestLogger = (request, response, next) => {
   console.log('Method:', request.method)
   console.log('Path:  ', request.path)
@@ -16,8 +18,7 @@ const tokenExtractor = (request, response, next) => {
 
 const userExtractor = (request, response, next) => {
     if (request.token) {
-        const decodedToken = jwt.verify(request.token, process.env.SECRET)
-        request.user = {username: decodedToken.username, id: decodedToken.id}
+        request.user = jwt.verify(request.token, process.env.SECRET)
     }
     next()
 }
