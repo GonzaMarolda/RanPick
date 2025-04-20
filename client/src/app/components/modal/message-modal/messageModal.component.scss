@@ -1,0 +1,71 @@
+:host {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 3;
+
+    .modal-container {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+
+        .message-container {
+            width: 20%;
+            height: fit-content;
+            min-height: 5%;
+            margin-top: 0.5rem;
+            font-size: large;
+            animation: appear 0.5s ease-out;
+
+            @keyframes appear {
+                from {
+                  transform: translate(0, -5rem);
+                  opacity: 0.1;
+                }
+                to {
+                  transform: translate(0, 0rem);
+                  opacity: 1;
+                }
+            }
+
+            .disappear-message-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+                padding: 0.5rem;
+                border-radius: 6px;
+                overflow-wrap: break-word;
+                color: var(--color-text-alt);
+                background: rgba(200, 200, 200, 0.9);
+                animation: disappear var(--disappear-time) cubic-bezier(1, 0, 0.3, 1) forwards;
+
+                @keyframes disappear {
+                    from {
+                        opacity: 1;
+                    }
+                    to {
+                        opacity: 0;
+                    }
+                }
+
+                .message {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 90%;
+                }
+    
+                .close-button {
+                    background: none;
+                    outline: none;
+                    border: none;
+                    color: var(--color-text-alt);
+                    font-size: large;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

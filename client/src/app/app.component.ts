@@ -5,12 +5,16 @@ import { ModalService } from './services/ModalService';
 import { NgComponentOutlet } from '@angular/common';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { HttpLoadService } from './services/HttpLoadService';
+import { MessageModalComponent } from './components/modal/message-modal/messageModal.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, NgComponentOutlet, MatProgressSpinnerModule],
+  imports: [RouterOutlet, HeaderComponent, NgComponentOutlet, MatProgressSpinnerModule, MessageModalComponent],
   template: `
-    <app-header/>
+    @if (modalService.messageModalOpen()) {
+      <message-modal [message]="modalService.messageModalMessage()"/>
+    }
+
     @if (httpLoadService.isLoading()) {
       <div class="loading-modal">
         <mat-spinner [diameter]="70"/>
@@ -22,6 +26,8 @@ import { HttpLoadService } from './services/HttpLoadService';
           inputs: modalService.modalProps()"
       />
     }
+
+    <app-header/>
     <router-outlet />
   `,
   styleUrl: './app.component.scss',

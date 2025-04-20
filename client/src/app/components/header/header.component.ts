@@ -28,7 +28,7 @@ export class HeaderComponent {
     saveWheel() {
         this.authService.user() ?
             this.wheelService.saveWheel().then((wheel) => {
-                console.log("The wheel has been saved successfully!: " + JSON.stringify(wheel))
+                this.modalService.openMessageModal("The wheel has been saved successfully")
             }) :
             this.openAuth(true)
     }
