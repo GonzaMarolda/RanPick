@@ -12,13 +12,48 @@ wheelsRouter.get('/', async (request, response) => {
     response.status(200).json(wheels)
 })
 
+wheelsRouter.get('/:id', async (request, response) => {
+  if (process.env.NODE_ENV !== "test" && !request.user?.id) {
+      return response.status(401).send({ error: 'invalid token' })
+  } 
+
+  wheels = await prisma.wheel.findUnique({
+      include: { entries: true },
+      where: {id: request.params.id, userId: request.user.id}
+  })
+  if (!wheels) return response.status(404).send({ error: 'Wheel not found' })
+  response.status(200).json(wheels)
+})
+
 wheelsRouter.put('/', async (request, response) => {
     if (process.env.NODE_ENV !== "test" && !request.user?.id) {
         return response.status(401).send({ error: 'invalid token' })
     } 
     const { id, name, entries } = request.body
-    const savedWheel = await prisma.wheel.create({
-        data: {
+
+    const savedWheel = await prisma.$transaction(async (tx) => {
+      const existingWheel = await tx.wheel.findUnique({ where: { id: id, userId: request.user.id } })
+      if (existingWheel) {
+        await tx.entry.deleteMany({
+          where: { wheelId: id }
+        })
+      }
+
+      return await tx.wheel.upsert({
+        where: { id: id },
+        include: { entries: true },
+        update: {
+          name,
+          entries: {
+            create: entries.map(entry => ({
+              id: entry.id, 
+              name: entry.name,
+              weight: entry.weight,
+              color: entry.color
+            }))
+          }
+        },
+        create: {
           id, 
           name,
           userId: request.user.id,
@@ -31,8 +66,8 @@ wheelsRouter.put('/', async (request, response) => {
             }))
           }
         }
+      })
     })
-
     response.status(200).json(savedWheel)
 })
 

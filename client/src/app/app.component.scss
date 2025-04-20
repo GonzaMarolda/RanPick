@@ -1,4 +1,22 @@
+@use '@angular/material' as mat;
+
 :host {
     display: flex;
     height: 100vh;
+
+    .loading-modal {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        z-index: 3;
+        background: rgba(0, 0, 0, 0.3);
+
+        
+        @include mat.progress-spinner-overrides((
+            active-indicator-color: var(--color-text),
+        ));
+    }
 }

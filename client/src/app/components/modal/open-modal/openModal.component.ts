@@ -20,7 +20,7 @@ export class OpenModalComponent implements OnInit {
   wheels = signal<Wheel[] | null>(null)
 
   ngOnInit() {
-    this.wheelService.getWheels(this.authService.user()!.id)
+    this.wheelService.getWheels()
       .then(wheels => {
         this.wheels.set(wheels)
       })
@@ -37,6 +37,12 @@ export class OpenModalComponent implements OnInit {
     if (this.deleteConfirmationOpen()) return
 
     this.modalService.close()
+  }
+
+  openWheel(wheelId: string) {
+    this.wheelService.getWheel(wheelId).then(() => {
+      this.closeModal()
+    })
   }
 
   deleteSelectedWheel() {

@@ -2,9 +2,12 @@ import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { Wheel } from '../models/wheel';
 import { EntryService } from './EntryService';
 import { AuthService } from './AuthService';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class WheelService {
+    http = inject(HttpClient)
     entryService = inject(EntryService)
     authService = inject(AuthService)
     wheel = signal<Wheel>(new Wheel())
@@ -14,40 +17,77 @@ export class WheelService {
     })
     errorMessage = signal<string>("")
 
+    constructor() {
+        const storedWheelId = localStorage.getItem("last_wheel_id")
+    
+        if (storedWheelId) {
+            this.getWheel(storedWheelId)
+        }
+    }
+
     updateName(name: string) {
         this.wheel.update(prev => ({...prev, name: name}))
     }
 
-    async getWheels(userId: string) : Promise<Wheel[]> {
+    async getWheels() : Promise<Wheel[]> {
         const token = this.authService.accessToken()
-        const res = await fetch('http://localhost:3001/api/wheel', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}` 
-            }
-        })
-        this.processError(res)
-    
-        const data = await res.json();
-        console.log(data)
-        return data
+        try {
+            const data = await firstValueFrom(
+                this.http.get<Wheel[]>('http://localhost:3001/api/wheel', {
+                    headers: {
+                        Authorization: `Bearer ${token}` 
+                    }
+                })
+            )
+            return data
+        } catch (err) {
+            this.processError(err)
+            throw err
+        }
+    }
+
+    async getWheel(wheelId: string): Promise<Wheel> {
+        const token = this.authService.accessToken()
+        try {
+            const data = await firstValueFrom(
+                this.http.get<Wheel>('http://localhost:3001/api/wheel/' + wheelId, {
+                    headers: {
+                        Authorization: `Bearer ${token}` 
+                    }
+                })
+            )
+        
+            this.wheel.set(data)
+            this.entryService.entries.set(data.entries ? data.entries : [])
+            localStorage.setItem("last_wheel_id", data.id)
+            return data
+        } catch (err) {
+            this.processError(err)
+            throw err
+        }
     }
 
     async saveWheel() {
         const token = this.authService.accessToken()
-        const res = await fetch('http://localhost:3001/api/wheel', {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json' , 
-            },
-            body: JSON.stringify(this.wheel()),
-        })
-        this.processError(res)
+        try {
+            const data = await lastValueFrom(
+                this.http.put<Wheel>('http://localhost:3001/api/wheel',
+                    JSON.stringify(this.wheel()), 
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            'Content-Type': 'application/json' , 
+                        }
+                    }
+                )
+            )
     
-        const data = await res.json();
-        console.log(data)
-        return data
+            localStorage.setItem("last_wheel_id", data.id)
+            return data
+        } catch (err) {
+            this.processError(err)
+            throw err
+        }
     }
 
     private async processError(res: any) {

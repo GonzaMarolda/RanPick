@@ -3,13 +3,19 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./components/header/header.component";
 import { ModalService } from './services/ModalService';
 import { NgComponentOutlet } from '@angular/common';
-import { ClickOutsideDirective } from './directives/ClickOutsideDirective';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { HttpLoadService } from './services/HttpLoadService';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, NgComponentOutlet],
+  imports: [RouterOutlet, HeaderComponent, NgComponentOutlet, MatProgressSpinnerModule],
   template: `
     <app-header/>
+    @if (httpLoadService.isLoading()) {
+      <div class="loading-modal">
+        <mat-spinner [diameter]="70"/>
+      </div>
+    }
     @if (modalService.modalComponent()) {
       <ng-container 
         *ngComponentOutlet="modalService.modalComponent();
@@ -22,4 +28,5 @@ import { ClickOutsideDirective } from './directives/ClickOutsideDirective';
 })
 export class AppComponent {
   modalService = inject(ModalService)
+  httpLoadService = inject(HttpLoadService)
 }
