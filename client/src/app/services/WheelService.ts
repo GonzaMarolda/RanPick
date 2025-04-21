@@ -4,6 +4,7 @@ import { EntryService } from './EntryService';
 import { AuthService } from './AuthService';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
+import { environment } from '../../environments/environment'; 
 
 @Injectable({ providedIn: 'root' })
 export class WheelService {
@@ -33,7 +34,7 @@ export class WheelService {
         const token = this.authService.accessToken()
         try {
             const data = await firstValueFrom(
-                this.http.get<Wheel[]>('http://localhost:3001/api/wheel', {
+                this.http.get<Wheel[]>(environment.apiUrl + '/wheel', {
                     headers: {
                         Authorization: `Bearer ${token}` 
                     }
@@ -50,7 +51,7 @@ export class WheelService {
         const token = this.authService.accessToken()
         try {
             const data = await firstValueFrom(
-                this.http.get<Wheel>('http://localhost:3001/api/wheel/' + wheelId, {
+                this.http.get<Wheel>(environment.apiUrl + '/wheel/' + wheelId, {
                     headers: {
                         Authorization: `Bearer ${token}` 
                     }
@@ -71,7 +72,7 @@ export class WheelService {
         const token = this.authService.accessToken()
         try {
             const data = await lastValueFrom(
-                this.http.put<Wheel>('http://localhost:3001/api/wheel',
+                this.http.put<Wheel>(environment.apiUrl + '/wheel',
                     JSON.stringify(this.wheel()), 
                     {
                         headers: {
@@ -94,7 +95,7 @@ export class WheelService {
         const token = this.authService.accessToken()
         try {
             await lastValueFrom(
-                this.http.delete<Wheel>('http://localhost:3001/api/wheel/' + wheelId,
+                this.http.delete<Wheel>(environment.apiUrl + '/wheel/' + wheelId,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,

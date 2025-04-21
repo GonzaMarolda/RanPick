@@ -3,6 +3,7 @@ import { User } from '../models/user'
 import { ModalService } from './ModalService'
 import { HttpClient } from '@angular/common/http'
 import { firstValueFrom, lastValueFrom } from 'rxjs'
+import { environment } from '../../environments/environment'; 
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -43,7 +44,7 @@ export class AuthService {
                 const googleToken = response.access_token
                 try {
                     const data = await lastValueFrom(
-                        this.http.post<{user: User, token: string}>('http://localhost:3001/api/auth/login',
+                        this.http.post<{user: User, token: string}>(environment.apiUrl + '/auth/login',
                             JSON.stringify({ googleToken }), 
                             {
                                 headers: { 'Content-Type': 'application/json' }
@@ -70,7 +71,7 @@ export class AuthService {
         password: string}) {
         try {
             const data = await lastValueFrom(
-                this.http.post<{user: User, token: string}>('http://localhost:3001/api/auth/signup',
+                this.http.post<{user: User, token: string}>(environment.apiUrl + '/auth/signup',
                     JSON.stringify({ formData }),
                     {
                         headers: { 'Content-Type': 'application/json' }
@@ -88,7 +89,7 @@ export class AuthService {
     async login(email: string, password: string) {
         try {
             const data = await firstValueFrom(
-                this.http.post<{user: User, token: string}>('http://localhost:3001/api/auth/login', 
+                this.http.post<{user: User, token: string}>(environment.apiUrl + '/api/auth/login', 
                     JSON.stringify({ email, password }), 
                     {
                         headers: { 'Content-Type': 'application/json' }
