@@ -13,6 +13,8 @@
         align-items: center;
 
         .open-container {
+            display: flex;
+            flex-direction: column;
             width: 60%;
             height: 70%;
             background-color: var(--color-surface);
@@ -40,6 +42,7 @@
                 flex-direction: column;
                 padding-top: 0.25rem;
                 width: 100%;
+                flex: 1;
 
                 .wheels-header {
                     display: flex;
@@ -103,6 +106,29 @@
                 }
             }
 
+            .buttons-container {
+                height: 7%;
+                display: flex;
+                justify-content: end;
+
+                .create-button {
+                    padding: 0 1rem;
+                    border-radius: 8px;
+                    outline: none;
+                    border: none;
+                    background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary-grad) 100%);
+                    color: var(--color-text);
+                    font-size: 1.3rem;
+                    font-family: var(--font);
+                    transform: all 0.2s ease;
+                    cursor: pointer;
+    
+                    &:hover {
+                        filter: brightness(1.1);
+                    }
+                }
+            }
+
             @keyframes appear {
                 from {
                   transform: scale(0);
@@ -113,7 +139,7 @@
             }
         }
 
-        .delete-confirm-modal {
+        .confirm-modal {
             position: fixed;
             display: flex;
             justify-content: center;
@@ -124,7 +150,7 @@
             width: 100vw;
             z-index: 2;
 
-            .delete-confirm-container {
+            .confirm-container {
                 position: absolute;
                 width: 30%;
                 height: 20%;
@@ -139,8 +165,9 @@
                     font-size: x-large;
                     font-style: bolder;
     
-                    .delete-word {
-                        color: rgb(253, 41, 41);
+                    .action-word {
+                        --color-delete: rgb(253, 41, 41);
+                        --color-create: rgb(41, 108, 253);
                     }
                 }
     

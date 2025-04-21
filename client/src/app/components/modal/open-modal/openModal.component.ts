@@ -15,9 +15,29 @@ export class OpenModalComponent implements OnInit {
   authService = inject(AuthService)
   wheelService = inject(WheelService)
   modalService = inject(ModalService)
-  deleteConfirmationOpen = signal<boolean>(false)
   selectedWheelId = signal<string>("")
   wheels = signal<Wheel[] | null>(null)
+  confirmation = signal<{
+    name: string,
+    nameColor: string,
+    headerText: string,
+    bodyText: string,
+    confirmFunc: () => void
+  } | null>(null)
+  createConfirmation = signal({
+    name: "Create",
+    nameColor: "var(--color-create)",
+    headerText: "a new wheel?",
+    bodyText: "Are you sure you want to create a new wheel? \n Any unsaved changes will be lost.",
+    confirmFunc: this.createNewWheel.bind(this)
+  })
+  deleteConfirmation = signal({
+    name: "Delete",
+    nameColor: "var(--color-delete)",
+    headerText: '"' + '?' + '"',
+    bodyText: "Are you sure you want to delete this wheel? \n This action cannot be undone.",
+    confirmFunc: this.deleteSelectedWheel.bind(this)
+  })
 
   ngOnInit() {
     this.wheelService.getWheels()
@@ -29,12 +49,8 @@ export class OpenModalComponent implements OnInit {
       })
   }
 
-  switchDeleteConfirmationOpen() {
-    this.deleteConfirmationOpen.update(prev => !prev)
-  }
-
   closeModal() {
-    if (this.deleteConfirmationOpen()) return
+    if (this.confirmation()) return
 
     this.modalService.close()
   }
@@ -45,9 +61,19 @@ export class OpenModalComponent implements OnInit {
     })
   }
 
-  openDeleteConfirmation(wheelId: string) {
-    this.switchDeleteConfirmationOpen()
+  closeConfirmation() {
+    this.confirmation.set(null)
+  }
+
+  openDeleteConfirmation(wheelId: string, wheelName: string) {
     this.selectedWheelId.set(wheelId)
+    this.deleteConfirmation.update(prev => ({...prev, headerText: '"' + wheelName + '"'}))
+    this.confirmation.set(this.deleteConfirmation())
+  }
+
+  createNewWheel() {
+    this.wheelService.createEmptyWheel()
+    this.modalService.close()
   }
 
   deleteSelectedWheel() {
@@ -56,9 +82,10 @@ export class OpenModalComponent implements OnInit {
         this.wheels.update(prev => prev!.filter(wheel => wheel.id !== this.selectedWheelId()))
         this.modalService.openMessageModal("The wheel has been deleted successfully")
         this.selectedWheelId.set("")
+        this.deleteConfirmation.update(prev => ({...prev, headerText: '"' + "?" + '"'}))
       })
       .finally(() =>
-        this.switchDeleteConfirmationOpen()
+        this.closeConfirmation()
       )
   }
 }

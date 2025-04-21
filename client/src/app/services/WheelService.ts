@@ -26,6 +26,12 @@ export class WheelService {
         }
     }
 
+    createEmptyWheel() {
+        this.wheel.set(new Wheel())
+        this.entryService.entries.set([])
+        localStorage.removeItem("last_wheel_id")
+    }
+
     updateName(name: string) {
         this.wheel.update(prev => ({...prev, name: name}))
     }

@@ -25,7 +25,7 @@ model Wheel {
   fatherWheelId String?
   fatherWheel Wheel? @relation("FatherChild", fields: [fatherWheelId], references: [id])
   childrenWheels Wheel[] @relation("FatherChild")
-  fatherEntryId String? 
+  fatherEntryId String?
   fatherEntry Entry? @relation("EntryNestedWheel")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
