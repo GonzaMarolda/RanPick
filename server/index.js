@@ -7,7 +7,7 @@ async function main() {
 
   if (process.env.NODE_ENV === 'production') {
     console.log('Applying migrations...')
-    execSync('npx prisma migrate deploy', { stdio: 'inherit' })
+    execSync('npx prisma generate', { stdio: 'inherit' })
   }
   app.listen(PORT, () => {
     console.log("Server running on port " + PORT)
