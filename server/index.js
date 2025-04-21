@@ -1,7 +1,17 @@
 const app = require('./app')
 const config = require('./utils/config')
+import { execSync } from 'child_process'
 
-const PORT = config.PORT || 3001
-app.listen(PORT, () => {
-  console.log("Server running on port " + PORT)
-})
+async function main() {
+  const PORT = config.PORT || 3001
+
+  if (process.env.NODE_ENV === 'production') {
+    console.log('Applying migrations...')
+    execSync('npx prisma migrate deploy', { stdio: 'inherit' })
+  }
+  app.listen(PORT, () => {
+    console.log("Server running on port " + PORT)
+  })
+}
+
+main()
