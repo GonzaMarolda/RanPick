@@ -1,6 +1,6 @@
 const app = require('./app')
 const config = require('./utils/config')
-import { execSync } from 'child_process'
+const { execSync } = require('child_process')
 
 async function main() {
   const PORT = config.PORT || 3001
