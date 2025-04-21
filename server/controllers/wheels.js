@@ -21,7 +21,7 @@ wheelsRouter.get('/:id', async (request, response) => {
       include: { entries: true },
       where: {id: request.params.id, userId: request.user.id}
   })
-  if (!wheels) return response.status(404).send({ error: 'Wheel not found' })
+  if (!wheels) return response.status(404).send({ error: 'The wheel does not exist or is not your wheel' })
   response.status(200).json(wheels)
 })
 
@@ -69,6 +69,29 @@ wheelsRouter.put('/', async (request, response) => {
       })
     })
     response.status(200).json(savedWheel)
+})
+
+wheelsRouter.delete('/:id', async (request, response) => {
+    if (process.env.NODE_ENV !== "test" && !request.user?.id) {
+        return response.status(401).send({ error: 'invalid token' })
+    } 
+
+    const wheel = await prisma.wheel.findUnique({
+        include: { entries: true },
+        where: {id: request.params.id, userId: request.user.id}
+    })
+    if (!wheel) {return response.status(404).send({ error: 'The wheel does not exist or is not your wheel' })}
+
+    await prisma.$transaction(async (tx) => {
+        await tx.entry.deleteMany({
+            where: { wheelId: wheel.id }
+        })
+        await tx.wheel.delete({
+            where: { id: wheel.id }
+        })
+    })
+
+    response.status(204).send()
 })
 
 module.exports = wheelsRouter

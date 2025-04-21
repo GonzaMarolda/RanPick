@@ -90,11 +90,28 @@ export class WheelService {
         }
     }
 
-    private async processError(res: any) {
-        if (!res.ok) {
-            const err = await res.json();
-            res.status === 400 ? this.errorMessage.set(err.error) : this.errorMessage.set("There was an error")
-            throw new Error(JSON.stringify(err));
-        } 
+    async deleteWheel(wheelId: string): Promise<void> {
+        const token = this.authService.accessToken()
+        try {
+            await lastValueFrom(
+                this.http.delete<Wheel>('http://localhost:3001/api/wheel/' + wheelId,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            'Content-Type': 'application/json' , 
+                        }
+                    }
+                )
+            )
+    
+            if (this.wheel().id === wheelId) localStorage.removeItem("last_wheel_id")
+        } catch (err) {
+            this.processError(err)
+            throw err
+        }
+    }
+
+    private async processError(err: any) {
+        err.status === 400 ? this.errorMessage.set(err.message) : this.errorMessage.set("There was an error")
     }
 }
