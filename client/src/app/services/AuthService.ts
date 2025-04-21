@@ -124,11 +124,7 @@ export class AuthService {
         this.modalService.close()
     }
 
-    private async processError(res: any) {
-        if (!res.ok) {
-            const err = await res.json();
-            res.status === 400 ? this.errorMessage.set(err.error) : this.errorMessage.set("There was an error")
-            throw new Error(JSON.stringify(err));
-        } 
+    private async processError(err: any) {
+        err.status === 400 ? this.errorMessage.set(err.message) : this.errorMessage.set("There was an error")
     }
 }

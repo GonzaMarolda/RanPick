@@ -21,17 +21,24 @@ model Wheel {
   id        String   @id 
   userId    Int     
   user      User     @relation(fields: [userId], references: [id])
-  name      String
+  name      String  
+  fatherWheelId String?
+  fatherWheel Wheel? @relation("FatherChild", fields: [fatherWheelId], references: [id])
+  childrenWheels Wheel[] @relation("FatherChild")
+  fatherEntryId String? 
+  fatherEntry Entry? @relation("EntryNestedWheel")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  entries   Entry[]
+  entries   Entry[] @relation("WheelEntry")
 }
 
 model Entry {
   id        String  @id 
   name      String
   wheelId   String     
-  wheel     Wheel   @relation(fields: [wheelId], references: [id])
+  wheel     Wheel   @relation("WheelEntry", fields: [wheelId], references: [id])
+  nestedWheelId String? @unique
+  nestedWheel Wheel? @relation("EntryNestedWheel", fields: [nestedWheelId], references: [id])
   weight    Float
   color     String 
 }
