@@ -35,6 +35,7 @@ export class WheelService {
     }
 
     private replaceWheelInTree(root: Wheel, updated: Wheel): Wheel {
+        console.log("Wheel: " + root.name)
         if (root.id === updated.id) {
           return updated;
         }
@@ -42,11 +43,12 @@ export class WheelService {
         return {
           ...root,
           entries: root.entries.map(entry => {
-            if (updated.fatherEntryId === entry.id) {
-              return {
-                ...entry,
-                nestedWheel: entry.nestedWheel ? this.replaceWheelInTree(entry.nestedWheel, updated) : updated,
-              };
+            if (entry.nestedWheel || updated.fatherEntryId === entry.id) {
+                console.log("Entry with nested: " + entry.name)
+                return {
+                    ...entry,
+                    nestedWheel: updated.fatherEntryId === entry.id ? updated : this.replaceWheelInTree(entry.nestedWheel!, updated)
+                }
             }
             return entry;
           })
@@ -123,11 +125,13 @@ export class WheelService {
         const newNestledWheel = new Wheel()
         newNestledWheel.fatherEntryId = entry.id
         newNestledWheel.fatherWheelId = entry.wheelId
-        this.wheel.update(root => this.replaceWheelInTree(root, newNestledWheel));
+        this.wheel.update(root => this.replaceWheelInTree(root, newNestledWheel))
         this.openNestedWheel(newNestledWheel.id)
     }
 
     openNestedWheel(wheelId: string) {
+        if (!wheelId) return
+
         const focusWheelId = wheelId
         const wheel = this.wheel()
         const wheelStack: Wheel[] = [wheel]

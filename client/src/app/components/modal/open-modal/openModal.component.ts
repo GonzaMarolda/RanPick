@@ -68,7 +68,7 @@ export class OpenModalComponent implements OnInit {
 
   openDeleteConfirmation(wheelId: string, wheelName: string) {
     this.selectedWheelId.set(wheelId)
-    this.deleteConfirmation.update(prev => ({...prev, headerText: '"' + wheelName + '"'}))
+    this.deleteConfirmation.update(prev => ({...prev, headerText: '"' + wheelName + '"?'}))
     this.confirmation.set(this.deleteConfirmation())
   }
 

@@ -30,7 +30,7 @@ wheelsRouter.put('/', async (request, response) => {
     const wheel = request.body
     const savedWheel = await prisma.$transaction(async (tx) => {
       return await upsertWheelTree(wheel, request.user.id, tx)
-    })
+    }, { timeout: 20000 })
 
     response.status(200).json(savedWheel)
 })
@@ -80,7 +80,8 @@ async function getWheelTree({ id, userId }) {
 }
 
 async function upsertWheelTree(wheel, userId, tx) {
-  console.log("Currently operating: " + wheel.name)
+  console.log("Currently upserting: " + wheel.name + ":")
+  console.log(wheel)
 
   await tx.entry.deleteMany({
     where: { wheelId: wheel.id }
@@ -106,6 +107,9 @@ async function upsertWheelTree(wheel, userId, tx) {
     },
     update: {
       name: wheel.name,
+      fatherEntry: wheel.fatherEntryId
+        ? { connect: { id: wheel.fatherEntryId } }
+        : { disconnect: true },
       entries: {
         create: wheel.entries.map(entry => ({
           id: entry.id,
@@ -134,5 +138,67 @@ async function upsertWheelTree(wheel, userId, tx) {
 
   return savedWheel
 }
+
+async function deleteWheelTree(wheel, userId, tx) {
+  console.log("Currently deleting: " + wheel.name + ":")
+  console.log(wheel)
+
+  await tx.entry.deleteMany({
+    where: { wheelId: wheel.id }
+  })
+
+  const savedWheel = await tx.wheel.upsert({
+    where: { id: wheel.id },
+    create: {
+      id: wheel.id, 
+      userId: userId,
+      name: wheel.name,
+      fatherWheelId: wheel.fatherWheelId,
+      fatherEntryId: wheel.fatherEntryId,
+      entries: {
+        create: wheel.entries.map(entry => ({
+          id: entry.id,
+          name: entry.name,
+          nestedWheelId: wheel.nestedWheel?.id,
+          weight: entry.weight,
+          color: entry.color
+        }))
+      }
+    },
+    update: {
+      name: wheel.name,
+      fatherEntry: wheel.fatherEntryId
+        ? { connect: { id: wheel.fatherEntryId } }
+        : { disconnect: true },
+      entries: {
+        create: wheel.entries.map(entry => ({
+          id: entry.id,
+          name: entry.name,
+          nestedWheelId: wheel.entries.find(e => e.id === entry.id).nestedWheel?.id,
+          weight: entry.weight,
+          color: entry.color
+        }))
+      }
+    },
+    include: {
+      entries: true
+    }
+  })
+  
+  for (const entry of savedWheel.entries) {
+    if (entry.nestedWheelId) {
+      console.log("This entry has a nested wheel: " + entry.name)
+      entry.nestedWheel = await upsertWheelTree(
+        wheel.entries.find(e => e.id === entry.id).nestedWheel, 
+        userId,
+        tx
+      )
+    }
+  }
+
+  return savedWheel
+}
+
+
 
 module.exports = wheelsRouter

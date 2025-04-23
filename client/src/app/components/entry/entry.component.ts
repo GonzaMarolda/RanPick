@@ -4,6 +4,8 @@ import { Entry } from '../../models/entry';
 import { PropertiesComponent } from '../properties/properties.component';
 import { ClickOutsideDirective } from '../../directives/ClickOutsideDirective';
 import { WheelService } from '../../services/WheelService';
+import { ModalService } from '../../services/ModalService';
+import { ConfirmationModalComponent } from '../modal/confirm-modal/confirmModal.component';
 
 @Component({
     selector: 'entry',
@@ -12,6 +14,7 @@ import { WheelService } from '../../services/WheelService';
     imports: [PropertiesComponent, ClickOutsideDirective]
 })
 export class EntryComponent{
+    modalService = inject(ModalService)
     wheelService = inject(WheelService)
     entryService = inject(EntryService)
     entryId = input.required<string>()
@@ -47,7 +50,37 @@ export class EntryComponent{
         if (entry.nestedWheel) {
             this.wheelService.openNestedWheel(entry.nestedWheel.id)
         } else {
-            this.wheelService.createNestledWheel(entry)
+            this.openConfirmation(true)
         }
+    }
+
+    deleteNestedWheel() {
+
+    }
+
+    openConfirmation(isCreate: boolean) {
+        const confirmation = isCreate ?
+            {
+                name: "Create",
+                nameColor: "var(--color-create)",
+                headerText: "a nested wheel?",
+                bodyText: 'Do you want to create a nested wheel for the entry "' + this.entryData().name + '"?',
+                confirmFunc: (() => {
+                    this.wheelService.createNestledWheel(this.entryData())
+                    this.modalService.close()
+                }).bind(this)
+            } :
+            {
+                name: "Delete",
+                nameColor: "var(--color-delete)",
+                headerText: '"' + '?' + '"',
+                bodyText: "Are you sure you want to delete this wheel? \n This action cannot be undone.",
+                confirmFunc: this.deleteNestedWheel.bind(this)
+            }
+
+        this.modalService.open<ConfirmationModalComponent>(
+            ConfirmationModalComponent, 
+            { confirmation: confirmation }
+        )
     }
 }
