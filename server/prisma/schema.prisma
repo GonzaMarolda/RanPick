@@ -23,10 +23,10 @@ model Wheel {
   user            User     @relation(fields: [userId], references: [id])
   name            String  
   fatherWheelId   String?
-  fatherWheel     Wheel?   @relation("FatherChild", fields: [fatherWheelId], references: [id])
+  fatherWheel     Wheel?   @relation("FatherChild", fields: [fatherWheelId], references: [id], onDelete: Cascade)
   childrenWheels  Wheel[]  @relation("FatherChild")
   fatherEntryId   String?  @unique
-  fatherEntry     Entry?   @relation("EntryNestedWheel", fields: [fatherEntryId], references: [id]) 
+  fatherEntry     Entry?   @relation("EntryNestedWheel", fields: [fatherEntryId], references: [id], onDelete: Cascade) 
   entries         Entry[]  @relation("WheelEntry")
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
@@ -36,7 +36,7 @@ model Entry {
   id            String  @id 
   name          String
   wheelId       String     
-  wheel         Wheel   @relation("WheelEntry", fields: [wheelId], references: [id])
+  wheel         Wheel   @relation("WheelEntry", fields: [wheelId], references: [id], onDelete: Cascade)
   nestedWheelId String? @unique
   nestedWheel   Wheel?  @relation("EntryNestedWheel")
   weight        Float
