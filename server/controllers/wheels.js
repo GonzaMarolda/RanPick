@@ -7,8 +7,9 @@ wheelsRouter.get('/', async (request, response) => {
     } 
 
     wheels = await prisma.wheel.findMany({
-        where: {userId: request.user.id}
+        where: {userId: request.user.id, fatherWheelId: {equals: null}}
     })
+    console.log(wheels)
     response.status(200).json(wheels)
 })
 
