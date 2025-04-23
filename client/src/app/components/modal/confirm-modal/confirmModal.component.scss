@@ -1,0 +1,85 @@
+:host {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+
+    .confirm-modal {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.25);
+        color: var(--color-text);
+        height: 100vh;
+        width: 100vw;
+        z-index: 2;
+
+        .confirm-container {
+            position: absolute;
+            width: 30%;
+            height: 20%;
+            padding: 1rem;
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-popup-border);
+            border-radius: 4px;
+            animation: appear 0.25s linear;
+
+            .confirm-header {
+                height: 30%;
+                font-size: x-large;
+                font-style: bolder;
+
+                .action-word {
+                    --color-delete: rgb(253, 41, 41);
+                    --color-create: rgb(41, 108, 253);
+                }
+            }
+
+            .confirm-body {
+                height: 50%;
+            }
+
+            .confirm-buttons-container {
+                display: flex;
+                justify-content: end;
+                height: 20%;
+                gap: 0.7rem;
+
+                & button {
+                    outline: none;
+                    border: none;
+                    border-radius: 6px;
+                    font-family: var(--font);
+                    color: var(--color-text);
+                    font-size: 1.2rem;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                        filter: brightness(1.1);
+                    }
+                }
+
+                .confirm-button {
+                    background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary-grad) 100%);
+                }
+
+                .cancel-button {
+                    background: none;
+
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.1);
+                    }
+                }
+            }
+
+            @keyframes appear {
+                from {
+                transform: scale(0);
+                }
+                to {
+                transform: scale(1);
+                }
+            }
+        }
+    }
+}

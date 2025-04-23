@@ -52,10 +52,15 @@
 
             .selected-text {
                 display: flex;
+                flex-direction: column;
+                justify-content: center;
                 align-items: center;
-                font-size: xx-large;
                 margin: 1rem 0;
-                color: var(--color-text);
+
+                .entry-text {
+                    color: var(--color-text);
+                    font-size: xx-large;
+                }
             }
 
             .buttons-container {

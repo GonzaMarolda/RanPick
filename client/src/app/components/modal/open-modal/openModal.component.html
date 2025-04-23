@@ -33,23 +33,9 @@
         </div>
     </div>
     @if (confirmation()) {
-        <div class="confirm-modal">
-            <div class="confirm-container">
-                <div class="confirm-header">
-                    <span class="action-word" [style.color]="confirmation()!.nameColor">{{confirmation()!.name}}</span> {{confirmation()!.headerText}}
-                </div>
-                <div class="confirm-body" [style.white-space]="'pre-line'">
-                    {{confirmation()!.bodyText}}
-                </div>
-                <div class="confirm-buttons-container">
-                    <button class="cancel-button" (click)="closeConfirmation()">
-                        Cancel
-                    </button>
-                    <button class="confirm-button" (click)="confirmation()!.confirmFunc()">
-                        Confirm
-                    </button>
-                </div>
-            </div>
-        </div>
+        <confirm-modal
+            [confirmation]="confirmation()!"
+            [closeFunc]="closeConfirmation.bind(this)"
+        />
     }
 </div>

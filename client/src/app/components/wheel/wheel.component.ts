@@ -31,6 +31,8 @@ export class WheelScreen {
     initialRotation = signal("0deg")
     totalRotation = signal("0deg")
 
+    finalSelectedEntries = signal<Entry[]>([])
+
     private intervalId: any;
     private updateInterval = 100; 
   
@@ -196,20 +198,35 @@ export class WheelScreen {
     onSpin() {
       if (this.spinClass() == this.spinClasses.active) return
 
-      this.initialRotation.update (prev => this.getCurrentRotation().toString() + "deg")
-      this.totalRotation.update(prev => (10 * 360 + Math.random() * 360).toString() + "deg")
-      this.spinClass.update(prev => this.spinClasses.active)
+      this.spin()
+    }
+
+    spin() {
+      const currentRotation = this.getCurrentRotation()
+      this.initialRotation.set(currentRotation.toString() + "deg")
+      this.totalRotation.set((10 * 360 + Math.random() * 360).toString() + "deg")
+      this.spinClass.set(this.spinClasses.active)
       this.startTrackRotation()
       this.sidebarVisibilityService.setIsOpen(false)
     }
 
     animationFinished() {
       this.stopTrackRotation();
-      this.initialRotation.update(prev => this.getCurrentRotation().toString() + "deg")
-
       const selectedEntry = this.entryService.entries().find(e => e.id === this.selected().id)!
-      const selectedColor = this.segments().find(segment => segment.id === selectedEntry.id)!.color
-      this.modalService.open<SelectedModalComponent>(SelectedModalComponent, { selectedEntry: selectedEntry, selectedColor: selectedColor })
+      this.finalSelectedEntries.update(prev => prev.concat(selectedEntry))
+
+      if (selectedEntry.nestedWheel) {
+        this.wheelService.openNestedWheel(selectedEntry.nestedWheel.id)
+
+        this.spinClass.set(this.spinClasses.continuous)
+        setTimeout(() => {
+          this.spin()
+        }, 0);
+      } else {
+        this.initialRotation.set(this.getCurrentRotation().toString() + "deg")
+        const selectedColor = this.segments().find(segment => segment.id === selectedEntry.id)!.color
+        this.modalService.open<SelectedModalComponent>(SelectedModalComponent, { selectedEntries: this.finalSelectedEntries(), selectedColor: selectedColor })
+      }
     }
 
     selectEntry(segment: any) {

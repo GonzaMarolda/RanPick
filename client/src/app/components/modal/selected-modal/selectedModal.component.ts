@@ -16,7 +16,7 @@ export class SelectedModalComponent {
   sidebarVisibilityService = inject(SidebarVisibilityService)
   modalService = inject(ModalService)
   entryService = inject(EntryService)
-  selectedEntry = input.required<Entry>()
+  selectedEntries = input.required<Entry[]>()
   selectedColor = input.required<string>()
 
   onClickOutside(event: Event) {
@@ -31,7 +31,7 @@ export class SelectedModalComponent {
   }
 
   remove(event: Event) {
-    this.entryService.removeEntry(this.selectedEntry().id)
+    this.entryService.removeEntry(this.selectedEntries()[this.selectedEntries().length - 1].id)
     this.close(event)
   }
 }

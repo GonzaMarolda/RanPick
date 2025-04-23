@@ -10,7 +10,11 @@
             </button>
         </div>
         <div class="selected-text">
-            {{selectedEntry().name}}
+            @for (entry of selectedEntries(); track entry.id) {
+                <div class="entry-text">
+                    {{entry.name}}
+                </div>
+            }
         </div>
         <div class="buttons-container">
             <button class="close-button" (click)="close($event)">

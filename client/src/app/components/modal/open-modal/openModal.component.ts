@@ -4,10 +4,11 @@ import { ModalService } from '../../../services/ModalService';
 import { WheelService } from '../../../services/WheelService';
 import { Wheel } from '../../../models/wheel';
 import { AuthService } from '../../../services/AuthService';
+import { ConfirmationModalComponent } from '../confirm-modal/confirmModal.component';
 
 @Component({
   selector: 'open-modal',
-  imports: [ClickOutsideDirective],
+  imports: [ClickOutsideDirective, ConfirmationModalComponent],
   templateUrl: './openModal.component.html',
   styleUrl: './openModal.component.scss'
 })
