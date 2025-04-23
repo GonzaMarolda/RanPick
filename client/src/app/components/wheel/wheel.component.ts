@@ -197,6 +197,7 @@ export class WheelScreen {
 
     onSpin() {
       if (this.spinClass() == this.spinClasses.active) return
+      this.finalSelectedEntries.set([])
 
       this.spin()
     }

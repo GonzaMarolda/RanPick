@@ -24,7 +24,12 @@ export class EntryComponent{
     switchPropertiesTimeout = signal<any | null>(null)
 
     onRemove() {
-        this.removeEntry.emit(this.entryData().id)
+        const entry: Entry = this.entryData()
+        if (entry.nestedWheel) {
+            this.openConfirmation(false)
+        } else {
+            this.removeEntry.emit(this.entryData().id)
+        }
     }
 
     onNameInput(event: Event) {
@@ -54,10 +59,6 @@ export class EntryComponent{
         }
     }
 
-    deleteNestedWheel() {
-
-    }
-
     openConfirmation(isCreate: boolean) {
         const confirmation = isCreate ?
             {
@@ -73,9 +74,13 @@ export class EntryComponent{
             {
                 name: "Delete",
                 nameColor: "var(--color-delete)",
-                headerText: '"' + '?' + '"',
-                bodyText: "Are you sure you want to delete this wheel? \n This action cannot be undone.",
-                confirmFunc: this.deleteNestedWheel.bind(this)
+                headerText: '"' + this.entryData().name + '"?',
+                bodyText: "Are you sure you want to delete this entry? It has a wheel attached. \n This action cannot be undone.",
+                confirmFunc: (() => {
+                    this.wheelService.deleteNested(this.entryData().nestedWheel!.id)
+                    this.removeEntry.emit(this.entryData().id)
+                    this.modalService.close()
+                }).bind(this)
             }
 
         this.modalService.open<ConfirmationModalComponent>(

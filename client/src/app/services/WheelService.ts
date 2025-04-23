@@ -34,8 +34,27 @@ export class WheelService {
         localStorage.removeItem("last_wheel_id")
     }
 
+    deleteNested(wheelId: string) {
+        const nestedWheel = this.getNestedWheel(wheelId)
+        this.wheel.update(root => this.deleteWheelInTree(root, nestedWheel));
+    }
+
+    deleteWheelInTree(root: Wheel, toDelete: Wheel) {
+        return {
+        ...root,
+        entries: root.entries.map(entry => {
+            if (entry.nestedWheel || toDelete.fatherEntryId === entry.id) {
+                return {
+                    ...entry,
+                    nestedWheel: toDelete.fatherEntryId === entry.id ? undefined : this.replaceWheelInTree(entry.nestedWheel!, toDelete)
+                }
+            }
+            return entry;
+        })
+        }
+    }
+
     private replaceWheelInTree(root: Wheel, updated: Wheel): Wheel {
-        console.log("Wheel: " + root.name)
         if (root.id === updated.id) {
           return updated;
         }
@@ -44,7 +63,6 @@ export class WheelService {
           ...root,
           entries: root.entries.map(entry => {
             if (entry.nestedWheel || updated.fatherEntryId === entry.id) {
-                console.log("Entry with nested: " + entry.name)
                 return {
                     ...entry,
                     nestedWheel: updated.fatherEntryId === entry.id ? updated : this.replaceWheelInTree(entry.nestedWheel!, updated)
@@ -132,6 +150,11 @@ export class WheelService {
     openNestedWheel(wheelId: string) {
         if (!wheelId) return
 
+        const nestedWheel = this.getNestedWheel(wheelId)
+        this.focusWheel.set(nestedWheel)
+    }
+
+    getNestedWheel(wheelId: string): Wheel {
         const focusWheelId = wheelId
         const wheel = this.wheel()
         const wheelStack: Wheel[] = [wheel]
@@ -139,8 +162,7 @@ export class WheelService {
             const currentWheel = wheelStack.pop()!
 
             if (currentWheel.id === focusWheelId) {
-                this.focusWheel.set(currentWheel)
-                return 
+                return currentWheel
             }
 
             for (const entry of currentWheel.entries) {
