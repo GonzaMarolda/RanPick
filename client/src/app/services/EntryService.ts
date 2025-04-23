@@ -1,24 +1,27 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable } from '@angular/core';
 import { Entry } from '../models/entry';
+import { WheelService } from './WheelService';
 
 @Injectable({ providedIn: 'root' })
 export class EntryService {
-  entries = signal<Array<Entry>>([]);
+  wheelService = inject(WheelService)
+  focusWheel = this.wheelService.focusWheel
+  entries = computed(() => this.focusWheel().entries)
 
   getEntry(id: string) : Entry {
     return this.entries().find(e => e.id === id)!
   }
 
   createEmpty(): void {
-    this.entries.update(current => [...current, new Entry('')]);
+    this.focusWheel.update(prev => ({...prev, entries: [...prev.entries, new Entry('', this.wheelService.focusWheel().id)]}));
   }
 
   removeEntry(id: string): void {
-    this.entries.update(current => current.filter(e => e.id !== id));
+    this.focusWheel.update(prev => ({...prev, entries: prev.entries.filter(e => e.id !== id)}));
   }
 
   updateEntry(newEntry: Entry): void {
-    this.entries.update(current => current.map(e => e.id === newEntry.id ? newEntry : e))
+    this.focusWheel.update(prev => ({...prev, entries: prev.entries.map(e => e.id === newEntry.id ? newEntry : e)}));
   }
 
   getProbability(id: string) : string {

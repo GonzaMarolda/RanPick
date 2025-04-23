@@ -17,57 +17,20 @@ wheelsRouter.get('/:id', async (request, response) => {
       return response.status(401).send({ error: 'invalid token' })
   } 
 
-  wheels = await prisma.wheel.findUnique({
-      include: { entries: true },
-      where: {id: request.params.id, userId: request.user.id}
-  })
-  if (!wheels) return response.status(404).send({ error: 'The wheel does not exist or is not your wheel' })
-  response.status(200).json(wheels)
+  const wheel = await getWheelTree({id: request.params.id, userId: request.user.id})
+  if (!wheel) return response.status(404).send({ error: 'The wheel does not exist or is not your wheel' })
+  response.status(200).json(wheel)
 })
 
 wheelsRouter.put('/', async (request, response) => {
     if (process.env.NODE_ENV !== "test" && !request.user?.id) {
         return response.status(401).send({ error: 'invalid token' })
     } 
-    const { id, name, entries } = request.body
-
+    const wheel = request.body
     const savedWheel = await prisma.$transaction(async (tx) => {
-      const existingWheel = await tx.wheel.findUnique({ where: { id: id, userId: request.user.id } })
-      if (existingWheel) {
-        await tx.entry.deleteMany({
-          where: { wheelId: id }
-        })
-      }
-
-      return await tx.wheel.upsert({
-        where: { id: id },
-        include: { entries: true },
-        update: {
-          name,
-          entries: {
-            create: entries.map(entry => ({
-              id: entry.id, 
-              name: entry.name,
-              weight: entry.weight,
-              color: entry.color
-            }))
-          }
-        },
-        create: {
-          id, 
-          name,
-          userId: request.user.id,
-          entries: {
-            create: entries.map(entry => ({
-              id: entry.id, 
-              name: entry.name,
-              weight: entry.weight,
-              color: entry.color
-            }))
-          }
-        }
-      })
+      return await upsertWheelTree(wheel, request.user.id, tx)
     })
+
     response.status(200).json(savedWheel)
 })
 
@@ -93,5 +56,82 @@ wheelsRouter.delete('/:id', async (request, response) => {
 
     response.status(204).send()
 })
+
+async function getWheelTree({ id, userId }) {
+  const wheel = await prisma.wheel.findUnique({
+    where: { id, userId },
+    include: {
+      entries: true
+    }
+  })
+  if (!wheel) return null
+  
+  for (const entry of wheel.entries) {
+    if (entry.nestedWheelId) {
+      entry.nestedWheel = await getWheelTree({
+        id: entry.nestedWheelId,
+        userId
+      })
+    }
+  }
+
+  return wheel
+}
+
+async function upsertWheelTree(wheel, userId, tx) {
+  console.log("Currently operating: " + wheel.name)
+
+  await tx.entry.deleteMany({
+    where: { wheelId: wheel.id }
+  })
+
+  const savedWheel = await tx.wheel.upsert({
+    where: { id: wheel.id },
+    create: {
+      id: wheel.id, 
+      userId: userId,
+      name: wheel.name,
+      fatherWheelId: wheel.fatherWheelId,
+      fatherEntryId: wheel.fatherEntryId,
+      entries: {
+        create: wheel.entries.map(entry => ({
+          id: entry.id,
+          name: entry.name,
+          nestedWheelId: wheel.nestedWheel?.id,
+          weight: entry.weight,
+          color: entry.color
+        }))
+      }
+    },
+    update: {
+      name: wheel.name,
+      entries: {
+        create: wheel.entries.map(entry => ({
+          id: entry.id,
+          name: entry.name,
+          nestedWheelId: wheel.entries.find(e => e.id === entry.id).nestedWheel?.id,
+          weight: entry.weight,
+          color: entry.color
+        }))
+      }
+    },
+    include: {
+      entries: true
+    }
+  })
+  
+  for (const entry of savedWheel.entries) {
+    if (entry.nestedWheelId) {
+      console.log("This entry has a nested wheel: " + entry.name)
+      entry.nestedWheel = await upsertWheelTree(
+        wheel.entries.find(e => e.id === entry.id).nestedWheel, 
+        userId,
+        tx
+      )
+    }
+  }
+
+  return savedWheel
+}
 
 module.exports = wheelsRouter

@@ -62,14 +62,16 @@
         padding: 1rem;
 
         .open-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             background: linear-gradient(180deg, var(--color-secondary) 0%, var(--color-secondary-grad) 100%);
+            padding: 0;
             height: 2.5rem;
             width: 2.5rem;
             cursor: pointer;
         
-            .open-char {
-                font-size: 1.5rem;
-                font-style: italic;
+            .open-icon {
                 color: var(--color-text);
                 opacity: 0.85;    
             }

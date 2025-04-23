@@ -5,6 +5,8 @@ export class Wheel {
     name: string
     userId: number
     entries: Entry[]
+    fatherWheelId?: string
+    fatherEntryId?: string
     createdAt: string
 
     constructor() {

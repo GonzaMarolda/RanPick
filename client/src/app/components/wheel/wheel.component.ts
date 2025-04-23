@@ -6,6 +6,7 @@ import { SidebarVisibilityService } from '../../services/SidebarVisibilityServic
 import { ModalService } from '../../services/ModalService'
 import { SelectedModalComponent } from '../modal/selected-modal/selectedModal.component'
 import { WheelService } from '../../services/WheelService'
+import { Wheel } from '../../models/wheel'
 
 @Component({
     selector: 'wheel-screen',
@@ -223,7 +224,9 @@ export class WheelScreen {
     switchEditName() {
       if (this.editNameActive()) {
         this.wheelService.updateName(this.tempEditedName())
-      } 
+      } else {
+        this.tempEditedName.set(this.wheelService.wheel().name)
+      }
       this.editNameActive.update(prev => !prev)
     }
 
@@ -231,6 +234,14 @@ export class WheelScreen {
       const input = event.target as HTMLInputElement
       const value = input.value
       this.tempEditedName.set(value)
+    }
+
+    entries(): Entry[] {
+      return this.wheelService.focusWheel().entries
+    }
+
+    wheel(): Wheel {
+      return this.wheelService.focusWheel()
     }
 
     ngOnDestroy() {

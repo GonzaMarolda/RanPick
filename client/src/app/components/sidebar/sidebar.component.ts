@@ -2,6 +2,7 @@ import { Component, inject, input, OnInit, output, signal } from '@angular/core'
 import { EntryComponent } from "../entry/entry.component";
 import { Entry } from '../../models/entry';
 import { EntryService } from '../../services/EntryService';
+import { WheelService } from '../../services/WheelService';
 
 @Component({
     selector: 'app-sidebar',
@@ -11,6 +12,7 @@ import { EntryService } from '../../services/EntryService';
 })
 export class Sidebar {
     entryService = inject(EntryService)
+    wheelService = inject(WheelService)
     
     addEntry() {
         this.entryService.createEmpty()
@@ -22,5 +24,17 @@ export class Sidebar {
 
     updateEntry(entry: Entry) {
         this.entryService.updateEntry(entry);
+    }
+
+    entries(): Entry[] {
+        return this.wheelService.focusWheel().entries
+    }
+
+    isRootWheel(): boolean {
+        return !this.wheelService.focusWheel().fatherWheelId
+    }
+
+    openPreviousWheel() {
+        this.wheelService.openNestedWheel(this.wheelService.focusWheel().fatherWheelId!)
     }
 }

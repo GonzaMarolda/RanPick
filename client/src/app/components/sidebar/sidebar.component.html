@@ -1,13 +1,13 @@
 <div class="sidebar-container">
     <div class="back-container">
-        <button class="back-button disabled">
+        <button [class.disabled]="isRootWheel()" class="back-button" (click)="openPreviousWheel()">
             <div class="back-text">
                 Go back
             </div>
         </button>
     </div>
     <ul class="entries-container">
-        @for (entry of entryService.entries(); track entry.id) {
+        @for (entry of entries(); track entry.id) {
             <entry
                 [entryId]="entry.id"
                 (removeEntry)="removeEntry($event)"

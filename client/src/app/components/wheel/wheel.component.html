@@ -1,6 +1,6 @@
 <div class="wheel-container">
     <div class="selected-text">
-        @if (entryService.entries().length >= 2) {
+        @if (entries().length >= 2) {
             @if (spinClass() === spinClasses.active) {
                 {{ selected().name }}
             } @else if (spinClass() === spinClasses.continuous) {
@@ -12,7 +12,7 @@
     </div>
 
     <div class="wheel">
-        @if (entryService.entries().length < 2) {
+        @if (entries().length < 2) {
             <div class="not-enough-entries">
                 You need at least 2 entries to start using the wheel
             </div>
@@ -57,12 +57,12 @@
     <div class="wheel-name-text">
         <div class="name-edit-container">
             @if (editNameActive()) {
-                <input class="name-input" type="text" [value]="wheelService.wheel().name" (input)="updateTempName($event)">
+                <input class="name-input" type="text" [value]="wheel().name" (input)="updateTempName($event)">
                 <svg class="confirm-edit-icon" viewBox="0 0 24 24" fill="currentColor" (click)="switchEditName()">
                     <path d="M17.0303 8.78039L8.99993 16.8107L5.4696 13.2804L6.53026 12.2197L8.99993 14.6894L15.9696 7.71973L17.0303 8.78039Z"/>
                 </svg>
             } @else {
-                {{wheelService.wheel().name}}
+                {{wheel().name}}
                 <svg class="edit-name-icon" fill="currentColor" viewBox="0 0 32 32" (click)="switchEditName()">
                     <path d="M0 32l12-4 20-20-8-8-20 20zM4 28l2.016-5.984 4 4zM8 20l12-12 4 4-12 12z"/>
                 </svg>

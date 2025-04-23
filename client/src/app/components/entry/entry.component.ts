@@ -3,6 +3,7 @@ import { EntryService } from '../../services/EntryService';
 import { Entry } from '../../models/entry';
 import { PropertiesComponent } from '../properties/properties.component';
 import { ClickOutsideDirective } from '../../directives/ClickOutsideDirective';
+import { WheelService } from '../../services/WheelService';
 
 @Component({
     selector: 'entry',
@@ -11,6 +12,7 @@ import { ClickOutsideDirective } from '../../directives/ClickOutsideDirective';
     imports: [PropertiesComponent, ClickOutsideDirective]
 })
 export class EntryComponent{
+    wheelService = inject(WheelService)
     entryService = inject(EntryService)
     entryId = input.required<string>()
     removeEntry = output<string>()
@@ -38,5 +40,14 @@ export class EntryComponent{
 
     entryData() : Entry {
         return this.entryService.getEntry(this.entryId())
+    }
+
+    openNestedWheel() {
+        const entry: Entry = this.entryData()
+        if (entry.nestedWheel) {
+            this.wheelService.openNestedWheel(entry.nestedWheel.id)
+        } else {
+            this.wheelService.createNestledWheel(entry)
+        }
     }
 }

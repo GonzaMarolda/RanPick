@@ -18,27 +18,27 @@ model User {
 }
 
 model Wheel {
-  id        String   @id 
-  userId    Int     
-  user      User     @relation(fields: [userId], references: [id])
-  name      String  
-  fatherWheelId String?
-  fatherWheel Wheel? @relation("FatherChild", fields: [fatherWheelId], references: [id])
-  childrenWheels Wheel[] @relation("FatherChild")
-  fatherEntryId String?
-  fatherEntry Entry? @relation("EntryNestedWheel")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  entries   Entry[] @relation("WheelEntry")
+  id              String   @id 
+  userId          Int     
+  user            User     @relation(fields: [userId], references: [id])
+  name            String  
+  fatherWheelId   String?
+  fatherWheel     Wheel?   @relation("FatherChild", fields: [fatherWheelId], references: [id])
+  childrenWheels  Wheel[]  @relation("FatherChild")
+  fatherEntryId   String?  @unique
+  fatherEntry     Entry?   @relation("EntryNestedWheel", fields: [fatherEntryId], references: [id]) 
+  entries         Entry[]  @relation("WheelEntry")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model Entry {
-  id        String  @id 
-  name      String
-  wheelId   String     
-  wheel     Wheel   @relation("WheelEntry", fields: [wheelId], references: [id])
+  id            String  @id 
+  name          String
+  wheelId       String     
+  wheel         Wheel   @relation("WheelEntry", fields: [wheelId], references: [id])
   nestedWheelId String? @unique
-  nestedWheel Wheel? @relation("EntryNestedWheel", fields: [nestedWheelId], references: [id])
-  weight    Float
-  color     String 
-}
+  nestedWheel   Wheel?  @relation("EntryNestedWheel")
+  weight        Float
+  color         String 
+}   
