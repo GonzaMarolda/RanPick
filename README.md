@@ -15,8 +15,7 @@ The most relevant functionality is the possibility of creating nested wheels, yo
 - 👤 Sign up and Log in manually or with SSO
 - 📁 Wheel save, loading and delete funcionality
 - ↪️ Nested wheels
-- 🚧 ~~Responsive design~~
-- 🚧 ~~Winner entries history~~
+- 🚧 ~~Selected entries history~~
 
 ## Technologies
 
