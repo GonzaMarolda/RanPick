@@ -10,7 +10,7 @@
             <div class="wheels-header">
                 <div class="header-data">
                     <div [style.width]="'80%'">Name</div>
-                    <div [style.width]="'20%'">Created at</div>
+                    <div [style.width]="'20%'">Last updated</div>
                 </div>
             </div>
 
@@ -18,7 +18,9 @@
                 <div class="wheel-data-container">
                     <div class="wheel-data" (click)="openWheel(wheel.id)">
                         <div [style.width]="'88%'">{{wheel.name}}</div>
-                        <div [style.width]="'20%'">{{wheel.createdAt.slice(0,10)}}</div>
+                        <div [style.width]="'20%'">
+                            {{wheel.updatedAt!.slice(0,10)}}
+                        </div>
                     </div>
                     <div class="wheel-delete-button" (click)="openDeleteConfirmation(wheel.id, wheel.name)">
                         <svg class="button" width="30px" height="30px" fill="currentColor" viewBox="0 0 1024 1024"><path d="M160 256H96a32 32 0 0 1 0-64h256V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64h-64v672a32 32 0 0 1-32 32H192a32 32 0 0 1-32-32V256zm448-64v-64H416v64h192zM224 896h576V256H224v640zm192-128a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32zm192 0a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32z"/></svg>

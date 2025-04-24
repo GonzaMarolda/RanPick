@@ -29,7 +29,7 @@ model Wheel {
   fatherEntry     Entry?   @relation("EntryNestedWheel", fields: [fatherEntryId], references: [id], onDelete: Cascade) 
   entries         Entry[]  @relation("WheelEntry")
   createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  updatedAt       DateTime @updatedAt @default(now())
 }
 
 model Entry {
