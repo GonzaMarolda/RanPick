@@ -43,7 +43,8 @@ export class OpenModalComponent implements OnInit {
   ngOnInit() {
     this.wheelService.getWheels()
       .then(wheels => {
-        this.wheels.set(wheels)
+        const sortedWheels = [...wheels].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+        this.wheels.set(sortedWheels)
       })
       .catch(() => {
         console.error("Error getting user's wheels: " + this.wheelService.errorMessage())
