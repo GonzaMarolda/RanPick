@@ -10,12 +10,11 @@ The most relevant functionality is the possibility of creating nested wheels, yo
 👉 **Try it here:** [petitboxd.onrender.com](https://ranpick.onrender.com)
 
 ## Main features
-- 🎡 Wheel creation and editing
+- ⭕ Wheel creation and editing
 - 🏷️ Entry editing: Probability and color
 - 👤 Sign up and Log in manually or with SSO
-- 🔎 Advanced search with static and dynamic filtering
 - 📁 Wheel save, loading and delete funcionality
-- 🚧 ~~Nested wheels~~
+- ↪️ Nested wheels
 - 🚧 ~~Responsive design~~
 - 🚧 ~~Winner entries history~~
 
