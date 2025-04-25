@@ -9,6 +9,7 @@
         <div class="color-picker-container">
             <button 
                 class="color-picker-button"
+                [attr.data-testId]="'entry_' + entry().name + '_properties_color'" 
                 [style.background]="getEntryColor()"
                 (click)="toggleColorPickerVisible()"
             ></button>
@@ -33,13 +34,14 @@
             <input 
                 class="weight-input" 
                 type="text" 
+                [attr.data-testId]="'entry_' + entry().name + '_properties_weight'" 
                 [value]="entry().weight" 
                 (input)="updateWeight($event)"
             >
             <button class="weight-button" (click)="updateWeightByButton(1)">+</button>
         </div>
     </div>
-    <div class="entry-probabilty">
+    <div class="entry-probabilty" [attr.data-testId]="'entry_' + entry().name + '_properties_probability'" >
         Probability {{entryService.getProbability(entry().id)}}%
     </div>
 </div>

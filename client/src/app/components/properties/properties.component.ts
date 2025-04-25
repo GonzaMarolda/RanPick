@@ -1,7 +1,7 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, signal, ViewChild } from '@angular/core';
 import { EntryService } from '../../services/EntryService';
 import { Entry } from '../../models/entry';
-import { ColorSketchModule } from 'ngx-color/sketch';
+import { ColorSketchModule, SketchComponent } from 'ngx-color/sketch';
 import { ColorEvent } from 'ngx-color';
 import { ClickOutsideDirective } from '../../directives/ClickOutsideDirective';
 
@@ -49,5 +49,11 @@ export class PropertiesComponent {
 
     getEntryColor() {
         return this.entry().color ? this.entry().color : this.entry().defaultColor
+    }
+
+    @ViewChild(SketchComponent)
+    colorPickerComponent?: SketchComponent;
+    testSetColor(color: string) {
+        this.entryService.updateEntry({...this.entry(), color: color})     
     }
 }

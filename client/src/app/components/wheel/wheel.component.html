@@ -33,12 +33,14 @@
                 >
                     @for (segment of segments(); track $index) {
                         <path
+                            data-testid="segment"
                             [attr.d]="segment.path"
                             [attr.fill]="getColor(segment.id)"
                             (click)="selectEntry(segment)"
                         />
                         <text
                             class="segment-text"
+                            data-testid="segment_text"
                             [attr.transform]="segment.textTransform"
                             [attr.fill]="segment.textColor"
                             [style.font-size.px]="segment.fontSize" 
