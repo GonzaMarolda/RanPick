@@ -20,6 +20,7 @@
                             required
                             class="form-input" 
                             type="text" 
+                            data-testId="first_name"
                             [value]="formData().firstName" 
                             (input)="updateValue('firstName', $event)"
                             [class.invalid]="invalidatedSubmit().firstName"
@@ -33,6 +34,7 @@
                             required
                             class="form-input" 
                             type="text" 
+                            data-testId="last_name"
                             [value]="formData().lastName" 
                             (input)="updateValue('lastName', $event)"
                             [class.invalid]="invalidatedSubmit().lastName"
@@ -48,6 +50,7 @@
                     required
                     class="form-input" 
                     type="text" 
+                    data-testId="email"
                     [value]="formData().email" 
                     (input)="updateValue('email', $event)"
                     [class.invalid]="invalidatedSubmit().email"
@@ -61,6 +64,7 @@
                     required
                     class="form-input" 
                     type="password" 
+                    data-testId="password"
                     [value]="formData().password" 
                     (input)="updateValue('password', $event)"
                     [class.invalid]="invalidatedSubmit().password"
@@ -73,10 +77,10 @@
             </div>
         </div>
         <div class="submit-container">
-            <button class="submit-button" (click)="submit()" [disabled]="isLoading()">
+            <button class="submit-button" data-testId="submit" (click)="submit()" [disabled]="isLoading()">
                 {{ isLogin() ? "Log in" : "Sign up" }}
             </button>
-            <div class="submit-error-message">
+            <div class="submit-error-message" data-testId="error_message">
                 {{submitErrorMessage()}}
             </div>
         </div>

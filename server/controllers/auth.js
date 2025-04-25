@@ -60,7 +60,7 @@ authRouter.post('/login', async (request, response) => {
             }
         }
     } else {
-        user = await prisma.user.findUnique({where: { email: email, password: password }})
+        user = await prisma.user.findUnique({where: { email: email }})
         if (!user) return response.status(400).send({ error: "Wrong email or password" })
         const passwordMatch = await bcrypt.compare(password, user.password)
         if (!passwordMatch) return response.status(400).send({ error: "Wrong email or password" })
@@ -71,6 +71,13 @@ authRouter.post('/login', async (request, response) => {
     response
       .status(200)
       .send({ token, user: user })
+})
+
+authRouter.delete('/', async (request, response) => {
+    if (process.env.NODE_ENV !== 'test') return response.status(401).send({ error: 'unauthorized' })
+
+    await prisma.user.deleteMany({})
+    response.status(204).send()
 })
   
 module.exports = authRouter

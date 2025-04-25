@@ -17,15 +17,13 @@ app.use(express.static('dist/client/browser'))
 app.use("/api/auth", authRouter)
 app.use("/api/wheel", middleware.userExtractor, wheelsRouter)
 
-console.log(__dirname)
+app.use(middleware.unknownEndpoint)
 app.get('/{*splat}', (req, res, next) => {
     next();
 })
 app.use((req, res, next) => {
     res.sendFile(path.resolve(__dirname, 'dist/client/browser/index.html'))
 })
-
-app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
 module.exports = app

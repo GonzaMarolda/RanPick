@@ -89,7 +89,7 @@ export class AuthService {
     async login(email: string, password: string) {
         try {
             const data = await firstValueFrom(
-                this.http.post<{user: User, token: string}>(environment.apiUrl + '/api/auth/login', 
+                this.http.post<{user: User, token: string}>(environment.apiUrl + '/auth/login', 
                     JSON.stringify({ email, password }), 
                     {
                         headers: { 'Content-Type': 'application/json' }
@@ -125,6 +125,6 @@ export class AuthService {
     }
 
     private async processError(err: any) {
-        err.status === 400 ? this.errorMessage.set(err.message) : this.errorMessage.set("There was an error")
+        err.status === 400 ? this.errorMessage.set(err.error.error) : this.errorMessage.set("There was an error")
     }
 }

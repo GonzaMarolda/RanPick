@@ -19,7 +19,7 @@
                     <div class="wheel-data" (click)="openWheel(wheel.id)">
                         <div [style.width]="'88%'">{{wheel.name}}</div>
                         <div [style.width]="'20%'">
-                            {{wheel.updatedAt!.slice(0,10)}}
+                            {{wheel.updatedAt.slice(0,10)}}
                         </div>
                     </div>
                     <div class="wheel-delete-button" (click)="openDeleteConfirmation(wheel.id, wheel.name)">

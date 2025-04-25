@@ -24,7 +24,9 @@ const userExtractor = (request, response, next) => {
 }
 
 const unknownEndpoint = (request, response) => {
-    response.status(404).send({ error: 'unknown endpoint' })
+    if (request.path.startsWith('/api')) {
+        response.status(404).send({ error: 'unknown endpoint' })
+    }
 }
 
 const errorHandler = (error, request, response, next) => {

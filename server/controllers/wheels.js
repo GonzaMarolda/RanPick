@@ -2,7 +2,7 @@ const wheelsRouter = require('express').Router()
 const prisma = require('../utils/prisma')
 
 wheelsRouter.get('/', async (request, response) => {
-    if (process.env.NODE_ENV !== "test" && !request.user?.id) {
+    if (!request.user?.id) {
         return response.status(401).send({ error: 'invalid token' })
     } 
 
@@ -14,7 +14,7 @@ wheelsRouter.get('/', async (request, response) => {
 })
 
 wheelsRouter.get('/:id', async (request, response) => {
-  if (process.env.NODE_ENV !== "test" && !request.user?.id) {
+  if (!request.user?.id) {
       return response.status(401).send({ error: 'invalid token' })
   } 
 
@@ -24,7 +24,7 @@ wheelsRouter.get('/:id', async (request, response) => {
 })
 
 wheelsRouter.put('/', async (request, response) => {
-    if (process.env.NODE_ENV !== "test" && !request.user?.id) {
+    if (!request.user?.id) {
         return response.status(401).send({ error: 'invalid token' })
     } 
     const wheel = request.body
@@ -36,7 +36,7 @@ wheelsRouter.put('/', async (request, response) => {
 })
 
 wheelsRouter.delete('/:id', async (request, response) => {
-    if (process.env.NODE_ENV !== "test" && !request.user?.id) {
+    if (!request.user?.id) {
         return response.status(401).send({ error: 'invalid token' })
     } 
 
