@@ -35,6 +35,13 @@ wheelsRouter.put('/', async (request, response) => {
     response.status(200).json(savedWheel)
 })
 
+wheelsRouter.delete('/', async (request, response) => {
+  if (process.env.NODE_ENV !== 'test') return response.status(401).send({ error: 'unauthorized' })
+
+    await prisma.wheel.deleteMany({})
+    response.status(204).send()
+})
+
 wheelsRouter.delete('/:id', async (request, response) => {
     if (!request.user?.id) {
         return response.status(401).send({ error: 'invalid token' })

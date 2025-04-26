@@ -1,7 +1,7 @@
 <div class="modal-container">
     <div class="message-container">
         <div class="disappear-message-container" [style.--disappear-time]="modalService.messageModalTime + 's'">
-            <div class="message">
+            <div class="message" data-testid="message">
                 {{message()}}
             </div>
             <button class="close-button" (click)="modalService.closeMessageModal()">
