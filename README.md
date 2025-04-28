@@ -7,13 +7,13 @@ The most relevant functionality is the possibility of creating nested wheels, yo
 
 <img src="https://github.com/user-attachments/assets/feaa8a96-ee2a-43bc-8d68-f83ad1ec1eb1" alt="Captura de la app" width="500" height="233" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
 
-👉 **Try it here:** [petitboxd.onrender.com](https://ranpick.onrender.com)
+👉 **Try it here:** [ranpick.onrender.com](https://ranpick.onrender.com)
 
 ## Main features
 - ⭕ Wheel creation and editing
 - 🏷️ Entry editing: Probability and color
 - 👤 Sign up and Log in manually or with SSO
-- 📁 Wheel save, loading and delete funcionality
+- 📁 Wheel save, loading and delete functionality
 - ↪️ Nested wheels
 - 🚧 ~~Selected entries history~~
 
@@ -31,3 +31,14 @@ The most relevant functionality is the possibility of creating nested wheels, yo
 
 **Testing**
 - Playwright (E2E)
+
+## Local development with Docker
+You can run the app locally using Docker and Docker Compose
+### Requirements
+- [Docker](https://www.docker.com/) installed
+- [Docker Compose](https://docs.docker.com/compose/install/) installed
+### Running locally
+```
+docker-compose up --build
+```
+The app will be accessible at [http://localhost:4200/](http://localhost:4200/)
