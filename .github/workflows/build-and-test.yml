@@ -57,7 +57,9 @@ jobs:
           npm run start &
 
       - name: Wait for the server to be ready
-        run: npx wait-on http://localhost:3000
+        run: |
+          npm install -g wait-on
+          npx wait-on http://localhost:3000
 
       - name: Run Playwright tests
         run: |
