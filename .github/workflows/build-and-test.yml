@@ -20,6 +20,8 @@ jobs:
           node-version: 22
 
       - name: Install Server dependencies
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL_TEST }}
         run: |
           cd server
           npm install
