@@ -54,7 +54,7 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL_TEST }}
         run: |
           cd server
-          npm run start &
+          npm run start:test &
 
       - name: Wait for the server to be ready
         run: |
