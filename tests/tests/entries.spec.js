@@ -2,7 +2,7 @@ const { test, expect, describe, beforeEach } = require('@playwright/test')
 
 describe('Entries', () => {
     beforeEach(async ({ page, request }) => {
-        await page.goto('http://localhost:4200')
+        await page.goto('http://localhost:3000')
     }) 
 
     test('Can add entry', async ({ page }) => {

@@ -2,9 +2,9 @@ const { test, expect, describe, beforeEach } = require('@playwright/test')
 
 describe('Auth', () => {
     beforeEach(async ({ page, request }) => {
-        await request.delete('http://localhost:3001/api/auth')
+        await request.delete('http://localhost:3000/api/auth')
 
-        await page.goto('http://localhost:4200')
+        await page.goto('http://localhost:3000')
         await page.evaluate(() => localStorage.clear())
     }) 
 

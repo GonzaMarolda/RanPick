@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/styles.scss"],
+  "sourcesContent": [":root {\r\n    --color-background: #121212; \r\n    --color-surface: #1E1E1E;\r\n    --color-text: #E0E0E0;   \r\n    --color-text-alt: #0E0E0E;   \r\n    --color-primary: #3369E8;\r\n    --color-primary-grad: #2a57c0;\r\n    --color-secondary: #363636;\r\n    --color-secondary-grad: #1E1E1E;\r\n    --color-popup-border: rgba(255, 255, 255, 0.2);\r\n\r\n    --font: \"Markazi Text\", serif\r\n}\r\n\r\nhtml, body {\r\n    height: 100vh;\r\n    margin: 0;\r\n    font-family: var(--font);\r\n    background: var(--color-background);\r\n}\r\n\r\ninput::-webkit-outer-spin-button,\r\ninput::-webkit-inner-spin-button {\r\n  -webkit-appearance: none;\r\n  margin: 0;\r\n}"],
+  "mappings": ";AAAA;AACI,sBAAA;AACA,mBAAA;AACA,gBAAA;AACA,oBAAA;AACA,mBAAA;AACA,wBAAA;AACA,qBAAA;AACA,0BAAA;AACA,wBAAA,KAAA,GAAA,EAAA,GAAA,EAAA,GAAA,EAAA;AAEA,UAAA,cAAA,EAAA;;AAGJ;AAAA;AACI,UAAA;AACA,UAAA;AACA,eAAA,IAAA;AACA,cAAA,IAAA;;AAGJ,KAAA;AAAA,KAAA;AAEE,sBAAA;AACA,UAAA;;",
+  "names": []
+}
