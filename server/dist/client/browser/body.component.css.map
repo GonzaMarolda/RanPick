@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/components/body/body.component.scss"],
-  "sourcesContent": [":host { \r\n    position: relative;\r\n    padding-top: 3rem;\r\n    width: 100%;\r\n\r\n    .body-container {\r\n        display: flex;\r\n        align-items: center;\r\n        height: 100%;\r\n    }\r\n}"],
-  "mappings": ";AAAA;AACI,YAAA;AACA,eAAA;AACA,SAAA;;AAEA,MAAA,CAAA;AACI,WAAA;AACA,eAAA;AACA,UAAA;;",
-  "names": []
-}
