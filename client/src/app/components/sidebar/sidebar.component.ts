@@ -37,4 +37,8 @@ export class Sidebar {
     openPreviousWheel() {
         this.wheelService.openNestedWheel(this.wheelService.focusWheel().fatherWheelId!)
     }
+
+    hasEntries() : boolean {
+        return this.entryService.entries().length > 0
+    }
 }

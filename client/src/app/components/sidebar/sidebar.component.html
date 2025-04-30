@@ -1,10 +1,18 @@
 <div class="sidebar-container">
-    <div class="back-container">
-        <button [class.disabled]="isRootWheel()" class="back-button" data-testid="go_back" (click)="openPreviousWheel()">
-            <div class="back-text">
-                Go back
-            </div>
-        </button>
+    <div class="header-container">
+        <div class="header-text">
+            {{hasEntries() ? "Properties" : ""}}
+        </div>
+        <div class="back-container">
+            <button [class.disabled]="isRootWheel()" class="back-button" data-testid="go_back" (click)="openPreviousWheel()">
+                <div class="back-text">
+                    Previous wheel
+                </div>
+            </button>
+        </div>
+        <div class="header-text">
+            {{hasEntries() ? "Nest" : ""}}
+        </div>
     </div>
     <ul class="entries-container">
         @for (entry of entries(); track entry.id) {

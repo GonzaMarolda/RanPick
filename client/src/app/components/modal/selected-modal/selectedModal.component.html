@@ -12,7 +12,7 @@
         <div class="selected-text" data-testid="selected_entries">
             @for (entry of selectedEntries(); track entry.id) {
                 <div class="entry-text">
-                    {{entry.name}}
+                    {{entry.name ? entry.name : "-"}}
                 </div>
             }
         </div>
