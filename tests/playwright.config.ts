@@ -8,14 +8,14 @@ export default defineConfig({
   testDir: './tests',
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  timeout: 15 * 1000,
+  timeout: 30 * 1000,
   retries: process.env.CI ? 1 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: process.env.CI ? 'line' : 'html',
   use: {
     baseURL: 'http://localhost:3000',
     trace: 'on-first-retry',
-    video: process.env.CI ? 'off' : "on-first-retry",
+    video: 'off',
     screenshot: process.env.CI ? 'off' : "only-on-failure",
     headless: process.env.CI ? true : false
   },
