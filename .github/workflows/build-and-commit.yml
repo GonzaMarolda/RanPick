@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          token: ${{ secrets.GIT_PAT }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -28,12 +31,9 @@ jobs:
           npm run build
 
       - name: Commit and push client build
-        env:
-          GIT_PAT: ${{ secrets.GIT_PAT }}
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-          git remote set-url origin https://github-actions:${GIT_PAT}@github.com/${{ github.repository }}
           git add server/dist
           git commit -m "Build client [skip ci]" || echo "No changes to commit"
           git push
