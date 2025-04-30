@@ -3,7 +3,10 @@ version: '3.8'
 services:
   server:
     image: ranpick-backend
-    build: ./server
+    build:
+      context: ./server
+      args:
+        DATABASE_URL: ${DATABASE_URL}
     ports:
       - "3000:3000"
     environment:

@@ -1,5 +1,8 @@
 FROM node:23-slim
 
+ARG DATABASE_URL
+ENV DATABASE_URL=$DATABASE_URL
+
 WORKDIR /app
 
 RUN apt-get update -y && \
