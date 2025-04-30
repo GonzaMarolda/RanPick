@@ -38,7 +38,7 @@ describe('Wheels', () => {
         await page.getByTestId("open").click() 
         await page.getByTestId("wheel_create").click() 
         await page.getByTestId("confirm").click()
-        await expect(page.getByTestId("wheel_name")).toHaveText("New Wheel")
+        await expect(page.getByTestId("wheel_name")).toHaveText("Wheel Name")
     }) 
 
     test('Can save a wheel', async ({ page }) => {
@@ -46,7 +46,7 @@ describe('Wheels', () => {
         await expect(page.getByTestId("message")).toContainText("saved")
 
         await page.getByTestId("open").click() 
-        await expect(page.getByTestId("open_wheels")).toContainText("New Wheel")
+        await expect(page.getByTestId("open_wheels")).toContainText("Wheel Name")
     }) 
 
     test('Can delete a wheel', async ({ page }) => {
@@ -55,6 +55,6 @@ describe('Wheels', () => {
         await page.getByTestId("open").click() 
         await page.getByTestId("wheel_delete").first().click()
         await page.getByTestId("confirm").click()
-        await expect(page.getByTestId("open_modal")).not.toContainText("New Wheel")
+        await expect(page.getByTestId("open_modal")).not.toContainText("Wheel Name")
     }) 
 })

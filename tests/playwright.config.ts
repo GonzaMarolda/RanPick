@@ -9,12 +9,15 @@ export default defineConfig({
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   timeout: 30 * 1000,
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 1 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  reporter: process.env.CI ? 'line' : 'html',
   use: {
     baseURL: 'http://localhost:3000',
     trace: 'on-first-retry',
+    video: 'off',
+    screenshot: process.env.CI ? 'off' : "only-on-failure",
+    headless: process.env.CI ? true : false
   },
   projects: [
     {

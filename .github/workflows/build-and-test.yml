@@ -60,9 +60,9 @@ jobs:
           npx wait-on http://localhost:3000
 
       - name: Run Playwright tests
+        timeout-minutes: 10 
         run: |
           cd tests
           npm install
-          npx playwright install-deps
           npx playwright install
           npm run test

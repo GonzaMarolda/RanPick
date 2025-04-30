@@ -26,7 +26,12 @@
         .wheel {
             display: flex;
             justify-content: center;
+            align-items: center;
             color: var(--color-text);
+
+            .wheel-svg {
+                width: 70vh;
+            }
 
             .not-enough-entries {
                 width: 50%;

@@ -12,7 +12,7 @@ export class Wheel {
 
     constructor() {
         this.id = crypto.randomUUID()
-        this.name = "New Wheel"
+        this.name = "Wheel Name"
         this.userId = 0
         this.entries = []
         this.createdAt = ""

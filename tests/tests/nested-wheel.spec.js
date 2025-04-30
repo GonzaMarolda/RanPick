@@ -50,8 +50,8 @@ describe('Nested Wheels', () => {
         const wheel = page.getByTestId('wheel')
         const box = await wheel.boundingBox()
         if (box) {
-          const clickX = box.x + 100
-          const clickY = box.y + 100
+          const clickX = box.x + 120
+          const clickY = box.y + 120
           await page.mouse.click(clickX, clickY)
         }
         await expect(page.getByTestId("selected_entries")).toContainText("testEntry", { timeout: 20000 })
