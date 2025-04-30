@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   server:
-    image: ranpick-backend
+    image: gonzamarolda/ranpick-backend
     build:
       context: ./server
       args:
@@ -15,7 +15,7 @@ services:
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - DATABASE_URL=${DATABASE_URL}
   client:
-    image: ranpick-frontend
+    image: gonzamarolda/ranpick-frontend
     build: ./client
     ports:
       - "4200:80"
