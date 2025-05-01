@@ -2,21 +2,23 @@ import { Component, computed, ElementRef, inject, effect, OnInit, signal, ViewCh
 import { EntryService } from '../../services/EntryService'
 import { Entry } from '../../models/entry'
 import { ContrastHelperService } from '../../services/ContrastHelperService'
-import { SidebarVisibilityService } from '../../services/SidebarVisibilityService'
+import { HideableComponentsService } from '../../services/HideableComponents'
 import { ModalService } from '../../services/ModalService'
 import { SelectedModalComponent } from '../modal/selected-modal/selectedModal.component'
 import { WheelService } from '../../services/WheelService'
 import { Wheel } from '../../models/wheel'
+import { SelectedHistoryComponent } from "../selected_history/selectedHistory.component";
 
 @Component({
     selector: 'wheel-screen',
     templateUrl: 'wheel.component.html',
-    styleUrl: 'wheel.component.scss'
+    styleUrl: 'wheel.component.scss',
+    imports: [SelectedHistoryComponent]
 })
 export class WheelScreen {
     entryService = inject(EntryService)
     contrastHelperService = inject(ContrastHelperService)
-    sidebarVisibilityService = inject(SidebarVisibilityService)
+    hideableComponentsService = inject(HideableComponentsService)
     wheelService = inject(WheelService)
     modalService = inject(ModalService)
     @ViewChild('wheelGroup') wheelGroup!: ElementRef<SVGGElement>
@@ -38,7 +40,7 @@ export class WheelScreen {
   
     constructor() {
       effect(() => {
-        if (this.sidebarVisibilityService.isOpen() === false) return 
+        if (this.hideableComponentsService.isOpen() === false) return 
 
         this.initialRotation.set("0deg")
         this.spinClass.set(this.spinClasses.continuous)
@@ -198,6 +200,7 @@ export class WheelScreen {
     onSpin() {
       if (this.spinClass() == this.spinClasses.active) return
       this.finalSelectedEntries.set([])
+      this.wheelService.setSpinnedWheel()
 
       this.spin()
     }
@@ -208,7 +211,7 @@ export class WheelScreen {
       this.totalRotation.set((10 * 360 + Math.random() * 360).toString() + "deg")
       this.spinClass.set(this.spinClasses.active)
       this.startTrackRotation()
-      this.sidebarVisibilityService.setIsOpen(false)
+      this.hideableComponentsService.setIsOpen(false)
     }
 
     animationFinished() {
@@ -216,7 +219,7 @@ export class WheelScreen {
       const selectedEntry = this.entryService.entries().find(e => e.id === this.selected().id)!
       this.finalSelectedEntries.update(prev => prev.concat(selectedEntry))
 
-      if (selectedEntry.nestedWheel) {
+      if (selectedEntry.nestedWheel && selectedEntry.nestedWheel.entries.length >= 2) {
         this.wheelService.openNestedWheel(selectedEntry.nestedWheel.id)
 
         this.spinClass.set(this.spinClasses.continuous)

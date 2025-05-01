@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment'; 
 import { Entry } from '../models/entry';
+import { SelectedRecord } from '../models/selectedRecord';
 
 @Injectable({ providedIn: 'root' })
 export class WheelService {
@@ -13,6 +14,7 @@ export class WheelService {
     authService = inject(AuthService)
     wheel = signal<Wheel>(new Wheel())
     focusWheel = signal<Wheel>(this.wheel())
+    spinnedWheel = signal<Wheel | null>(null)
     errorMessage = signal<string>("")
 
     constructor() {
@@ -75,6 +77,26 @@ export class WheelService {
 
     updateName(name: string) {
         this.focusWheel.update(prev => ({...prev, name: name}))
+    }
+
+    addSelectedRecord(selected: Entry[]) {
+        const recordName = selected.map(s => s.name).join("-")
+        const recordColor =  selected[selected.length - 1].color ? 
+            selected[selected.length - 1].color : 
+            selected[selected.length - 1].defaultColor
+
+        const selectedRecord = new SelectedRecord(
+            recordName, 
+            recordColor
+        )
+
+        this.focusWheel.set(this.spinnedWheel()!)
+        this.focusWheel.update(prev => ({...prev, selectedHistory: prev.selectedHistory.slice(0, 18).concat(selectedRecord)}))
+        this.spinnedWheel.set(null)
+    }
+
+    setSpinnedWheel() {
+        this.spinnedWheel.set(this.focusWheel())
     }
 
     async getWheels() : Promise<Wheel[]> {

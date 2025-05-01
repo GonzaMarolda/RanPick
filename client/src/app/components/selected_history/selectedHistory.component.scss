@@ -1,0 +1,98 @@
+:host {
+    position: absolute;
+    left: 2rem;
+    bottom: -1rem;
+    width: 22%;
+    height: 11rem;
+    overflow-y: hidden;
+
+    .selected-history-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        transition: transform 0.2s ease-out;
+
+        .selected-history-title {
+            display: flex;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 100;
+        }
+
+        .selected-container {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            border: 2px solid var(--color-popup-border);
+            border-top: none;
+            border-bottom: none;
+            background: rgba(0, 0, 0, 0.2);
+            opacity: 0.9;
+            font-weight: 400;
+
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            overflow-y: auto;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            .no-selected-message {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0.5rem;
+                height: 100%;
+                text-align: center;
+                font-size: large;
+                opacity: 0.3;
+            }
+
+            .selected-section {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                border-bottom: 2px solid var(--color-popup-border);
+
+                &:first-child {
+                    border-top: 2px solid var(--color-popup-border);
+                }
+
+                .selected-section-text {
+                    width: 100%;
+                    padding: 0.2rem 0.5rem;
+                    box-sizing: border-box;
+                    font-size: large;
+                    text-align: center;
+
+                    .selected-individual-text {
+                        text-overflow: ellipsis;
+                        overflow-x: hidden;
+                        white-space: nowrap;
+                    }
+                }
+            }
+        }
+
+        .selected-history-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 1.2rem;
+            width: 100%;
+            border: none;
+            padding: 0;
+            background: var(--color-text);
+            border-radius: 4px 4px 0px 0px;
+            cursor: pointer;
+
+            .selected-history-button-arrow {
+                width: 16px;
+                height: 16px;
+                transition: transform 0.2s ease-out;
+            }
+        }
+    }
+}

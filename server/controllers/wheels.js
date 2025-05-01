@@ -64,7 +64,8 @@ async function getWheelTree({ id, userId }) {
   const wheel = await prisma.wheel.findUnique({
     where: { id, userId },
     include: {
-      entries: true
+      entries: true,
+      selectedHistory: true
     }
   })
   if (!wheel) return null
@@ -89,6 +90,10 @@ async function upsertWheelTree(wheel, userId, tx) {
     where: { wheelId: wheel.id }
   })
 
+  await tx.selectedRecord.deleteMany({
+    where: { wheelId: wheel.id }
+  })
+
   const savedWheel = await tx.wheel.upsert({
     where: { id: wheel.id },
     create: {
@@ -105,6 +110,13 @@ async function upsertWheelTree(wheel, userId, tx) {
           weight: entry.weight,
           color: entry.color
         }))
+      },
+      selectedHistory: {
+        create: wheel.selectedHistory.map(selected => ({
+          id: selected.id,
+          name: selected.name,
+          color: selected.color
+        }))
       }
     },
     update: {
@@ -120,10 +132,18 @@ async function upsertWheelTree(wheel, userId, tx) {
           weight: entry.weight,
           color: entry.color
         }))
+      },
+      selectedHistory: {
+        create: wheel.selectedHistory.map(selected => ({
+          id: selected.id,
+          name: selected.name,
+          color: selected.color
+        }))
       }
     },
     include: {
-      entries: true
+      entries: true,
+      selectedHistory: true
     }
   })
   

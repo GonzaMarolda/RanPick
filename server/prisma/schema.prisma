@@ -28,6 +28,7 @@ model Wheel {
   fatherEntryId   String?  @unique
   fatherEntry     Entry?   @relation("EntryNestedWheel", fields: [fatherEntryId], references: [id], onDelete: Cascade) 
   entries         Entry[]  @relation("WheelEntry")
+  selectedHistory SelectedRecord[]
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt @default(now())
 }
@@ -41,4 +42,12 @@ model Entry {
   nestedWheel   Wheel?  @relation("EntryNestedWheel")
   weight        Float
   color         String 
-}   
+} 
+
+model SelectedRecord {
+  id            String  @id
+  name          String
+  color         String
+  wheelId       String
+  wheel         Wheel   @relation(fields: [wheelId], references: [id], onDelete: Cascade)
+}
