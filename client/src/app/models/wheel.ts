@@ -1,10 +1,12 @@
 import { Entry } from "./entry"
+import { SelectedRecord } from "./selectedRecord"
 
 export class Wheel {
     id: string
     name: string
     userId: number
     entries: Entry[]
+    selectedHistory: SelectedRecord[]
     fatherWheelId?: string
     fatherEntryId?: string
     createdAt: string
@@ -15,6 +17,7 @@ export class Wheel {
         this.name = "Wheel Name"
         this.userId = 0
         this.entries = []
+        this.selectedHistory = []
         this.createdAt = ""
         this.updatedAt = ""
     }

@@ -64,5 +64,5 @@ jobs:
         run: |
           cd tests
           npm install
-          npx playwright install
+          npx playwright install --with-deps chromium
           npm run test

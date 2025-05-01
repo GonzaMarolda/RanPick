@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
-export class SidebarVisibilityService {
+export class HideableComponentsService {
   isOpen = signal<boolean>(true)
 
   setIsOpen(value: boolean) {
