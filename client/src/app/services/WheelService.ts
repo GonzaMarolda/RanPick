@@ -1,6 +1,5 @@
 import { computed, effect, inject, Injectable, signal, untracked } from '@angular/core';
 import { Wheel } from '../models/wheel';
-import { EntryService } from './EntryService';
 import { AuthService } from './AuthService';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, lastValueFrom } from 'rxjs';

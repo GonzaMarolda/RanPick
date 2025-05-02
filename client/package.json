@@ -7,7 +7,7 @@
     "build": "ng build --output-path ../server/dist/client/",
     "build:dev": "ng build --configuration=development",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "jest",
     "lint": "eslint \"src/**/*.{ts,html}\" --fix"
   },
   "private": true,
@@ -34,15 +34,13 @@
     "@angular/cli": "^19.2.6",
     "@angular/compiler-cli": "^19.2.0",
     "@types/jasmine": "~5.1.0",
+    "@types/jest": "^29.5.14",
     "@typescript-eslint/eslint-plugin": "^8.29.0",
     "@typescript-eslint/parser": "^8.29.0",
     "eslint": "^9.24.0",
     "jasmine-core": "~5.6.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
+    "jest": "^29.7.0",
+    "jest-preset-angular": "^14.5.5",
     "typescript": "~5.7.2"
   }
 }
