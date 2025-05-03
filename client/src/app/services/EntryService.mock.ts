@@ -12,7 +12,7 @@ export function createMockEntryService(): EntryService {
         entries: [
             {
                 id: '0',
-                name: 'Mock Entry 1',
+                name: 'Mock Entry 0',
                 weight: 0,
                 color: '',
                 defaultColor: '',
@@ -20,11 +20,20 @@ export function createMockEntryService(): EntryService {
             },
             {
                 id: '1',
-                name: 'Mock Entry 2',
+                name: 'Mock Entry 1',
                 weight: 0,
                 color: '',
                 defaultColor: '',
                 wheelId: '0',
+                nestedWheel: {
+                  id: '1',
+                  name: 'Nested Mock Wheel',
+                  userId: 0,
+                  entries: [],
+                  selectedHistory: [],
+                  createdAt: '',
+                  updatedAt: ''
+                }
             }
         ],
         selectedHistory: [],
