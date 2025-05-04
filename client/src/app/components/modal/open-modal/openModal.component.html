@@ -10,7 +10,7 @@
             <div class="wheels-header">
                 <div class="header-data">
                     <div [style.width]="'80%'">Name</div>
-                    <div [style.width]="'20%'">Last updated</div>
+                    <div class="last_updated_title">Last updated</div>
                 </div>
             </div>
 
@@ -18,7 +18,7 @@
                 <div class="wheel-data-container" data-testid="open_wheels">
                     <div class="wheel-data" (click)="openWheel(wheel.id)">
                         <div [style.width]="'88%'">{{wheel.name}}</div>
-                        <div [style.width]="'20%'">
+                        <div class="last_updated_data">
                             {{wheel.updatedAt.slice(0,10)}}
                         </div>
                     </div>

@@ -1,3 +1,5 @@
+@use '../../../variables' as *;
+
 :host {
     position: fixed;
     background: var(--color-surface);
@@ -27,6 +29,10 @@
                 align-items: center;
                 font-size: 1.4rem;
                 font-weight: bold;
+
+                @media screen and (max-width: map-get($breakpoints, mobile)) {
+                    font-size: 0rem;
+                }
             }
         }
 
@@ -53,10 +59,19 @@
                     filter: brightness(1.5);
                 }
 
+                @media screen and (max-width: map-get($breakpoints, mobile)) {
+                    font-size: 0rem;
+                    padding: 0 1rem;
+                }
+
                 .button-icon {
                     margin-right: 0.4rem;
                     width: 19px;
                     height: 19px;
+
+                    @media screen and (max-width: map-get($breakpoints, mobile)) {
+                        margin-right: 0rem;
+                    }
                 }
             }   
 

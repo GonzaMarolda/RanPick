@@ -1,3 +1,5 @@
+@use '../../../variables' as *;
+
 :host { 
     position: relative;
     padding-top: 3rem;
@@ -7,5 +9,10 @@
         display: flex;
         align-items: center;
         height: 100%;
+
+        @media screen and (max-width: map-get($breakpoints, mobile)) {
+            height: auto;
+            flex-direction: column;
+        }
     }
 }

@@ -9,11 +9,12 @@
     --color-secondary-grad: #1E1E1E;
     --color-popup-border: rgb(83, 83, 83);
 
-    --font: "Markazi Text", serif
+    --font: "Markazi Text", serif;
+
+    --width-mobile: 480px;
 }
 
 html, body {
-    height: 100vh;
     margin: 0;
     font-family: var(--font);
     background: var(--color-background);
