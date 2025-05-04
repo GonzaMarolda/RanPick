@@ -1,3 +1,5 @@
+@use '../../../../variables' as *;
+
 :host {
     position: fixed;
     height: 100vh;
@@ -24,6 +26,10 @@
             border: 1px solid var(--color-popup-border);
             border-radius: 4px;
             animation: appear 0.25s linear;
+
+            @media screen and (max-width: map-get($breakpoints, mobile)) {
+                width: 60%;
+            }
 
             .confirm-header {
                 height: 30%;

@@ -1,3 +1,5 @@
+@use '../../../variables' as *;
+
 :host {
     width: 30%;
     height: 100%;
@@ -8,10 +10,15 @@
         width: 0;
     }
 
+    @media screen and (max-width: map-get($breakpoints, mobile)) {
+        height: auto;
+        width: 100%;
+        flex-direction: column;
+    }
+
     .sidebar-container {
         background: var(--color-background);
         border-left: 1px solid rgba(255, 255, 255, 0.2);
-
         display: flex;
         flex-direction: column;
         padding: 1rem 0.5rem;
@@ -35,6 +42,10 @@
                 display: flex;
                 justify-content: center;
                 padding-left: 0.4rem;
+
+                @media screen and (max-width: map-get($breakpoints, mobile)) {
+                    padding-left: 0;
+                }
     
                 .back-button {
                     background: linear-gradient(180deg, var(--color-secondary) 0%, var(--color-secondary-grad) 100%);
@@ -69,6 +80,10 @@
             &::-webkit-scrollbar {
                 display: none;
             }
+
+            @media screen and (max-width: map-get($breakpoints, mobile)) {
+                overflow-y: hidden;
+            }
         }
 
         .add-entry-container {
@@ -76,6 +91,10 @@
             display: flex;
             justify-content: center;
             padding-left: 1rem;
+
+            @media screen and (max-width: map-get($breakpoints, mobile)) {
+                padding-left: 0rem;
+            }
 
             .add-entry-button {
                 background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary-grad) 100%);
