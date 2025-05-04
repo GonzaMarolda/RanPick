@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, output, signal } from '@angular/core';
+import { Component, inject, input, output, signal } from '@angular/core';
 import { EntryService } from '../../services/EntryService';
 import { Entry } from '../../models/entry';
 import { PropertiesComponent } from '../properties/properties.component';
@@ -17,6 +17,7 @@ export class EntryComponent{
     modalService = inject(ModalService)
     wheelService = inject(WheelService)
     entryService = inject(EntryService)
+
     entryId = input.required<string>()
     removeEntry = output<string>()
     updateEntry = output<Entry>()

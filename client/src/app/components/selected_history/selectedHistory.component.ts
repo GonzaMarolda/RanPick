@@ -16,7 +16,8 @@ export class SelectedHistoryComponent {
     isOpen = signal<boolean>(false)
 
     getSelectedHistory() : SelectedRecord[] {
-        return this.wheelService.focusWheel().selectedHistory
+        const selectedHistory = this.wheelService.focusWheel().selectedHistory.slice()
+        return selectedHistory.reverse()
     }
 
     getSeparatedWords(selected: string) : String[] {
