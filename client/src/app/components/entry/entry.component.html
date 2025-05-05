@@ -1,6 +1,10 @@
-<li class="entry-container">
+<li #entryElement class="entry-container">
     @if (isPropertiesOpen()) {
-        <entry-properties [entryId]="entryId()" (clickOutside)="switchProperties()"/>
+        <entry-properties 
+            [entryId]="entryId()" 
+            [entryPosition]="getPosition()"
+            (clickedOutside)="switchProperties(false)"
+        />
     }
 
     <div class="properties-button-container">
