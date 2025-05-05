@@ -5,6 +5,7 @@ import { EntryService } from '../../../services/EntryService';
 import { ModalService } from '../../../services/ModalService';
 import { Entry } from '../../../models/entry';
 import { WheelService } from '../../../services/WheelService';
+import { SoundService } from '../../../services/SoundService';
 
 @Component({
   selector: 'selected-modal',
@@ -18,11 +19,13 @@ export class SelectedModalComponent implements OnInit {
   modalService = inject(ModalService)
   entryService = inject(EntryService)
   wheelService = inject(WheelService)
+  soundService = inject(SoundService)
   selectedEntries = input.required<Entry[]>()
   selectedColor = input.required<string>()
 
   ngOnInit(): void {
       this.wheelService.addSelectedRecord(this.selectedEntries())
+      this.soundService.play("selected")
   }
 
   onClickOutside(event: Event) {

@@ -4,7 +4,7 @@
             {{hasEntries() ? "Properties" : ""}}
         </div>
         <div class="back-container">
-            <button [class.disabled]="isRootWheel()" class="back-button" data-testid="go_back" (click)="openPreviousWheel()">
+            <button [style.visibility]="isRootWheel() ? 'hidden' : 'visible'" class="back-button" data-testid="go_back" (click)="openPreviousWheel()">
                 <div class="back-text">
                     Previous wheel
                 </div>

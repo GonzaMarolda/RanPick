@@ -8,6 +8,7 @@ import { SelectedModalComponent } from '../modal/selected-modal/selectedModal.co
 import { WheelService } from '../../services/WheelService'
 import { Wheel } from '../../models/wheel'
 import { SelectedHistoryComponent } from "../selected_history/selectedHistory.component";
+import { SoundService } from '../../services/SoundService'
 
 @Component({
     selector: 'wheel-screen',
@@ -21,6 +22,7 @@ export class WheelScreen {
     hideableComponentsService = inject(HideableComponentsService)
     wheelService = inject(WheelService)
     modalService = inject(ModalService)
+    soundService = inject(SoundService)
     @ViewChild('wheelGroup') wheelGroup!: ElementRef<SVGGElement>
 
     selected = signal<{name: string, id: string}>({name: 'Click the wheel to start', id: ""})
@@ -36,7 +38,7 @@ export class WheelScreen {
     finalSelectedEntries = signal<Entry[]>([])
 
     private intervalId: any;
-    private updateInterval = 100; 
+    private updateInterval = 50; 
   
     constructor() {
       effect(() => {
@@ -183,7 +185,10 @@ export class WheelScreen {
           if (acumAngle >= currentAngle) {
             const selectedEntry = this.entryService.entries().find(e => e.id === segment.id)!
 
-            this.selected.set({name: selectedEntry.name, id: selectedEntry.id})
+            if (selectedEntry.id !== this.selected()?.id) {
+              this.selected.set({name: selectedEntry.name, id: selectedEntry.id})
+              this.soundService.play("tick")
+            }
             foundIt = true
           }
         });
