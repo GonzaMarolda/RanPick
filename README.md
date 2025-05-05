@@ -16,6 +16,7 @@ The most relevant feature is the possibility of creating nested wheels, you can 
 - 📁 Wheel save, loading and delete functionality
 - ↪️ Nested wheels
 - 📝 Selected entries history
+- 📱 Responsive design
 
 ## Technologies
 
