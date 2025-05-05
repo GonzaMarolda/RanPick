@@ -1,21 +1,23 @@
-import { Component, inject, input, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, input, output, signal, ViewChild } from '@angular/core';
 import { EntryService } from '../../services/EntryService';
 import { Entry } from '../../models/entry';
 import { ColorSketchModule, SketchComponent } from 'ngx-color/sketch';
 import { ColorEvent } from 'ngx-color';
-import { ClickOutsideDirective } from '../../directives/ClickOutsideDirective';
 
 @Component({
     selector: 'entry-properties',
     templateUrl: 'properties.component.html',
     styleUrl: 'properties.component.scss',
-    imports: [ColorSketchModule, ClickOutsideDirective]
+    imports: [ColorSketchModule]
 })
 export class PropertiesComponent {
     entryService = inject(EntryService)
+    elementRef = inject(ElementRef)
     entryId = input.required<string>()
     colorPickerVisible = signal<boolean>(false)
     switchColorTimeout = signal<any | null>(null)
+    clickedOutside = output()
+    entryPosition = input.required<{top: number, left: number}>()
 
     entry() : Entry {
         return this.entryService.getEntry(this.entryId())
@@ -55,5 +57,14 @@ export class PropertiesComponent {
     colorPickerComponent?: SketchComponent;
     testSetColor(color: string) {
         this.entryService.updateEntry({...this.entry(), color: color})     
+    }
+
+    @ViewChild('mainContainer') mainContainer!: ElementRef<HTMLElement>;
+    @HostListener('document:click', ['$event'])
+    onClick(event: MouseEvent) {
+        const target = event.target as HTMLElement;
+        if (!this.mainContainer.nativeElement.contains(target)) {
+            this.clickedOutside.emit(); 
+        }
     }
 }

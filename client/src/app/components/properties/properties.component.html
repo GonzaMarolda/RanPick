@@ -1,4 +1,9 @@
-<div class="properties-container">
+<div 
+    class="properties-container" 
+    [style.top] = "entryPosition().top" 
+    [style.left] = "entryPosition().left"
+    #mainContainer
+>
     <div class="entry-title">
         {{entry().name ? entry().name : "?"}}
     </div>

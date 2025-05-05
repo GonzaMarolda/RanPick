@@ -14,6 +14,10 @@
         height: auto;
         width: 100%;
         flex-direction: column;
+
+        &.closed {
+            height: 0;
+        }
     }
 
     .sidebar-container {

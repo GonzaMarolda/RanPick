@@ -1,4 +1,4 @@
-import { Component, inject, input, output, signal } from '@angular/core';
+import { Component, ElementRef, inject, input, output, signal, ViewChild } from '@angular/core';
 import { EntryService } from '../../services/EntryService';
 import { Entry } from '../../models/entry';
 import { PropertiesComponent } from '../properties/properties.component';
@@ -40,6 +40,7 @@ export class EntryComponent{
     }
 
     switchProperties(value?: boolean) {
+        console.log("AAAA")
         if (this.switchPropertiesTimeout()) return
         this.switchPropertiesTimeout.set(setTimeout(() => {
             this.isPropertiesOpen.update(prev => !prev)
@@ -88,5 +89,14 @@ export class EntryComponent{
             ConfirmationModalComponent, 
             { confirmation: confirmation }
         )
+    }
+
+    @ViewChild('entryElement') entryElement!: ElementRef;
+    getPosition(): {top: number, left: number} {
+        const rect = this.entryElement.nativeElement.getBoundingClientRect();
+        return {
+            top: rect.bottom + window.scrollY,
+            left: rect.left + window.scrollX,
+        }
     }
 }
