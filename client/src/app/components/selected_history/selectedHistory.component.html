@@ -9,15 +9,21 @@
     </button>
     <ul class="selected-container">
         @for (selectedRecord of getSelectedHistory(); track selectedRecord.id) {
-            <li class="selected-section" [style.background-color]="selectedRecord.color" [style.color]="contrastHelperService.getContrastTextColor(selectedRecord.color)">
-                <div class="selected-section-text">
-                    @for (individualSelected of getSeparatedWords(selectedRecord.name); track $index) {
-                        <div class="selected-individual-text">
-                            {{ individualSelected }}
-                        </div>
-                    }
+            <div class="section-container">
+                <div class="section-color-mark" [style.background-color]="selectedRecord.color">
                 </div>
-            </li>
+                <li class="selected-section">
+                    <div class="selected-section-text">
+                        @for (individualSelected of getSeparatedWords(selectedRecord.name); track $index) {
+                            <div class="selected-individual-text">
+                                {{ individualSelected }}
+                            </div>
+                        }
+                    </div>
+                </li>
+                <div class="section-color-mark" [style.background-color]="selectedRecord.color">
+                </div>
+            </div>
         }
         @if (getSelectedHistory().length === 0) {
             <li class="no-selected-message">
