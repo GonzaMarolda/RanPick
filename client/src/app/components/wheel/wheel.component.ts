@@ -1,4 +1,5 @@
-import { Component, computed, ElementRef, inject, effect, OnInit, signal, ViewChild } from '@angular/core'
+import { Component, computed, ElementRef, inject, effect, OnInit, signal, ViewChild, AfterViewInit, untracked } from '@angular/core'
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { EntryService } from '../../services/EntryService'
 import { Entry } from '../../models/entry'
 import { ContrastHelperService } from '../../services/ContrastHelperService'
@@ -14,6 +15,30 @@ import { SoundService } from '../../services/SoundService'
     selector: 'wheel-screen',
     templateUrl: 'wheel.component.html',
     styleUrl: 'wheel.component.scss',
+    animations: [
+      trigger('appear', [
+        state('small', 
+          style({
+            height: '0',
+            width: '0',
+            opacity: 0
+          })),
+        state('normal', 
+          style({
+            height: '*',
+            width: '*',
+            opacity: 1
+          })),
+        state('big', 
+          style({
+            height: '100vh',
+            width: '100vw',
+            opacity: 0
+          })),
+        transition('normal => big', animate('0.3s linear')),
+        transition('small => normal', animate('0.4s ease-out'))
+      ])
+    ],
     imports: [SelectedHistoryComponent]
 })
 export class WheelScreen {
@@ -34,8 +59,11 @@ export class WheelScreen {
 
     initialRotation = signal("0deg")
     totalRotation = signal("0deg")
-
+    nextNestedWheelId = signal<string | null>(null)
     finalSelectedEntries = signal<Entry[]>([])
+
+    // Animations
+    animationState = "normal"
 
     private intervalId: any;
     private updateInterval = 50; 
@@ -219,22 +247,45 @@ export class WheelScreen {
       this.hideableComponentsService.setIsOpen(false)
     }
 
-    animationFinished() {
+    spinAnimationFinished() {
       this.stopTrackRotation();
       const selectedEntry = this.entryService.entries().find(e => e.id === this.selected().id)!
       this.finalSelectedEntries.update(prev => prev.concat(selectedEntry))
 
       if (selectedEntry.nestedWheel && selectedEntry.nestedWheel.entries.length >= 2) {
-        this.wheelService.openNestedWheel(selectedEntry.nestedWheel.id)
-
-        this.spinClass.set(this.spinClasses.continuous)
-        setTimeout(() => {
-          this.spin()
-        }, 0);
+        this.switchToNestedWheel(selectedEntry)
       } else {
         this.initialRotation.set(this.getCurrentRotation().toString() + "deg")
         const selectedColor = this.segments().find(segment => segment.id === selectedEntry.id)!.color
         this.modalService.open<SelectedModalComponent>(SelectedModalComponent, { selectedEntries: this.finalSelectedEntries(), selectedColor: selectedColor })
+      }
+    }
+
+    switchToNestedWheel(selectedEntry: Entry) {
+        this.animationState = "big"
+        this.soundService.play("enter_nested")
+        this.nextNestedWheelId.set(selectedEntry.nestedWheel!.id)
+    }
+
+    nestAnimationFinished() {
+      if (this.spinClass() === this.spinClasses.continuous) {
+        return
+      }
+       
+      if (this.animationState === "small") {
+        
+      } else if (this.animationState === "normal") {
+        this.spinClass.set(this.spinClasses.continuous)
+        setTimeout(() => {
+          this.spin()
+        }, 0);
+      } else if (this.animationState === "big") {
+        this.animationState = "small"
+        this.wheelService.openNestedWheel(this.nextNestedWheelId()!)
+        this.nextNestedWheelId.set(null)
+        setTimeout(() => {
+          this.animationState = "normal"
+        }, 0);
       }
     }
 
