@@ -13,7 +13,7 @@ The most relevant feature is the possibility of creating nested wheels, you can 
 - ⭕ Wheel creation and editing
 - 🏷️ Entry editing: Probability and color
 - 👤 Sign up and Log in manually or with SSO
-- 📁 Wheel save, loading and delete functionality
+- 📁 Wheel save, loading and delete
 - ↪️ Nested wheels
 - 📝 Selected entries history
 - 📱 Responsive design
