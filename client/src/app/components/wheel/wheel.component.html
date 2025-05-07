@@ -18,6 +18,8 @@
             </div>
         } @else {
             <svg 
+                [@appear]="animationState"
+                (@appear.done)="nestAnimationFinished()"
                 class="wheel-svg"
                 viewBox="0 0 120 120" 
                 fill="currentColor"
@@ -29,7 +31,7 @@
                     (click)="onSpin()"
                     [style.--total-rotation]="totalRotation()"
                     [style.--initial-rotation]="initialRotation()"
-                    (animationend)="animationFinished()"
+                    (animationend)="spinAnimationFinished()"
                 >
                     @for (segment of segments(); track $index) {
                         <path

@@ -5,6 +5,7 @@
     height: 100%;
     background: var(--color-background);
     color: var(--color-text);
+    overflow: hidden;
 
     .wheel-container {
         height: 100%;
@@ -34,13 +35,16 @@
             justify-content: center;
             align-items: center;
             color: var(--color-text);
+            overflow: hidden;
 
             .wheel-svg {
-                width: 70vh;
-
+                --wheel-size: 70vh;
                 @media screen and (max-width: map-get($breakpoints, mobile)) {
-                    width: 55vh;
+                    --wheel-size: 55vh;
                 }
+
+                height: var(--wheel-size);
+                width: var(--wheel-size);
             }
 
             .not-enough-entries {

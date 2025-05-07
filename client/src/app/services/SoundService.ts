@@ -18,6 +18,10 @@ export class SoundService {
     let selectedAudio = new Audio(environment.url + '/uploads/sounds/selected.mp3')
     selectedAudio.volume *= 0.1;
     this.audioElements['selected'] = [selectedAudio]
+
+    let nestedAudio = new Audio(environment.url + '/uploads/sounds/enter_nested.mp3')
+    nestedAudio.volume *= 0.2;
+    this.audioElements['enter_nested'] = [nestedAudio]
   }
 
   play(name: string) {
