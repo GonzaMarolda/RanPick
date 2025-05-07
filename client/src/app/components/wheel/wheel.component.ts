@@ -1,4 +1,4 @@
-import { Component, computed, ElementRef, inject, effect, OnInit, signal, ViewChild, AfterViewInit } from '@angular/core'
+import { Component, computed, ElementRef, inject, effect, OnInit, signal, ViewChild, AfterViewInit, untracked } from '@angular/core'
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { EntryService } from '../../services/EntryService'
 import { Entry } from '../../models/entry'
@@ -63,7 +63,6 @@ export class WheelScreen {
     finalSelectedEntries = signal<Entry[]>([])
 
     // Animations
-    animFirstTimeFlag = true
     animationState = "normal"
 
     private intervalId: any;
@@ -269,11 +268,10 @@ export class WheelScreen {
     }
 
     nestAnimationFinished() {
-      if (this.animFirstTimeFlag) {
-        this.animFirstTimeFlag = false
+      if (this.spinClass() === this.spinClasses.continuous) {
         return
       }
-      
+       
       if (this.animationState === "small") {
         
       } else if (this.animationState === "normal") {
