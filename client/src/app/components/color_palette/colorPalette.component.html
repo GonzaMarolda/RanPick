@@ -1,0 +1,33 @@
+<div class="palette-container">
+    <div class="palette-name">
+        {{selectedPalette().name}}
+    </div>
+    <div class="swipe-container">
+        <button class="move-button">
+            <
+        </button>
+        <div class="wheel-container">
+            <svg 
+                class="wheel-svg"
+                viewBox="0 0 120 120" 
+                fill="currentColor"
+                data-testid="wheel"
+            >
+                <circle cx="60" cy="60" r="51" fill="#ffffff"/>
+                <g>
+                    @for (color of selectedPalette().colors; track $index) {
+                        <path
+                            data-testid="segment"
+                            [attr.fill]="color"
+                            [attr.d]="getSegmentPath($index)"
+                        />
+                    }
+                </g>
+                <circle cx="60" cy="60" r="7" fill="#121212"/> 
+            </svg>
+        </div>
+        <button class="move-button">
+            >
+        </button>
+    </div>
+</div>

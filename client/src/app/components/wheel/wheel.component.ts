@@ -10,6 +10,7 @@ import { WheelService } from '../../services/WheelService'
 import { Wheel } from '../../models/wheel'
 import { SelectedHistoryComponent } from "../selected_history/selectedHistory.component";
 import { SoundService } from '../../services/SoundService'
+import { ColorPaletteComponent } from "../color_palette/colorPalette.component";
 
 @Component({
     selector: 'wheel-screen',
@@ -39,7 +40,7 @@ import { SoundService } from '../../services/SoundService'
         transition('small => normal', animate('0.4s ease-out'))
       ])
     ],
-    imports: [SelectedHistoryComponent]
+    imports: [SelectedHistoryComponent, ColorPaletteComponent]
 })
 export class WheelScreen {
     entryService = inject(EntryService)
