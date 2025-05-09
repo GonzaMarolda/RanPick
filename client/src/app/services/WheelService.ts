@@ -29,6 +29,11 @@ export class WheelService {
             const updated = this.focusWheel();
             this.wheel.update(root => this.replaceWheelInTree(root, updated));
         })
+
+        effect(() => {
+            const palettes = this.colorPaletteService.palettes()
+            this.setColorPalette(palettes[0])
+        })
     }
 
     createEmptyWheel() {

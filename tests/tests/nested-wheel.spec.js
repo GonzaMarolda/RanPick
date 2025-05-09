@@ -2,7 +2,7 @@ const { test, expect, describe, beforeEach } = require('@playwright/test')
 
 describe('Nested Wheels', () => {
     beforeEach(async ({ page, request }) => {
-        await page.goto('http://localhost:3000')
+        await page.goto('http://localhost:4200')
 
         await page.getByText("Add Entry").click()
         await page.getByText("Add Entry").click()

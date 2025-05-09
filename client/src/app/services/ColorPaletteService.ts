@@ -10,7 +10,9 @@ export class ColorPaletteService {
     palettes = signal<ColorPalette[]>([{id: 0, name: "-", colors: ["#FFFFFF"]}])
 
     constructor() {
-        this.getColorPalettes()
+        this.getColorPalettes().then(() => {
+
+        })
     }
 
     async getColorPalettes() {
