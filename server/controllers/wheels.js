@@ -65,7 +65,8 @@ async function getWheelTree({ id, userId }) {
     where: { id, userId },
     include: {
       entries: true,
-      selectedHistory: true
+      selectedHistory: true,
+      colorPalette: true
     }
   })
   if (!wheel) return null
@@ -85,6 +86,8 @@ async function getWheelTree({ id, userId }) {
 async function upsertWheelTree(wheel, userId, tx) {
   console.log("Currently upserting: " + wheel.name + ":")
   console.log(wheel)
+
+  console.log("COLOR PALETTE ID: " + wheel.colorPalette.id)
 
   await tx.entry.deleteMany({
     where: { wheelId: wheel.id }
@@ -117,7 +120,8 @@ async function upsertWheelTree(wheel, userId, tx) {
           name: selected.name,
           color: selected.color
         }))
-      }
+      },
+      colorPaletteId: wheel.colorPalette.id
     },
     update: {
       name: wheel.name,
@@ -139,11 +143,15 @@ async function upsertWheelTree(wheel, userId, tx) {
           name: selected.name,
           color: selected.color
         }))
+      },
+      colorPalette: {
+        connect: { id: wheel.colorPalette.id }
       }
     },
     include: {
       entries: true,
-      selectedHistory: true
+      selectedHistory: true,
+      colorPalette: true
     }
   })
   

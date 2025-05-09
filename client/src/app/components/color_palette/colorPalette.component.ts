@@ -1,44 +1,50 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { WheelService } from '../../services/WheelService';
+import { ColorPaletteService } from '../../services/ColorPaletteService';
+import { ColorPalette } from '../../models/colorPalette';
+import { HideableComponentsService } from '../../services/HideableComponents';
 
 @Component({
     selector: 'color-palette',
     templateUrl: 'colorPalette.component.html',
-    styleUrl: 'colorPalette.component.scss'
+    styleUrl: 'colorPalette.component.scss',
+    animations: [
+        trigger('switch', [
+            state('normal', 
+                style({
+                    transform: "scale(1)"
+                })),
+            state('big', 
+                style({
+                    transform: "scale(1.05)"
+                })),
+            transition('normal => big', animate('0s linear')),
+            transition('big => normal', animate('0.2s linear'))
+        ]),
+        trigger('switch-text', [
+            state('normal', 
+                style({
+                    "font-size": "1rem"
+                })),
+            state('big', 
+                style({
+                    "font-size": "1.05rem"
+                })),
+            transition('normal => big', animate('0s linear')),
+            transition('big => normal', animate('0.2s linear'))
+        ])
+    ]
 })
 export class ColorPaletteComponent {
-    palettes = [
-        new ColorPalette(
-            "Default",
-            [
-                '#51CC0A', 
-                '#CC9D10', 
-                '#CC4021', 
-                '#9200CC', 
-                '#1DA0CC'
-            ]
-        ),
-        new ColorPalette(
-            "Alt 1",
-            [
-                '#510C0A', 
-                '#CC0D10', 
-                '#CC0021', 
-                '#92F0CC', 
-                '#1D00CC'
-            ]
-        ),
-        new ColorPalette(
-            "Alt 2",
-            [
-                '#5FFC0A', 
-                '#CFFD10', 
-                '#CFF021', 
-                '#9FF0CC', 
-                '#1FF0CC'
-            ]
-        ),
-    ]
-    selectedPalette = signal<ColorPalette>(this.palettes[0])
+    wheelService = inject(WheelService)
+    hideableComponentService = inject(HideableComponentsService)
+    colorPaletteService = inject(ColorPaletteService)
+    selectedPalette = computed(() => {
+        const focusWheel = this.wheelService.focusWheel()
+        return focusWheel.colorPalette
+    })
+    animationState = "normal"
 
     getSegmentPath(index: number) {
         const center = 60
@@ -56,14 +62,31 @@ export class ColorPaletteComponent {
 
         return `M ${center},${center} L ${x1},${y1} A ${radius} ${radius} 0 0 1 ${x2},${y2} Z`
     }
-}
 
-class ColorPalette {
-    name: string
-    colors: string[]
+    switchAnimationFinished() {
+        if (this.animationState === "normal") {
 
-    constructor(name: string, colors: string[]) {
-        this.name = name
-        this.colors = colors
+        } else if (this.animationState === "big") {
+            this.animationState = "normal"
+        }
+    }
+
+    switchPalette(toTheRight: boolean) {
+        const side = toTheRight ? 1 : -1
+        this.animationState = "big"
+
+        const palettes = this.colorPaletteService.palettes()
+        const index = this.selectedPalette().id
+        let nextIndex = index + side
+        if (nextIndex < 0) nextIndex = palettes.length - 1
+        if (nextIndex >= palettes.length) nextIndex = 0
+        console.log("nextIndex" + nextIndex)
+        this.wheelService.setColorPalette(palettes[nextIndex])
+    }
+
+    getOffset() {
+        if (!this.hideableComponentService.isOpen()) return '10rem'
+
+        return '0'
     }
 }

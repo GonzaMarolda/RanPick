@@ -6,6 +6,7 @@ export function createMockWheelService(): Partial<WheelService> {
     const initialWheel: Wheel = {
         id: '0',
         name: 'Mock Wheel',
+        colorPalette: {id: 0, name: "Test", colors: []},
         userId: 0,
         entries: [
             {

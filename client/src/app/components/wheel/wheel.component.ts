@@ -54,7 +54,6 @@ export class WheelScreen {
     selected = signal<{name: string, id: string}>({name: 'Click the wheel to start', id: ""})
     spinClasses = { continuous: "spin-continuous", active: "spin" }
     spinClass = signal<String>(this.spinClasses.continuous)
-    colors = ['#51CC0A', '#CC9D10', '#CC4021', '#9200CC', '#1DA0CC']
     editNameActive = signal<boolean>(false)
     tempEditedName = signal<string>("")
 
@@ -95,7 +94,8 @@ export class WheelScreen {
         if (index === lastSegmentIndex && 
             segment.color === unprocessedSegments[0].color &&
             unprocessedSegments[lastSegmentIndex - 1].color) {
-              return {...segment, color: this.colors[1]}
+              const colors = this.wheelService.focusWheel().colorPalette.colors
+              return {...segment, color: colors[1]}
         }  
         else return segment
       }) : unprocessedSegments
@@ -168,7 +168,8 @@ export class WheelScreen {
       svg.remove()
 
       // Adjust text color for contrast
-      const color = entry.color ? entry.color : this.colors[index % this.colors.length]
+      const colors = this.wheelService.focusWheel().colorPalette.colors
+      const color = entry.color ? entry.color : colors[index % colors.length]
       const textColor = this.contrastHelperService.getContrastTextColor(color)
 
       return {

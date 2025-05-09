@@ -6,12 +6,15 @@ import { firstValueFrom, lastValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment'; 
 import { Entry } from '../models/entry';
 import { SelectedRecord } from '../models/selectedRecord';
+import { ColorPaletteService } from './ColorPaletteService';
+import { ColorPalette } from '../models/colorPalette';
 
 @Injectable({ providedIn: 'root' })
 export class WheelService {
     http = inject(HttpClient)
     authService = inject(AuthService)
-    wheel = signal<Wheel>(new Wheel())
+    colorPaletteService = inject(ColorPaletteService)
+    wheel = signal<Wheel>(new Wheel(this.colorPaletteService.palettes()[0]))
     focusWheel = signal<Wheel>(this.wheel())
     spinnedWheel = signal<Wheel | null>(null)
     errorMessage = signal<string>("")
@@ -29,7 +32,7 @@ export class WheelService {
     }
 
     createEmptyWheel() {
-        const newWheel = new Wheel()
+        const newWheel = new Wheel(this.colorPaletteService.palettes()[0])
         this.wheel.set(newWheel)
         this.focusWheel.set(newWheel)
         localStorage.removeItem("last_wheel_id")
@@ -76,6 +79,10 @@ export class WheelService {
 
     updateName(name: string) {
         this.focusWheel.update(prev => ({...prev, name: name}))
+    }
+
+    setColorPalette(palette: ColorPalette) {
+        this.focusWheel.update(prev => ({...prev, colorPalette: palette}))
     }
 
     addSelectedRecord(selected: Entry[]) {
@@ -161,7 +168,7 @@ export class WheelService {
     }
 
     async createNestledWheel(entry: Entry) {
-        const newNestledWheel = new Wheel()
+        const newNestledWheel = new Wheel(this.colorPaletteService.palettes()[0])
         newNestledWheel.fatherEntryId = entry.id
         newNestledWheel.fatherWheelId = entry.wheelId
         this.wheel.update(root => this.replaceWheelInTree(root, newNestledWheel))
