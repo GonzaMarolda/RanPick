@@ -6,6 +6,7 @@ const path = require("path")
 
 const authRouter = require("./controllers/auth")
 const wheelsRouter = require("./controllers/wheels")
+const colorPalettesRouter = require("./controllers/colorPalettes")
 
 app.use(cors())
 app.use(express.json())
@@ -16,6 +17,7 @@ app.use(express.static('dist/client/browser'))
 
 app.use("/api/auth", authRouter)
 app.use("/api/wheel", middleware.userExtractor, wheelsRouter)
+app.use("/api/colorPalette", colorPalettesRouter)
 
 app.use(middleware.unknownEndpoint)
 app.get('/{*splat}', (req, res, next) => {

@@ -1,9 +1,11 @@
+import { ColorPalette } from "./colorPalette"
 import { Entry } from "./entry"
 import { SelectedRecord } from "./selectedRecord"
 
 export class Wheel {
     id: string
     name: string
+    colorPalette: ColorPalette
     userId: number
     entries: Entry[]
     selectedHistory: SelectedRecord[]
@@ -12,9 +14,10 @@ export class Wheel {
     createdAt: string
     updatedAt: string
 
-    constructor() {
+    constructor(defaultPalette: ColorPalette) {
         this.id = crypto.randomUUID()
         this.name = "Wheel Name"
+        this.colorPalette = defaultPalette
         this.userId = 0
         this.entries = []
         this.selectedHistory = []

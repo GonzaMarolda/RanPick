@@ -18,19 +18,21 @@ model User {
 }
 
 model Wheel {
-  id              String   @id 
+  id              String            @id 
   userId          Int     
-  user            User     @relation(fields: [userId], references: [id])
+  user            User              @relation(fields: [userId], references: [id])
   name            String  
+  colorPalette    ColorPalette      @relation(fields: [colorPaletteId], references: [id], onDelete: SetDefault)
+  colorPaletteId  Int               @default(0)  
   fatherWheelId   String?
-  fatherWheel     Wheel?   @relation("FatherChild", fields: [fatherWheelId], references: [id], onDelete: Cascade)
-  childrenWheels  Wheel[]  @relation("FatherChild")
-  fatherEntryId   String?  @unique
-  fatherEntry     Entry?   @relation("EntryNestedWheel", fields: [fatherEntryId], references: [id], onDelete: Cascade) 
-  entries         Entry[]  @relation("WheelEntry")
+  fatherWheel     Wheel?            @relation("FatherChild", fields: [fatherWheelId], references: [id], onDelete: Cascade)
+  childrenWheels  Wheel[]           @relation("FatherChild")
+  fatherEntryId   String?           @unique
+  fatherEntry     Entry?            @relation("EntryNestedWheel", fields: [fatherEntryId], references: [id], onDelete: Cascade) 
+  entries         Entry[]           @relation("WheelEntry")
   selectedHistory SelectedRecord[]
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt @default(now())
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt @default(now())
 }
 
 model Entry {
@@ -43,6 +45,15 @@ model Entry {
   weight        Float
   color         String 
 } 
+
+
+model ColorPalette {
+  id            Int       @id 
+  name          String
+  colors        String[]
+  wheels        Wheel[]
+}
+
 
 model SelectedRecord {
   id            String  @id

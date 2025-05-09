@@ -58,7 +58,8 @@
             </svg>
         }
     </div>
-    <div class="wheel-name-text">
+    <div class="wheel-bottom-container">
+        <selected-history/>
         <div class="name-edit-container" data-testid="wheel_name">
             @if (editNameActive()) {
                 <input class="name-input" type="text" data-testid="wheel_name_edit_input" [value]="wheel().name" (input)="updateTempName($event)">
@@ -72,6 +73,6 @@
                 </svg>
             }
         </div>
-        <selected-history/>
+        <color-palette/>
     </div>
 </div>

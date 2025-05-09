@@ -1,0 +1,66 @@
+:host {
+    position: absolute;
+    width: 15%;
+    height: 6rem;
+    right: 2rem;
+    bottom: 0;
+
+    .palette-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        transition: transform 0.2s ease;
+
+        .palette-name {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 100;
+            font-size: 1rem;
+            height: 10%;
+        }
+
+        .swipe-container {
+            width: 100%;
+            height: 90%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+
+            .wheel-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+    
+                .wheel-svg {
+                    height: 90%;
+                }
+            }
+    
+            .move-button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 0;
+                background: none;
+                width: 2rem;
+                height: 2rem;
+                font-size: 1.4rem;
+                cursor: pointer;
+                color: var(--color-text);
+                transition: transform 0.2s ease;
+
+                &:hover {
+                    transform: scale(1.2);
+                }
+            }
+        }
+    }
+}
