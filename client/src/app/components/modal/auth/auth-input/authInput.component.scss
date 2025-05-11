@@ -1,0 +1,53 @@
+:host {
+    width: 70%;
+    .form-input-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        .input-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 5px;
+
+            .forgot-password {
+                cursor: pointer;
+                font-size: 0.9rem;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        .form-input {
+            width: 100%;
+            height: 1.8rem;
+            padding: 0 0.5rem;
+            box-sizing: border-box;
+            border: none;
+            outline: none;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--color-text);
+            border: 1px solid rgba(255, 255, 255, 0);
+            transition: all 0.2s ease;
+
+            &:focus {
+                border: 1px solid var(--color-text);
+            }
+
+            &.invalid {
+                border: 1px solid rgba(255, 43, 43, 0.479);
+                color: rgb(255, 43, 43);
+            }
+        }
+
+        .password-validations {
+            color: rgb(255, 61, 61);
+            font-size: 0.9rem;
+        }
+    }
+}
