@@ -1,9 +1,15 @@
+@use '../../../variables' as *;
+
 :host {
     position: absolute;
     width: 15%;
     height: 6rem;
     right: 2rem;
     bottom: 0;
+
+    @media screen and (max-width: map-get($breakpoints, mobile)) {
+        display: none;
+    }
 
     .palette-container {
         display: flex;
