@@ -20,11 +20,6 @@ export class WheelService {
     errorMessage = signal<string>("")
 
     constructor() {
-        const storedWheelId = localStorage.getItem("last_wheel_id") 
-        if (storedWheelId) {
-            this.getWheel(storedWheelId)
-        }
-
         effect(() => {
             const updated = this.focusWheel();
             this.wheel.update(root => this.replaceWheelInTree(root, updated));

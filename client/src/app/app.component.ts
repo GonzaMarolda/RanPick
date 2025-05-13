@@ -6,10 +6,11 @@ import { NgComponentOutlet } from '@angular/common';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { HttpLoadService } from './services/HttpLoadService';
 import { MessageModalComponent } from './components/modal/message-modal/messageModal.component';
+import { BodyComponent } from "./components/body/body.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, NgComponentOutlet, MatProgressSpinnerModule, MessageModalComponent],
+  imports: [RouterOutlet, HeaderComponent, NgComponentOutlet, MatProgressSpinnerModule, MessageModalComponent, BodyComponent],
   template: `
     @if (modalService.messageModalOpen()) {
       <message-modal [message]="modalService.messageModalMessage()"/>

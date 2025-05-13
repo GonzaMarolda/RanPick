@@ -4,9 +4,6 @@ import angularTemplate from '@angular-eslint/eslint-plugin-template';
 export default [
   {
     files: ['**/*.ts'],
-    plugins: {
-      '@angular-eslint': angularESLint,
-    },
     rules: {
       ...angularESLint.configs.recommended.rules,
       '@angular-eslint/directive-selector': [
@@ -22,9 +19,6 @@ export default [
 
   {
     files: ['**/*.html'],
-    plugins: {
-      '@angular-eslint/template': angularTemplate,
-    },
     rules: {
       ...angularTemplate.configs.recommended.rules,
     },

@@ -2,6 +2,7 @@ import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { ModalService } from '../../../../services/ModalService';
 import { AuthInputComponent } from "../auth-input/authInput.component";
 import { AuthModalComponent } from '../auth-modal/authModal.component';
+import { AuthService } from '../../../../services/AuthService';
 
 @Component({
   selector: 'forgot-password-modal',
@@ -11,8 +12,10 @@ import { AuthModalComponent } from '../auth-modal/authModal.component';
 })
 export class ForgotPasswordModalComponent {
   modalService = inject(ModalService)
+  authService = inject(AuthService)
   email = signal<string>("")
   invalidatedSubmit = signal<boolean>(false)
+  submitErrorMessage = signal<string>("")
 
   updateEmail(value: string) {
     this.email.set(value)
@@ -25,7 +28,19 @@ export class ForgotPasswordModalComponent {
   }
 
   submit() {
+    if (!this.email() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email())) {
+      this.invalidatedSubmit.set(true)
+      return
+    }
 
+    this.authService.sendResetPasswordEmail(this.email())
+      .then(() => {
+        this.modalService.openMessageModal("The email has been sent")
+        this.modalService.close()
+      })
+      .catch(() => {
+        this.submitErrorMessage.set(this.authService.errorMessage())
+      })
   }
 
   openLogin() {

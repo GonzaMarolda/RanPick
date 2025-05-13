@@ -87,8 +87,6 @@ async function upsertWheelTree(wheel, userId, tx) {
   console.log("Currently upserting: " + wheel.name + ":")
   console.log(wheel)
 
-  console.log("COLOR PALETTE ID: " + wheel.colorPalette.id)
-
   await tx.entry.deleteMany({
     where: { wheelId: wheel.id }
   })

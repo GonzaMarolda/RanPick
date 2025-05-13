@@ -11,6 +11,7 @@ import { Wheel } from '../../models/wheel'
 import { SelectedHistoryComponent } from "../selected_history/selectedHistory.component";
 import { SoundService } from '../../services/SoundService'
 import { ColorPaletteComponent } from "../color_palette/colorPalette.component";
+import { AuthService } from '../../services/AuthService';
 
 @Component({
     selector: 'wheel-screen',
@@ -48,6 +49,7 @@ export class WheelScreen {
     hideableComponentsService = inject(HideableComponentsService)
     wheelService = inject(WheelService)
     modalService = inject(ModalService)
+    authService = inject(AuthService)
     soundService = inject(SoundService)
     @ViewChild('wheelGroup') wheelGroup!: ElementRef<SVGGElement>
 
@@ -69,6 +71,11 @@ export class WheelScreen {
     private updateInterval = 50; 
   
     constructor() {
+      const storedWheelId = localStorage.getItem("last_wheel_id") 
+      if (storedWheelId && this.authService.user()) {
+          this.wheelService.getWheel(storedWheelId)
+      }
+
       effect(() => {
         if (this.hideableComponentsService.isOpen() === false) return 
 

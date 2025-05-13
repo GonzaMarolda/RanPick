@@ -12,7 +12,7 @@ export class AuthInputComponent {
     modalService = inject(ModalService)
     name = input.required<string>()
     wasInvalidated = input.required<boolean>()
-    passwordData = input<{isLogin: boolean, validationMessage: string} | null>(null)
+    passwordData = input<{isLogin: boolean, isReset: boolean, validationMessage: string} | null>(null)
     forgotPassword = output()
     valueOutput = output<string>()
     value = signal<string>("")

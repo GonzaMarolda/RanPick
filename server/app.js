@@ -17,7 +17,7 @@ app.use(express.static('dist/client/browser'))
 
 app.use("/api/auth", authRouter)
 app.use("/api/wheel", middleware.userExtractor, wheelsRouter)
-app.use("/api/colorPalette", colorPalettesRouter)
+app.use("/api/color-palette", colorPalettesRouter)
 
 app.use(middleware.unknownEndpoint)
 app.get('/{*splat}', (req, res, next) => {

@@ -11,7 +11,7 @@ import { ConfirmationModalComponent } from '../modal/confirm-modal/confirmModal.
     selector: 'entry',
     templateUrl: 'entry.component.html',
     styleUrl: 'entry.component.scss',
-    imports: [PropertiesComponent, ClickOutsideDirective]
+    imports: [PropertiesComponent]
 })
 export class EntryComponent{
     modalService = inject(ModalService)

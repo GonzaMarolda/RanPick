@@ -35,7 +35,7 @@
             name="Password"
             (valueOutput)="updateValue('password', $event)"
             [wasInvalidated]="invalidatedSubmit().password"
-            [passwordData]="{isLogin: isLogin(), validationMessage: passwordValidationMessage()}"
+            [passwordData]="{isLogin: isLogin(), isReset: false, validationMessage: passwordValidationMessage()}"
             (forgotPassword)="openForgotPassword()"
         />
 
