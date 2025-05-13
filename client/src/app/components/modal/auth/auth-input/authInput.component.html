@@ -1,0 +1,22 @@
+<div class="form-input-container">
+    <div class="input-header">
+        {{name()}}
+        @if (passwordData()?.isLogin && !passwordData()!.isReset) {
+            <div class="forgot-password" (click)="forgotPasswordClicked()"> Forgot password? </div>
+        }
+    </div>
+    <input 
+        required
+        class="form-input" 
+        [type]="passwordData() ? 'password' : 'text'" 
+        [attr.data-testId]="'input_'+ name()"
+        [value]="value()" 
+        (input)="updateValue($event)"
+        [class.invalid]="wasInvalidated()"
+    />
+    @if (passwordData() && (!passwordData()!.isLogin || passwordData()!.isReset)) {
+        <div class="password-validations">
+            {{passwordData()!.validationMessage}}
+        </div>
+    }
+</div>

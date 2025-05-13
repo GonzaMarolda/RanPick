@@ -103,6 +103,33 @@ export class AuthService {
             throw err
         }
     }
+
+    async sendResetPasswordEmail(email: string) {
+        try {
+            await firstValueFrom(
+                this.http.get(environment.apiUrl + '/auth/reset-password/' + email)
+            )
+        } catch (err) {
+            this.processError(err)
+            throw err
+        }
+    }
+
+    async setNewPassword(token: string, password: string) {
+        try {
+            await firstValueFrom(
+                this.http.post(environment.apiUrl + '/auth/reset-password', 
+                    JSON.stringify({ token, password }), 
+                    {
+                        headers: { 'Content-Type': 'application/json' }
+                    }
+                )
+            )
+        } catch (err) {
+            this.processError(err)
+            throw err
+        }
+    }
   
     logout() {
         this.resetData()
@@ -125,6 +152,6 @@ export class AuthService {
     }
 
     private async processError(err: any) {
-        err.status === 400 ? this.errorMessage.set(err.error.error) : this.errorMessage.set("There was an error")
+        [400, 401, 402, 403].includes(err.status) ? this.errorMessage.set(err.error.error) : this.errorMessage.set("There was an error")
     }
 }

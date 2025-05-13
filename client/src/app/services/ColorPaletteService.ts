@@ -18,7 +18,7 @@ export class ColorPaletteService {
     async getColorPalettes() {
         try {
             const data = await firstValueFrom(
-                this.http.get<ColorPalette[]>(environment.apiUrl + '/colorPalette')
+                this.http.get<ColorPalette[]>(environment.apiUrl + '/color-palette')
             )
             this.palettes.set(data)
         } catch (err) {

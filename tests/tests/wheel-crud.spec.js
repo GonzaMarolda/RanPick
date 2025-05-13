@@ -2,10 +2,10 @@ const { test, expect, describe, beforeEach } = require('@playwright/test')
 
 describe('Wheels', () => {
     const fields = [
-        {name: 'first_name', fill: 'testName'},
-        {name: 'last_name', fill: 'testSurname'},
-        {name: 'email', fill: 'testMail@gmail.com'},
-        {name: 'password', fill: 'testPassword123'}
+        {name: 'input_First Name', fill: 'testName'},
+        {name: 'input_Last Name', fill: 'testSurname'},
+        {name: 'input_Email', fill: 'testMail@gmail.com'},
+        {name: 'input_Password', fill: 'testPassword123'}
     ]
 
     beforeEach(async ({ page, request }) => {

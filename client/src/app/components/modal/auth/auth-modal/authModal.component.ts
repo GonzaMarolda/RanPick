@@ -1,10 +1,12 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
-import { ModalService } from '../../../services/ModalService';
-import { AuthService } from '../../../services/AuthService';
+import { ModalService } from '../../../../services/ModalService';
+import { AuthService } from '../../../../services/AuthService';
+import { AuthInputComponent } from "../auth-input/authInput.component";
+import { ForgotPasswordModalComponent } from '../forgotPassword-modal/forgotPassword.component';
 
 @Component({
   selector: 'auth-modal',
-  imports: [],
+  imports: [AuthInputComponent],
   templateUrl: './authModal.component.html',
   styleUrl: './authModal.component.scss'
 })
@@ -59,6 +61,10 @@ export class AuthModalComponent {
     this.modalService.open<AuthModalComponent>(AuthModalComponent, { isLogin: !this.isLogin() })
   }
 
+  openForgotPassword() {
+    this.modalService.open<ForgotPasswordModalComponent>(ForgotPasswordModalComponent)
+  }
+
   submit() {
     if (!this.isSubmitValid()) return
     this.isLoading.set(true)
@@ -83,9 +89,8 @@ export class AuthModalComponent {
     this.authService.loginWithGoogle(this.isLoading.set)
   }
 
-  updateValue(type: string, event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.formData.update(data => ({ ...data, [type]: value }));
+  updateValue(type: string, value: string) {
+    this.formData.update(data => ({ ...data, [type]: value }))
     this.invalidatedSubmit.update(data => ({ ...data, [type]: false }))
   }
 

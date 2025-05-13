@@ -1,6 +1,6 @@
 import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { ModalService } from '../../services/ModalService';
-import { AuthModalComponent } from '../modal/auth-modal/authModal.component';
+import { AuthModalComponent } from '../modal/auth/auth-modal/authModal.component';
 import { AuthService } from '../../services/AuthService';
 import { OpenModalComponent } from '../modal/open-modal/openModal.component';
 import { WheelService } from '../../services/WheelService';

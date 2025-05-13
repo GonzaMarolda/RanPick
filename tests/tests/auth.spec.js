@@ -9,10 +9,10 @@ describe('Auth', () => {
     }) 
 
     const fields = [
-        {name: 'first_name', fill: 'testName'},
-        {name: 'last_name', fill: 'testSurname'},
-        {name: 'email', fill: 'testMail@gmail.com'},
-        {name: 'password', fill: 'testPassword123'}
+        {name: 'input_First Name', fill: 'testName'},
+        {name: 'input_Last Name', fill: 'testSurname'},
+        {name: 'input_Email', fill: 'testMail@gmail.com'},
+        {name: 'input_Password', fill: 'testPassword123'}
     ]
     describe('Manual sign up', () => {
         test('Can sign up', async ({ page }) => {
@@ -71,8 +71,8 @@ describe('Auth', () => {
             await page.getByText("Logout").click()
 
             await page.getByText("Log in").click()
-            await page.getByTestId("email").fill("testMail@gmail.com")
-            await page.getByTestId("password").fill("incorrectPassword")
+            await page.getByTestId("input_Email").fill("testMail@gmail.com")
+            await page.getByTestId("input_Password").fill("incorrectPassword")
             await page.getByTestId("submit").click()
             await expect(page.getByTestId("error_message")).toContainText("password")
         }) 
@@ -87,8 +87,8 @@ describe('Auth', () => {
             await page.getByText("Logout").click()
 
             await page.getByText("Log in").click()
-            await page.getByTestId("email").fill("incorrectMail@gmail.com")
-            await page.getByTestId("password").fill("testPassword123")
+            await page.getByTestId("input_Email").fill("incorrectMail@gmail.com")
+            await page.getByTestId("input_Password").fill("testPassword123")
             await page.getByTestId("submit").click()
             await expect(page.getByTestId("error_message")).toContainText("password")
         }) 
