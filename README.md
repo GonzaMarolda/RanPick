@@ -5,7 +5,7 @@
 Web app to create wheels that pick a value randomly. You can add entries, spin the wheel, and see which one is the winner.
 The most relevant feature is the possibility of creating nested wheels, you can create a "Dinner" wheel and another wheel for "Pasta" if gets selected.
 
-<img src="https://github.com/user-attachments/assets/5c4d42d7-5e2c-4113-88dc-6f2e9b02ad2b" alt="Captura de la app" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
+<img src="https://github.com/user-attachments/assets/d79d735c-d65d-4e5c-ad3f-6fd7ece29818" alt="Captura de la app" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"/>
 
 👉 **Try it here:** [ranpick.onrender.com](https://ranpick.onrender.com)
 
