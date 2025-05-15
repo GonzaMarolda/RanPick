@@ -6,18 +6,19 @@ import { ClickOutsideDirective } from '../../directives/ClickOutsideDirective';
 import { WheelService } from '../../services/WheelService';
 import { ModalService } from '../../services/ModalService';
 import { ConfirmationModalComponent } from '../modal/confirm-modal/confirmModal.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'entry',
     templateUrl: 'entry.component.html',
     styleUrl: 'entry.component.scss',
-    imports: [PropertiesComponent]
+    imports: [PropertiesComponent, TranslateModule]
 })
 export class EntryComponent{
     modalService = inject(ModalService)
     wheelService = inject(WheelService)
     entryService = inject(EntryService)
-
+    translation = inject(TranslateService)
     entryId = input.required<string>()
     removeEntry = output<string>()
     updateEntry = output<Entry>()

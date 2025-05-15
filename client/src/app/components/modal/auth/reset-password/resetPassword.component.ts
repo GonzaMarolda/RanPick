@@ -5,16 +5,18 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthModalComponent } from '../auth-modal/authModal.component';
 import { AuthService } from '../../../../services/AuthService';
 import { Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'forgot-password-modal',
-  imports: [AuthInputComponent],
+  imports: [AuthInputComponent, TranslateModule],
   templateUrl: './resetPassword.component.html',
   styleUrl: './resetPassword.component.scss'
 })
 export class ResetPasswordModalComponent {
 	route = inject(ActivatedRoute)
 	router = inject(Router)
+	translate = inject(TranslateService)
 	authService = inject(AuthService)
 	modalService = inject(ModalService)
 	password = signal<string>("")

@@ -5,10 +5,11 @@ import { WheelService } from '../../../services/WheelService';
 import { Wheel } from '../../../models/wheel';
 import { AuthService } from '../../../services/AuthService';
 import { ConfirmationModalComponent } from '../confirm-modal/confirmModal.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'open-modal',
-  imports: [ClickOutsideDirective, ConfirmationModalComponent],
+  imports: [ClickOutsideDirective, ConfirmationModalComponent, TranslateModule],
   templateUrl: './openModal.component.html',
   styleUrl: './openModal.component.scss'
 })
@@ -18,6 +19,7 @@ export class OpenModalComponent implements OnInit {
   modalService = inject(ModalService)
   selectedWheelId = signal<string>("")
   wheels = signal<Wheel[] | null>(null)
+  translation = inject(TranslateService)
   confirmation = signal<{
     name: string,
     nameColor: string,

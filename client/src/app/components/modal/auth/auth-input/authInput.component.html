@@ -2,7 +2,7 @@
     <div class="input-header">
         {{name()}}
         @if (passwordData()?.isLogin && !passwordData()!.isReset) {
-            <div class="forgot-password" (click)="forgotPasswordClicked()"> Forgot password? </div>
+            <div class="forgot-password" (click)="forgotPasswordClicked()"> {{ "auth-input.forgot-pass" | translate }} </div>
         }
     </div>
     <input 

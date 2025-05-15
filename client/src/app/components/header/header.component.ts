@@ -4,9 +4,11 @@ import { AuthModalComponent } from '../modal/auth/auth-modal/authModal.component
 import { AuthService } from '../../services/AuthService';
 import { OpenModalComponent } from '../modal/open-modal/openModal.component';
 import { WheelService } from '../../services/WheelService';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-header',
+    imports: [TranslateModule],
     templateUrl: 'header.component.html',
     styleUrl: 'header.component.scss'
 })
@@ -14,6 +16,7 @@ export class HeaderComponent {
     wheelService = inject(WheelService)
     modalService = inject(ModalService)
     authService = inject(AuthService)
+    translate = inject(TranslateService)
 
     openAuth(isLogin: boolean) {
         this.modalService.open<AuthModalComponent>(AuthModalComponent, { isLogin: isLogin })

@@ -8,10 +8,10 @@
         </div>
         <div class="confirm-buttons-container">
             <button class="cancel-button" (click)="close()">
-                Cancel
+                {{ "confirm-modal.cancel" | translate }}
             </button>
             <button class="confirm-button" (click)="confirmation()!.confirmFunc()" data-testid="confirm">
-                Confirm
+                {{ "confirm-modal.confirm" | translate }}
             </button>
         </div>
     </div>

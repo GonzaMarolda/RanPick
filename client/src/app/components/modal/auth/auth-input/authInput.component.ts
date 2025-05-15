@@ -1,16 +1,18 @@
 import { Component, inject, input, OnInit, output, signal } from '@angular/core';
 import { ModalService } from '../../../../services/ModalService';
 import { ForgotPasswordModalComponent } from '../forgotPassword-modal/forgotPassword.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'auth-input',
-  imports: [],
+  imports: [TranslateModule],
   templateUrl: './authInput.component.html',
   styleUrl: './authInput.component.scss'
 })
 export class AuthInputComponent {
     modalService = inject(ModalService)
     name = input.required<string>()
+    translate = inject(TranslateService)
     wasInvalidated = input.required<boolean>()
     passwordData = input<{isLogin: boolean, isReset: boolean, validationMessage: string} | null>(null)
     forgotPassword = output()

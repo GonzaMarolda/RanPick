@@ -1,0 +1,70 @@
+{
+    "header": {
+        "save": "Guardar",
+        "open": "Abrir",
+        "logout": "Cerrar sesión",
+        "login": "Iniciar sesión",
+        "signup": "Registrarse"
+    },
+    "wheel": {
+        "tip-entries": "Necesitás al menos 2 entradas para usar la ruleta",
+        "tip-click": "Hacé clic en la ruleta para empezar",
+        "default-name": "Nombre de la ruleta"
+    },
+    "sidebar": {
+        "back": "Ruleta anterior",
+        "add-entry": "Agregar entrada",
+        "properties": "Propiedades",
+        "nest": "Anidar"
+    },
+    "history": {
+        "title": "Historial de seleccionados",
+        "no-history": "Todavía no hay historial"
+    },
+    "properties": {
+        "color": "Color",
+        "weight": "Peso",
+        "probability": "Probabilidad"
+    },
+    "selected-modal": {
+        "close": "Cerrar",
+        "remove": "Eliminar"
+    },
+    "open-modal": {
+        "title": "Abrir ruleta",
+        "name": "Nombre",
+        "last-updated": "Última modificación",
+        "create": "Crear nueva ruleta"
+    },
+    "confirm-modal": {
+        "cancel": "Cancelar",
+        "confirm": "Confirmar"
+    },
+    "auth-modal": {
+        "first-name": "Nombre",
+        "last-name": "Apellido",
+        "password": "Contraseña",
+        "title-login": "Iniciar sesión con",
+        "title-signup": "Crear tu cuenta",
+        "redirect-login-1": "¿No tenés cuenta?",
+        "redirect-login-2": "Registrate",
+        "redirect-signup-1": "¿Ya tenés cuenta?",
+        "redirect-signup-2": "Iniciá sesión",
+        "submit-login": "Iniciar sesión",
+        "submit-signup": "Registrarse"
+    },
+    "auth-input": {
+        "forgot-pass": "¿Olvidaste tu contraseña?"
+    },
+    "forgot-pass-modal": {
+        "title": "Restablecer contraseña",
+        "desc": "Ingresá el correo asociado a tu cuenta para recuperar tu contraseña.",
+        "send": "Enviar correo",
+        "back": "¿Volver?"
+    },
+    "reset-pass-modal": {
+        "title": "Restablecer contraseña",
+        "desc": "Ingresá una nueva contraseña, reemplazará a la anterior.",
+        "submit": "Confirmar"
+    }
+}

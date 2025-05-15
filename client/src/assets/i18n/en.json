@@ -1,0 +1,70 @@
+{
+    "header": {
+        "save": "Save",
+        "open": "Open",
+        "logout": "Logout",
+        "login": "Log in",
+        "signup": "Sign up"
+    },
+    "wheel": {
+        "tip-entries": "You need at least 2 entries to start using the wheel",
+        "tip-click": "Click the wheel to start",
+        "default-name": "Wheel Name"
+    },
+    "sidebar": {
+        "back": "Previous wheel",
+        "add-entry": "Add Entry",
+        "properties": "Properties",
+        "nest": "Nest"
+    },
+    "history": {
+        "title": "Selected history",
+        "no-history": "No selected history yet"
+    },
+    "properties": {
+        "color": "Color",
+        "weight": "Weight",
+        "probability": "Probability"
+    },
+    "selected-modal": {
+        "close": "Close",
+        "remove": "Remove"
+    },
+    "open-modal": {
+        "title": "Open wheel",
+        "name": "Name",
+        "last-updated": "Last updated",
+        "create": "Create new wheel"
+    },
+    "confirm-modal": {
+        "cancel": "Cancel",
+        "confirm": "Confirm"
+    },
+    "auth-modal": {
+        "first-name": "First Name",
+        "last-name": "Last Name",
+        "password": "Password",
+        "title-login": "Log in with",
+        "title-signup": "Create your account",
+        "redirect-login-1": "Not a member?",
+        "redirect-login-2": "Sign up",
+        "redirect-signup-1": "Have an account?",
+        "redirect-signup-2": "Log in",
+        "submit-login": "Log in",
+        "submit-signup": "Sign up"
+    },
+    "auth-input": {
+        "forgot-pass": "Forgot password?"
+    },
+    "forgot-pass-modal": {
+        "title": "Password Reset",
+        "desc": "Provide the email associated with your account to recover your password.",
+        "send": "Send email",
+        "back": "Go back?"
+    }, 
+    "reset-pass-modal": {
+        "title": "Password Reset",
+        "desc": "Enter a new password, it will replace your old password.",
+        "submit": "Submit"
+    }
+}
