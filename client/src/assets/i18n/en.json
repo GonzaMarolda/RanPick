@@ -1,10 +1,15 @@
 {
-    "header": {
-        "save": "Save",
+    "common-words": {
+        "delete": "Delete",
+        "confirm": "Confirm",
         "open": "Open",
         "logout": "Logout",
+        "save": "Save",
         "login": "Log in",
-        "signup": "Sign up"
+        "signup": "Sign up",
+        "cancel": "Cancel",
+        "remove": "Remove",
+        "submit": "Submit"
     },
     "wheel": {
         "tip-entries": "You need at least 2 entries to start using the wheel",
@@ -26,19 +31,11 @@
         "weight": "Weight",
         "probability": "Probability"
     },
-    "selected-modal": {
-        "close": "Close",
-        "remove": "Remove"
-    },
     "open-modal": {
         "title": "Open wheel",
         "name": "Name",
         "last-updated": "Last updated",
         "create": "Create new wheel"
-    },
-    "confirm-modal": {
-        "cancel": "Cancel",
-        "confirm": "Confirm"
     },
     "auth-modal": {
         "first-name": "First Name",
@@ -47,11 +44,7 @@
         "title-login": "Log in with",
         "title-signup": "Create your account",
         "redirect-login-1": "Not a member?",
-        "redirect-login-2": "Sign up",
-        "redirect-signup-1": "Have an account?",
-        "redirect-signup-2": "Log in",
-        "submit-login": "Log in",
-        "submit-signup": "Sign up"
+        "redirect-signup-1": "Have an account?"
     },
     "auth-input": {
         "forgot-pass": "Forgot password?"
@@ -64,7 +57,6 @@
     }, 
     "reset-pass-modal": {
         "title": "Password Reset",
-        "desc": "Enter a new password, it will replace your old password.",
-        "submit": "Submit"
+        "desc": "Enter a new password, it will replace your old password."
     }
 }

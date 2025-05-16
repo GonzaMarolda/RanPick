@@ -1,0 +1,14 @@
+<div class="button-container" (click)="switchDropdownOpen()">
+    <button class="selected-lang">
+        <img class="flag" [src]="getFlagSrc(selectedLanguage())" [alt]="selectedLanguage()">
+    </button>
+    @if (isDropdownOpen()) {
+        <div class="dropdown-container">
+            @for (lang of languages(); track $index) {
+                <button class="lang-container" (click)="changeLanguage(lang)">
+                    <img class="flag" [src]="getFlagSrc(lang)" [alt]="lang">
+                </button>
+            }
+        </div>
+    }
+</div>

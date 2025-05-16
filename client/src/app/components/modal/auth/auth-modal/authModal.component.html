@@ -41,7 +41,7 @@
 
         <div class="submit-container">
             <button class="submit-button" data-testId="submit" (click)="submit()" [disabled]="isLoading()">
-                {{ isLogin() ? ('auth-modal.submit-login' | translate) : ('auth-modal.submit-signup' | translate) }}
+                {{ isLogin() ? ('common-words.login' | translate) : ('common-words.signup' | translate) }}
             </button>
             <div class="submit-error-message" data-testId="error_message">
                 {{submitErrorMessage()}}
@@ -51,12 +51,12 @@
             @if (isLogin()) {
                 {{ "auth-modal.redirect-login-1" | translate }}
                 <span class="redirect-button" (click)="switchAuthMode()">
-                    {{ "auth-modal.redirect-login-2" | translate }}
+                    {{ "common-words.signup" | translate }}
                 </span>
             } @else {
                 {{ "auth-modal.redirect-signup-1" | translate }}
                 <span class="redirect-button" (click)="switchAuthMode()">
-                    {{ "auth-modal.redirect-signup-2" | translate }}
+                    {{ "common-words.login" | translate }}
                 </span>
             }
         </div>

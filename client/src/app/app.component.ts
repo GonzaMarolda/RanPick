@@ -37,10 +37,4 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 export class AppComponent {
   modalService = inject(ModalService)
   httpLoadService = inject(HttpLoadService)
-
-  constructor(private translate: TranslateService) {
-    this.translate.addLangs(['es', 'en']);
-    this.translate.setDefaultLang('en');
-    this.translate.use('es');
-  }
 }

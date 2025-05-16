@@ -5,10 +5,11 @@ import { AuthService } from '../../services/AuthService';
 import { OpenModalComponent } from '../modal/open-modal/openModal.component';
 import { WheelService } from '../../services/WheelService';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LanguageDropdownComponent } from "../language/languageDropdown.component";
 
 @Component({
     selector: 'app-header',
-    imports: [TranslateModule],
+    imports: [TranslateModule, LanguageDropdownComponent],
     templateUrl: 'header.component.html',
     styleUrl: 'header.component.scss'
 })
