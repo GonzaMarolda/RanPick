@@ -18,6 +18,7 @@ The most relevant feature is the possibility of creating nested wheels, you can 
 - 📝 Selected entries history
 - 📱 Responsive design
 - 🎬 Animations and sound effects
+- 🌎 Language switching
 
 ## Technologies
 
