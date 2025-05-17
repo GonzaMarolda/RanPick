@@ -42,11 +42,15 @@ describe('Wheels', () => {
     }) 
 
     test('Can save a wheel', async ({ page }) => {
+        await page.getByTestId("wheel_name_edit_button").click()
+        await page.getByTestId("wheel_name_edit_input").fill("testWheel")
+        await page.getByTestId("wheel_name_confirm").click()
+
         await page.getByTestId("save").click() 
         await expect(page.getByTestId("message")).toContainText("saved")
 
         await page.getByTestId("open").click() 
-        await expect(page.getByTestId("open_wheels")).toContainText("Wheel Name")
+        await expect(page.getByTestId("open_wheels")).toContainText("testWheel")
     }) 
 
     test('Can delete a wheel', async ({ page }) => {
