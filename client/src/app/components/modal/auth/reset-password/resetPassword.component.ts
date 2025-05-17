@@ -30,19 +30,19 @@ export class ResetPasswordModalComponent {
 		if (password.length === 0) return ""
 
 		// No whitespace
-		if (/\s/.test(password)) return "Cannot contain spaces";
+		if (/\s/.test(password)) return "password-validations.spaces";
 
 		// Length
-		if (password.length < 8) return "Must be at least 8 characters"
+		if (password.length < 8) return "password-validations.characters"
 		
 			// Contains uppercase
-		if (!/[A-Z]/.test(password)) return "Must contain at least one uppercase letter";
+		if (!/[A-Z]/.test(password)) return "password-validations.uppercase";
 
 		// Contains lowercase
-		if (!/[a-z]/.test(password)) return "Must contain at least one lowercase letter";
+		if (!/[a-z]/.test(password)) return "password-validations.lowercase";
 
 		// Contains number
-		if (!/[0-9]/.test(password)) return "Must contain at least one number";
+		if (!/[0-9]/.test(password)) return "password-validations.number";
 
 		else return ""
 	})
@@ -67,7 +67,7 @@ export class ResetPasswordModalComponent {
 
 		this.authService.setNewPassword(this.token(), this.password())
       .then(() => {
-				this.modalService.openMessageModal("Your password was updated.\nYou can now log in.")
+				this.modalService.openMessageModal("message.pass-reset-completed")
         this.router.navigate(["/"])
       })
       .catch(() => {

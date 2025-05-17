@@ -1,70 +1,86 @@
 {
-    "header": {
-        "save": "Guardar",
-        "open": "Abrir",
-        "logout": "Cerrar sesión",
-        "login": "Iniciar sesión",
-        "signup": "Registrarse"
-    },
-    "wheel": {
-        "tip-entries": "Necesitás al menos 2 entradas para usar la ruleta",
-        "tip-click": "Hacé clic en la ruleta para empezar",
-        "default-name": "Nombre de la ruleta"
-    },
-    "sidebar": {
-        "back": "Ruleta anterior",
-        "add-entry": "Agregar entrada",
-        "properties": "Propiedades",
-        "nest": "Anidar"
-    },
-    "history": {
-        "title": "Historial de seleccionados",
-        "no-history": "Todavía no hay historial"
-    },
-    "properties": {
-        "color": "Color",
-        "weight": "Peso",
-        "probability": "Probabilidad"
-    },
-    "selected-modal": {
-        "close": "Cerrar",
-        "remove": "Eliminar"
-    },
-    "open-modal": {
-        "title": "Abrir ruleta",
-        "name": "Nombre",
-        "last-updated": "Última modificación",
-        "create": "Crear nueva ruleta"
-    },
-    "confirm-modal": {
-        "cancel": "Cancelar",
-        "confirm": "Confirmar"
-    },
-    "auth-modal": {
-        "first-name": "Nombre",
-        "last-name": "Apellido",
-        "password": "Contraseña",
-        "title-login": "Iniciar sesión con",
-        "title-signup": "Crear tu cuenta",
-        "redirect-login-1": "¿No tenés cuenta?",
-        "redirect-login-2": "Registrate",
-        "redirect-signup-1": "¿Ya tenés cuenta?",
-        "redirect-signup-2": "Iniciá sesión",
-        "submit-login": "Iniciar sesión",
-        "submit-signup": "Registrarse"
-    },
-    "auth-input": {
-        "forgot-pass": "¿Olvidaste tu contraseña?"
-    },
-    "forgot-pass-modal": {
-        "title": "Restablecer contraseña",
-        "desc": "Ingresá el correo asociado a tu cuenta para recuperar tu contraseña.",
-        "send": "Enviar correo",
-        "back": "¿Volver?"
-    },
-    "reset-pass-modal": {
-        "title": "Restablecer contraseña",
-        "desc": "Ingresá una nueva contraseña, reemplazará a la anterior.",
-        "submit": "Confirmar"
-    }
+  "common-words": {
+    "delete": "Eliminar",
+    "confirm": "Confirmar",
+    "open": "Abrir",
+    "logout": "Cerrar sesión",
+    "save": "Guardar",
+    "login": "Iniciar sesión",
+    "signup": "Registrarse",
+    "cancel": "Cancelar",
+    "remove": "Eliminar",
+    "submit": "Enviar",
+    "create": "Crear"
+  },
+  "wheel": {
+    "tip-entries": "Necesitas al menos 2 entradas para comenzar a usar la ruleta",
+    "tip-click": "Haz clic en la ruleta para empezar",
+    "default-name": "Nombre de la ruleta"
+  },
+  "sidebar": {
+    "back": "Ruleta anterior",
+    "add-entry": "Agregar entrada",
+    "properties": "Propiedades",
+    "nest": "Anidar"
+  },
+  "history": {
+    "title": "Historial de selecciones",
+    "no-history": "Aún no hay historial de selecciones"
+  },
+  "properties": {
+    "color": "Color",
+    "weight": "Peso",
+    "probability": "Probabilidad"
+  },
+  "open-modal": {
+    "title": "Abrir ruleta",
+    "name": "Nombre",
+    "last-updated": "Última actualización",
+    "create": "Crear nueva ruleta"
+  },
+  "auth-modal": {
+    "first-name": "Nombre",
+    "last-name": "Apellido",
+    "password": "Contraseña",
+    "title-login": "Iniciar sesión con",
+    "title-signup": "Crea tu cuenta",
+    "redirect-login-1": "¿No eres miembro?",
+    "redirect-signup-1": "¿Ya tienes una cuenta?"
+  },
+  "auth-input": {
+    "forgot-pass": "¿Olvidaste tu contraseña?"
+  },
+  "forgot-pass-modal": {
+    "title": "Restablecer contraseña",
+    "desc": "Proporciona el correo asociado a tu cuenta para recuperar tu contraseña.",
+    "send": "Enviar correo",
+    "back": "¿Volver atrás?"
+  },
+  "reset-pass-modal": {
+    "title": "Restablecer contraseña",
+    "desc": "Ingresa una nueva contraseña, reemplazará la anterior."
+  },
+  "confirm-modal": {
+    "header-create-nested": "¿una ruleta anidada?",
+    "body-create-nested": "¿Deseas crear una ruleta anidada para la entrada \"{{name}}\"?",
+    "header-delete-entry": "\"{{name}}\"?",
+    "body-delete-entry": "¿Estás seguro de que deseas eliminar esta entrada? Tiene una ruleta asociada. \nEsta acción no se puede deshacer.",
+    "header-create-wheel": "¿una nueva ruleta?",
+    "body-create-wheel": "¿Estás seguro de que deseas crear una nueva ruleta? \nCualquier cambio no guardado se perderá.",
+    "header-delete-wheel": "\"{{name}}\"?",
+    "body-delete-wheel": "¿Estás seguro de que deseas eliminar esta ruleta? \nEsta acción no se puede deshacer."
+  },
+  "message": {
+    "pass-reset-completed": "Tu contraseña ha sido actualizada.\nAhora puedes iniciar sesión.",
+    "wheel-saved": "La ruleta se ha guardado correctamente.",
+    "email-sent": "El correo ha sido enviado.",
+    "wheel-deleted": "La ruleta ha sido eliminada correctamente."
+  },
+  "password-validations": {
+    "spaces": "No puede contener espacios",
+    "characters": "Debe tener al menos 8 caracteres",
+    "uppercase": "Debe contener al menos una letra mayúscula",
+    "lowercase": "Debe contener al menos una letra minúscula",
+    "number": "Debe contener al menos un número"
+  }
 }

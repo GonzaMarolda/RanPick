@@ -32,7 +32,7 @@ export class HeaderComponent {
     saveWheel() {
         this.authService.user() ?
             this.wheelService.saveWheel().then((wheel) => {
-                this.modalService.openMessageModal("The wheel has been saved successfully")
+                this.modalService.openMessageModal("message.wheel-saved")
             }) :
             this.openAuth(true)
     }

@@ -61,7 +61,7 @@
 
                 @media screen and (max-width: map-get($breakpoints, mobile)) {
                     font-size: 0rem;
-                    padding: 0 1rem;
+                    padding: 0 0.7rem;
                 }
 
                 .button-icon {
@@ -84,6 +84,12 @@
                 object-fit: cover;
                 border: 1px solid var(--color-text);
                 box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
+
+                @media screen and (max-width: map-get($breakpoints, mobile)) {
+                    height: 1.5rem;
+                    width: 1.5rem;
+                    margin-left: 0.5rem;
+                }
             }
         }
     }

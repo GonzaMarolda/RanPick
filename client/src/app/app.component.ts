@@ -14,7 +14,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   imports: [RouterOutlet, HeaderComponent, NgComponentOutlet, MatProgressSpinnerModule, MessageModalComponent, TranslateModule],
   template: `
     @if (modalService.messageModalOpen()) {
-      <message-modal [message]="modalService.messageModalMessage()"/>
+      <message-modal [messageId]="modalService.messageModalMessage()"/>
     }
 
     @if (httpLoadService.isLoading()) {

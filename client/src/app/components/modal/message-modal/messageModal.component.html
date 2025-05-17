@@ -2,7 +2,7 @@
     <div class="message-container">
         <div class="disappear-message-container" [style.--disappear-time]="modalService.messageModalTime + 's'">
             <div class="message" data-testid="message">
-                {{message()}}
+                {{messageId() | translate}}
             </div>
             <button class="close-button" (click)="modalService.closeMessageModal()">
                 x

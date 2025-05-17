@@ -16,7 +16,7 @@
     />
     @if (passwordData() && (!passwordData()!.isLogin || passwordData()!.isReset)) {
         <div class="password-validations">
-            {{passwordData()!.validationMessage}}
+            {{passwordData()!.validationMessageId | translate}}
         </div>
     }
 </div>

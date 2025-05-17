@@ -33,23 +33,23 @@ export class AuthModalComponent {
   passwordValidationMessage = computed(() => {
     const password = this.formData().password;
 
-    // Default
-    if (password.length === 0) return ""
+		// Default
+		if (password.length === 0) return ""
 
-    // No whitespace
-    if (/\s/.test(password)) return "Cannot contain spaces";
+		// No whitespace
+		if (/\s/.test(password)) return "password-validations.spaces";
 
-    // Length
-    if (password.length < 8) return "Must be at least 8 characters"
-    
-      // Contains uppercase
-    if (!/[A-Z]/.test(password)) return "Must contain at least one uppercase letter";
+		// Length
+		if (password.length < 8) return "password-validations.characters"
+		
+			// Contains uppercase
+		if (!/[A-Z]/.test(password)) return "password-validations.uppercase";
 
-    // Contains lowercase
-    if (!/[a-z]/.test(password)) return "Must contain at least one lowercase letter";
+		// Contains lowercase
+		if (!/[a-z]/.test(password)) return "password-validations.lowercase";
 
-    // Contains number
-    if (!/[0-9]/.test(password)) return "Must contain at least one number";
+		// Contains number
+		if (!/[0-9]/.test(password)) return "password-validations.number";
 
     else return ""
   })

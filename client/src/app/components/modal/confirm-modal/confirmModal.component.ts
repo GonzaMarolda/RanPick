@@ -12,10 +12,12 @@ export class ConfirmationModalComponent {
     modalService = inject(ModalService)
     translate = inject(TranslateService)
     confirmation = input.required<{
-        name: string,
+        nameId: string,
         nameColor: string,
-        headerText: string,
-        bodyText: string,
+        headerTextId: string,
+        headerDynamicName: string,
+        bodyTextId: string,
+        bodyDynamicName: string,
         confirmFunc: () => void
     }>()
     closeFunc = input<() => void>()

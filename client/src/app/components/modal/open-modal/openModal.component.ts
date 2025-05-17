@@ -21,24 +21,30 @@ export class OpenModalComponent implements OnInit {
   wheels = signal<Wheel[] | null>(null)
   translation = inject(TranslateService)
   confirmation = signal<{
-    name: string,
+    nameId: string,
     nameColor: string,
-    headerText: string,
-    bodyText: string,
+    headerTextId: string,
+    headerDynamicName: string,
+    bodyTextId: string,
+    bodyDynamicName: string,
     confirmFunc: () => void
   } | null>(null)
   createConfirmation = signal({
-    name: "Create",
+    nameId: "common-words.create",
     nameColor: "var(--color-create)",
-    headerText: "a new wheel?",
-    bodyText: "Are you sure you want to create a new wheel? \n Any unsaved changes will be lost.",
+    headerTextId: "confirm-modal.header-create-wheel",
+    headerDynamicName: "",
+    bodyTextId: "confirm-modal.body-create-wheel",
+    bodyDynamicName: "",
     confirmFunc: this.createNewWheel.bind(this)
   })
   deleteConfirmation = signal({
-    name: "Delete",
+    nameId: "common-words.delete",
     nameColor: "var(--color-delete)",
-    headerText: '"' + '?' + '"',
-    bodyText: "Are you sure you want to delete this wheel? \n This action cannot be undone.",
+    headerTextId: "confirm-modal.header-delete-wheel",
+    headerDynamicName: "?",
+    bodyTextId: "confirm-modal.body-delete-wheel",
+    bodyDynamicName: "?",
     confirmFunc: this.deleteSelectedWheel.bind(this)
   })
 
@@ -71,7 +77,7 @@ export class OpenModalComponent implements OnInit {
 
   openDeleteConfirmation(wheelId: string, wheelName: string) {
     this.selectedWheelId.set(wheelId)
-    this.deleteConfirmation.update(prev => ({...prev, headerText: '"' + wheelName + '"?'}))
+    this.deleteConfirmation.update(prev => ({...prev, headerDynamicName: wheelName}))
     this.confirmation.set(this.deleteConfirmation())
   }
 
@@ -84,9 +90,9 @@ export class OpenModalComponent implements OnInit {
     this.wheelService.deleteWheel(this.selectedWheelId())
       .then(() => {
         this.wheels.update(prev => prev!.filter(wheel => wheel.id !== this.selectedWheelId()))
-        this.modalService.openMessageModal("The wheel has been deleted successfully")
+        this.modalService.openMessageModal("message.wheel-deleted")
         this.selectedWheelId.set("")
-        this.deleteConfirmation.update(prev => ({...prev, headerText: '"' + "?" + '"'}))
+        this.deleteConfirmation.update(prev => ({...prev, headerDynamicName: "?"}))
       })
       .finally(() =>
         this.closeConfirmation()

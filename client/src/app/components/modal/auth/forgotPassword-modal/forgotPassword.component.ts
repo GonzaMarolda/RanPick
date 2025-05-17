@@ -37,7 +37,7 @@ export class ForgotPasswordModalComponent {
 
     this.authService.sendResetPasswordEmail(this.email())
       .then(() => {
-        this.modalService.openMessageModal("The email has been sent")
+        this.modalService.openMessageModal("message.email-sent")
         this.modalService.close()
       })
       .catch(() => {

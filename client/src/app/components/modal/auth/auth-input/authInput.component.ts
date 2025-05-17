@@ -14,7 +14,7 @@ export class AuthInputComponent {
     name = input.required<string>()
     translate = inject(TranslateService)
     wasInvalidated = input.required<boolean>()
-    passwordData = input<{isLogin: boolean, isReset: boolean, validationMessage: string} | null>(null)
+    passwordData = input<{isLogin: boolean, isReset: boolean, validationMessageId: string} | null>(null)
     forgotPassword = output()
     valueOutput = output<string>()
     value = signal<string>("")

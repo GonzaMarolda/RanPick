@@ -1,10 +1,11 @@
 <div class="confirm-modal">
     <div class="confirm-container">
         <div class="confirm-header">
-            <span class="action-word" [style.color]="confirmation()!.nameColor">{{confirmation()!.name}}</span> {{confirmation()!.headerText}}
+            <span class="action-word" [style.color]="confirmation()!.nameColor">{{confirmation()!.nameId | translate}}</span> 
+            {{confirmation()!.headerTextId | translate:{ name: confirmation()!.headerDynamicName } }}
         </div>
         <div class="confirm-body" [style.white-space]="'pre-line'">
-            {{confirmation()!.bodyText}}
+            {{confirmation()!.bodyTextId | translate:{ name: confirmation()!.bodyDynamicName } }}
         </div>
         <div class="confirm-buttons-container">
             <button class="cancel-button" (click)="close()">
