@@ -9,7 +9,7 @@
     </div>
     <div class="section-container">
         <div class="section-title">
-            Color
+            {{ "properties.color" | translate }}
         </div>
         <div class="color-picker-container">
             <button 
@@ -32,7 +32,7 @@
     </div>
     <div class="section-container">
         <div class="section-title">
-            Weight
+            {{ "properties.weight" | translate }}
         </div>
         <div class="weight-input-container">
             <button class="weight-button" (click)="updateWeightByButton(-1)">-</button>
@@ -47,6 +47,6 @@
         </div>
     </div>
     <div class="entry-probabilty" [attr.data-testId]="'entry_' + entry().name + '_properties_probability'" >
-        Probability {{entryService.getProbability(entry().id)}}%
+        {{ "properties.probability" | translate }} {{entryService.getProbability(entry().id)}}%
     </div>
 </div>

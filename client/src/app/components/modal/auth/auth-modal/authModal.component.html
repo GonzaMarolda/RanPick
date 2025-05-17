@@ -1,7 +1,7 @@
 <div class="modal-container" (mousedown)="onClickOutside($event)">
     <div class="auth-container">
         <div class="auth-header" (click)="authService.resetData()">
-            {{ isLogin() ? "Log in with" : "Create your account" }}
+            {{ isLogin() ? ('auth-modal.title-login' | translate) : ('auth-modal.title-signup' | translate) }}
         </div>
         <div class="auth-sso-container">
             <button class="sso-button google" (click)="loginWithGoogle()">
@@ -13,13 +13,13 @@
         @if (!isLogin()) {
             <div style="display: flex; width: 70%; justify-content: space-between;">
                 <auth-input
-                    name="First Name"
+                    [name]="('auth-modal.first-name' | translate)"
                     (valueOutput)="updateValue('firstName', $event)"
                     [wasInvalidated]="invalidatedSubmit().firstName"
                     style="width: 40%;"
                 />
                 <auth-input
-                    name="Last Name"
+                    [name]="('auth-modal.last-name' | translate)"
                     (valueOutput)="updateValue('lastName', $event)"
                     [wasInvalidated]="invalidatedSubmit().lastName"
                     style="width: 40%;"
@@ -32,16 +32,16 @@
             [wasInvalidated]="invalidatedSubmit().email"
         />
         <auth-input
-            name="Password"
+            [name]="('auth-modal.password' | translate)"
             (valueOutput)="updateValue('password', $event)"
             [wasInvalidated]="invalidatedSubmit().password"
-            [passwordData]="{isLogin: isLogin(), isReset: false, validationMessage: passwordValidationMessage()}"
+            [passwordData]="{isLogin: isLogin(), isReset: false, validationMessageId: passwordValidationMessage()}"
             (forgotPassword)="openForgotPassword()"
         />
 
         <div class="submit-container">
             <button class="submit-button" data-testId="submit" (click)="submit()" [disabled]="isLoading()">
-                {{ isLogin() ? "Log in" : "Sign up" }}
+                {{ isLogin() ? ('common-words.login' | translate) : ('common-words.signup' | translate) }}
             </button>
             <div class="submit-error-message" data-testId="error_message">
                 {{submitErrorMessage()}}
@@ -49,14 +49,14 @@
         </div>
         <div class="redirect-message">
             @if (isLogin()) {
-                Not a member?
+                {{ "auth-modal.redirect-login-1" | translate }}
                 <span class="redirect-button" (click)="switchAuthMode()">
-                    Sign up
+                    {{ "common-words.signup" | translate }}
                 </span>
             } @else {
-                Have an account?
+                {{ "auth-modal.redirect-signup-1" | translate }}
                 <span class="redirect-button" (click)="switchAuthMode()">
-                    Log in
+                    {{ "common-words.login" | translate }}
                 </span>
             }
         </div>

@@ -3,16 +3,18 @@ import { EntryService } from '../../services/EntryService';
 import { Entry } from '../../models/entry';
 import { ColorSketchModule, SketchComponent } from 'ngx-color/sketch';
 import { ColorEvent } from 'ngx-color';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'entry-properties',
     templateUrl: 'properties.component.html',
     styleUrl: 'properties.component.scss',
-    imports: [ColorSketchModule]
+    imports: [ColorSketchModule, TranslateModule]
 })
 export class PropertiesComponent {
     entryService = inject(EntryService)
     elementRef = inject(ElementRef)
+    translate = inject(TranslateService)
     entryId = input.required<string>()
     colorPickerVisible = signal<boolean>(false)
     switchColorTimeout = signal<any | null>(null)

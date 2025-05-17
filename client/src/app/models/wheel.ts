@@ -16,7 +16,7 @@ export class Wheel {
 
     constructor(defaultPalette: ColorPalette) {
         this.id = crypto.randomUUID()
-        this.name = "Wheel Name"
+        this.name = ""
         this.colorPalette = defaultPalette
         this.userId = 0
         this.entries = []

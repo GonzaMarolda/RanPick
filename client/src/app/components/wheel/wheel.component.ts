@@ -12,6 +12,7 @@ import { SelectedHistoryComponent } from "../selected_history/selectedHistory.co
 import { SoundService } from '../../services/SoundService'
 import { ColorPaletteComponent } from "../color_palette/colorPalette.component";
 import { AuthService } from '../../services/AuthService';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'wheel-screen',
@@ -40,8 +41,8 @@ import { AuthService } from '../../services/AuthService';
         transition('normal => big', animate('0.3s linear')),
         transition('small => normal', animate('0.4s ease-out'))
       ])
-    ],
-    imports: [SelectedHistoryComponent, ColorPaletteComponent]
+    ], 
+    imports: [SelectedHistoryComponent, ColorPaletteComponent, TranslateModule]
 })
 export class WheelScreen {
     entryService = inject(EntryService)
@@ -51,9 +52,10 @@ export class WheelScreen {
     modalService = inject(ModalService)
     authService = inject(AuthService)
     soundService = inject(SoundService)
+    translate = inject(TranslateService)
     @ViewChild('wheelGroup') wheelGroup!: ElementRef<SVGGElement>
 
-    selected = signal<{name: string, id: string}>({name: 'Click the wheel to start', id: ""})
+    selected = signal<{name: string, id: string} | null>(null)
     spinClasses = { continuous: "spin-continuous", active: "spin" }
     spinClass = signal<String>(this.spinClasses.continuous)
     editNameActive = signal<boolean>(false)
@@ -81,7 +83,6 @@ export class WheelScreen {
 
         this.initialRotation.set("0deg")
         this.spinClass.set(this.spinClasses.continuous)
-        this.selected.set({name: 'Click the wheel to start', id: ""})
       })
     }
 
@@ -258,7 +259,7 @@ export class WheelScreen {
 
     spinAnimationFinished() {
       this.stopTrackRotation();
-      const selectedEntry = this.entryService.entries().find(e => e.id === this.selected().id)!
+      const selectedEntry = this.entryService.entries().find(e => e.id === this.selected()!.id)!
       this.finalSelectedEntries.update(prev => prev.concat(selectedEntry))
 
       if (selectedEntry.nestedWheel && selectedEntry.nestedWheel.entries.length >= 2) {

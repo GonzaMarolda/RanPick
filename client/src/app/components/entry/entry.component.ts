@@ -6,18 +6,19 @@ import { ClickOutsideDirective } from '../../directives/ClickOutsideDirective';
 import { WheelService } from '../../services/WheelService';
 import { ModalService } from '../../services/ModalService';
 import { ConfirmationModalComponent } from '../modal/confirm-modal/confirmModal.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'entry',
     templateUrl: 'entry.component.html',
     styleUrl: 'entry.component.scss',
-    imports: [PropertiesComponent]
+    imports: [PropertiesComponent, TranslateModule]
 })
 export class EntryComponent{
     modalService = inject(ModalService)
     wheelService = inject(WheelService)
     entryService = inject(EntryService)
-
+    translation = inject(TranslateService)
     entryId = input.required<string>()
     removeEntry = output<string>()
     updateEntry = output<Entry>()
@@ -64,20 +65,24 @@ export class EntryComponent{
     openConfirmation(isCreate: boolean) {
         const confirmation = isCreate ?
             {
-                name: "Create",
+                nameId: "common-words.create",
                 nameColor: "var(--color-create)",
-                headerText: "a nested wheel?",
-                bodyText: 'Do you want to create a nested wheel for the entry "' + this.entryData().name + '"?',
+                headerTextId: "confirm-modal.header-create-nested",
+                headerDynamicName: "",
+                bodyTextId: "confirm-modal.body-create-nested",
+                bodyDynamicName: this.entryData().name,
                 confirmFunc: (() => {
                     this.wheelService.createNestledWheel(this.entryData())
                     this.modalService.close()
                 }).bind(this)
             } :
             {
-                name: "Delete",
+                nameId: "common-words.delete",
                 nameColor: "var(--color-delete)",
-                headerText: '"' + this.entryData().name + '"?',
-                bodyText: "Are you sure you want to delete this entry? It has a wheel attached. \n This action cannot be undone.",
+                headerTextId: "confirm-modal.header-delete-entry",
+                headerDynamicName: this.entryData().name,
+                bodyTextId: "confirm-modal.body-delete-entry",
+                bodyDynamicName: "",
                 confirmFunc: (() => {
                     this.wheelService.deleteNested(this.entryData().nestedWheel!.id)
                     this.removeEntry.emit(this.entryData().id)

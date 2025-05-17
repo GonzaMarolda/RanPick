@@ -5,16 +5,18 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthModalComponent } from '../auth-modal/authModal.component';
 import { AuthService } from '../../../../services/AuthService';
 import { Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'forgot-password-modal',
-  imports: [AuthInputComponent],
+  imports: [AuthInputComponent, TranslateModule],
   templateUrl: './resetPassword.component.html',
   styleUrl: './resetPassword.component.scss'
 })
 export class ResetPasswordModalComponent {
 	route = inject(ActivatedRoute)
 	router = inject(Router)
+	translate = inject(TranslateService)
 	authService = inject(AuthService)
 	modalService = inject(ModalService)
 	password = signal<string>("")
@@ -28,19 +30,19 @@ export class ResetPasswordModalComponent {
 		if (password.length === 0) return ""
 
 		// No whitespace
-		if (/\s/.test(password)) return "Cannot contain spaces";
+		if (/\s/.test(password)) return "password-validations.spaces";
 
 		// Length
-		if (password.length < 8) return "Must be at least 8 characters"
+		if (password.length < 8) return "password-validations.characters"
 		
 			// Contains uppercase
-		if (!/[A-Z]/.test(password)) return "Must contain at least one uppercase letter";
+		if (!/[A-Z]/.test(password)) return "password-validations.uppercase";
 
 		// Contains lowercase
-		if (!/[a-z]/.test(password)) return "Must contain at least one lowercase letter";
+		if (!/[a-z]/.test(password)) return "password-validations.lowercase";
 
 		// Contains number
-		if (!/[0-9]/.test(password)) return "Must contain at least one number";
+		if (!/[0-9]/.test(password)) return "password-validations.number";
 
 		else return ""
 	})
@@ -65,7 +67,7 @@ export class ResetPasswordModalComponent {
 
 		this.authService.setNewPassword(this.token(), this.password())
       .then(() => {
-				this.modalService.openMessageModal("Your password was updated.\nYou can now log in.")
+				this.modalService.openMessageModal("message.pass-reset-completed")
         this.router.navigate(["/"])
       })
       .catch(() => {

@@ -3,16 +3,18 @@ import { ModalService } from '../../../../services/ModalService';
 import { AuthService } from '../../../../services/AuthService';
 import { AuthInputComponent } from "../auth-input/authInput.component";
 import { ForgotPasswordModalComponent } from '../forgotPassword-modal/forgotPassword.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'auth-modal',
-  imports: [AuthInputComponent],
+  imports: [AuthInputComponent, TranslateModule],
   templateUrl: './authModal.component.html',
   styleUrl: './authModal.component.scss'
 })
 export class AuthModalComponent {
   authService = inject(AuthService)
   modalService = inject(ModalService)
+  translate = inject(TranslateService)
   isLogin = input.required<boolean>()
   isLoading = signal<boolean>(false)
   submitErrorMessage = signal<string>("")
@@ -31,23 +33,23 @@ export class AuthModalComponent {
   passwordValidationMessage = computed(() => {
     const password = this.formData().password;
 
-    // Default
-    if (password.length === 0) return ""
+		// Default
+		if (password.length === 0) return ""
 
-    // No whitespace
-    if (/\s/.test(password)) return "Cannot contain spaces";
+		// No whitespace
+		if (/\s/.test(password)) return "password-validations.spaces";
 
-    // Length
-    if (password.length < 8) return "Must be at least 8 characters"
-    
-      // Contains uppercase
-    if (!/[A-Z]/.test(password)) return "Must contain at least one uppercase letter";
+		// Length
+		if (password.length < 8) return "password-validations.characters"
+		
+			// Contains uppercase
+		if (!/[A-Z]/.test(password)) return "password-validations.uppercase";
 
-    // Contains lowercase
-    if (!/[a-z]/.test(password)) return "Must contain at least one lowercase letter";
+		// Contains lowercase
+		if (!/[a-z]/.test(password)) return "password-validations.lowercase";
 
-    // Contains number
-    if (!/[0-9]/.test(password)) return "Must contain at least one number";
+		// Contains number
+		if (!/[0-9]/.test(password)) return "password-validations.number";
 
     else return ""
   })

@@ -1,6 +1,6 @@
 <div class="selected-history-container" [style.transform]="'translate(0,' + getOffset() + ')'">
     <div class="selected-history-title">
-        Selected history
+        {{ "history.title" | translate }}
     </div>
     <button class="selected-history-button" (click)="switchOpen()">
         <svg class="selected-history-button-arrow" [attr.transform]="'rotate(' + (isOpen() ? '180' : '0') + ', 0, 0)'" fill="currentColor" viewBox="0 0 330 330">
@@ -27,7 +27,7 @@
         }
         @if (getSelectedHistory().length === 0) {
             <li class="no-selected-message">
-                No selected history yet
+                {{ "history.no-history" | translate }}
             </li>
         }
     </ul>

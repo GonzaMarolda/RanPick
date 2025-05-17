@@ -3,16 +3,18 @@ import { ModalService } from '../../../../services/ModalService';
 import { AuthInputComponent } from "../auth-input/authInput.component";
 import { AuthModalComponent } from '../auth-modal/authModal.component';
 import { AuthService } from '../../../../services/AuthService';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'forgot-password-modal',
-  imports: [AuthInputComponent],
+  imports: [AuthInputComponent, TranslateModule],
   templateUrl: './forgotPassword.component.html',
   styleUrl: './forgotPassword.component.scss'
 })
 export class ForgotPasswordModalComponent {
   modalService = inject(ModalService)
   authService = inject(AuthService)
+  translate = inject(TranslateService)
   email = signal<string>("")
   invalidatedSubmit = signal<boolean>(false)
   submitErrorMessage = signal<string>("")
@@ -35,7 +37,7 @@ export class ForgotPasswordModalComponent {
 
     this.authService.sendResetPasswordEmail(this.email())
       .then(() => {
-        this.modalService.openMessageModal("The email has been sent")
+        this.modalService.openMessageModal("message.email-sent")
         this.modalService.close()
       })
       .catch(() => {

@@ -1,0 +1,89 @@
+{
+    "common-words": {
+        "delete": "Delete",
+        "confirm": "Confirm",
+        "open": "Open",
+        "logout": "Logout",
+        "save": "Save",
+        "login": "Log in",
+        "signup": "Sign up",
+        "cancel": "Cancel",
+        "remove": "Remove",
+        "submit": "Submit",
+        "create": "Create"
+    },
+    "wheel": {
+        "tip-entries": "You need at least 2 entries to start using the wheel",
+        "tip-click": "Click the wheel to start",
+        "default-name": "Wheel Name"
+    },
+    "sidebar": {
+        "back": "Previous wheel",
+        "add-entry": "Add Entry",
+        "properties": "Properties",
+        "nest": "Nest"
+    },
+    "history": {
+        "title": "Selected history",
+        "no-history": "No selected history yet"
+    },
+    "properties": {
+        "color": "Color",
+        "weight": "Weight",
+        "probability": "Probability"
+    },
+    "open-modal": {
+        "title": "Open wheel",
+        "name": "Name",
+        "last-updated": "Last updated",
+        "create": "Create new wheel"
+    },
+    "auth-modal": {
+        "first-name": "First Name",
+        "last-name": "Last Name",
+        "password": "Password",
+        "title-login": "Log in with",
+        "title-signup": "Create your account",
+        "redirect-login-1": "Not a member?",
+        "redirect-signup-1": "Have an account?"
+    },
+    "auth-input": {
+        "forgot-pass": "Forgot password?"
+    },
+    "forgot-pass-modal": {
+        "title": "Password Reset",
+        "desc": "Provide the email associated with your account to recover your password.",
+        "send": "Send email",
+        "back": "Go back?"
+    }, 
+    "reset-pass-modal": {
+        "title": "Password Reset",
+        "desc": "Enter a new password, it will replace your old password."
+    },
+    "confirm-modal": {
+        "header-create-nested": "a nested wheel?",
+        "body-create-nested": "Do you want to create a nested wheel for the entry \"{{name}}\"?",
+
+        "header-delete-entry": "\"{{name}}\"?",
+        "body-delete-entry": "Are you sure you want to delete this entry? It has a wheel attached. \n This action cannot be undone.",
+
+        "header-create-wheel": "a new wheel?",
+        "body-create-wheel": "Are you sure you want to create a new wheel? \n Any unsaved changes will be lost.",
+
+        "header-delete-wheel": "\"{{name}}\"?",
+        "body-delete-wheel": "Are you sure you want to delete this wheel? \n This action cannot be undone."
+    },
+    "message": {
+        "pass-reset-completed": "Your password was updated.\nYou can now log in.",
+        "wheel-saved": "The wheel has been saved successfully.",
+        "email-sent": "The email has been sent.",
+        "wheel-deleted": "The wheel has been deleted successfully."
+    },
+    "password-validations": {
+        "spaces": "Cannot contain spaces",
+        "characters": "Must be at least 8 characters",
+        "uppercase": "Must contain at least one uppercase letter",
+        "lowercase": "Must contain at least one lowercase letter",
+        "number": "Must contain at least one number"
+    }
+}

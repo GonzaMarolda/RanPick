@@ -7,13 +7,14 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { HttpLoadService } from './services/HttpLoadService';
 import { MessageModalComponent } from './components/modal/message-modal/messageModal.component';
 import { BodyComponent } from "./components/body/body.component";
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, NgComponentOutlet, MatProgressSpinnerModule, MessageModalComponent, BodyComponent],
+  imports: [RouterOutlet, HeaderComponent, NgComponentOutlet, MatProgressSpinnerModule, MessageModalComponent, TranslateModule],
   template: `
     @if (modalService.messageModalOpen()) {
-      <message-modal [message]="modalService.messageModalMessage()"/>
+      <message-modal [messageId]="modalService.messageModalMessage()"/>
     }
 
     @if (httpLoadService.isLoading()) {

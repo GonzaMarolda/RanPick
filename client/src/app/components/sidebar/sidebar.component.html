@@ -1,17 +1,17 @@
 <div class="sidebar-container">
     <div class="header-container">
         <div class="header-text">
-            {{hasEntries() ? "Properties" : ""}}
+            {{hasEntries() ? ("sidebar.properties" | translate) : ""}}
         </div>
         <div class="back-container">
             <button [style.visibility]="isRootWheel() ? 'hidden' : 'visible'" class="back-button" data-testid="go_back" (click)="openPreviousWheel()">
                 <div class="back-text">
-                    Previous wheel
+                    {{ "sidebar.back" | translate }}
                 </div>
             </button>
         </div>
         <div class="header-text">
-            {{hasEntries() ? "Nest" : ""}}
+            {{hasEntries() ? ("sidebar.nest" | translate) : ""}}
         </div>
     </div>
     <ul class="entries-container">
@@ -25,7 +25,7 @@
     </ul>
     <div class="add-entry-container">
         <button class="add-entry-button" (click)="addEntry()">
-            Add Entry
+            {{ "sidebar.add-entry" | translate }}
         </button>
     </div>
 </div>

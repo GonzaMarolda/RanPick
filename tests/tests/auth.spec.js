@@ -22,7 +22,7 @@ describe('Auth', () => {
             }
             await page.getByTestId("submit").click()
 
-            await expect(page.getByText("Logout")).toBeVisible()
+            await expect(page.getByTestId("logout")).toBeVisible()
         }) 
 
         test('Error on empty fields', async ({ page }) => {
@@ -42,7 +42,7 @@ describe('Auth', () => {
             }
             await page.getByTestId("submit").click()
     
-            await page.getByText("Logout").click()
+            await page.getByTestId("logout").click()
 
             await page.getByText("Log in").click()
             for (const field of fields.slice(fields.length - 2)) {
@@ -50,7 +50,7 @@ describe('Auth', () => {
             }
             await page.getByTestId("submit").click()
     
-            await expect(page.getByText("Logout")).toBeVisible()
+            await expect(page.getByTestId("logout")).toBeVisible()
         }) 
 
         test('Error on empty fields', async ({ page }) => {
@@ -68,7 +68,7 @@ describe('Auth', () => {
             }
             await page.getByTestId("submit").click()
     
-            await page.getByText("Logout").click()
+            await page.getByTestId("logout").click()
 
             await page.getByText("Log in").click()
             await page.getByTestId("input_Email").fill("testMail@gmail.com")
@@ -84,7 +84,7 @@ describe('Auth', () => {
             }
             await page.getByTestId("submit").click()
     
-            await page.getByText("Logout").click()
+            await page.getByTestId("logout").click()
 
             await page.getByText("Log in").click()
             await page.getByTestId("input_Email").fill("incorrectMail@gmail.com")

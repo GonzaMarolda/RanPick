@@ -6,10 +6,11 @@ import { ModalService } from '../../../services/ModalService';
 import { Entry } from '../../../models/entry';
 import { WheelService } from '../../../services/WheelService';
 import { SoundService } from '../../../services/SoundService';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'selected-modal',
-  imports: [],
+  imports: [TranslateModule],
   templateUrl: './selectedModal.component.html',
   styleUrl: './selectedModal.component.scss'
 })
@@ -20,6 +21,7 @@ export class SelectedModalComponent implements OnInit {
   entryService = inject(EntryService)
   wheelService = inject(WheelService)
   soundService = inject(SoundService)
+  translate = inject(TranslateService)
   selectedEntries = input.required<Entry[]>()
   selectedColor = input.required<string>()
 

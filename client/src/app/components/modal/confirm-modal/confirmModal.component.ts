@@ -1,19 +1,23 @@
 import { Component, inject, input } from '@angular/core';
 import { ModalService } from '../../../services/ModalService';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'confirm-modal',
-  imports: [],
+  imports: [TranslateModule],
   templateUrl: './confirmModal.component.html',
   styleUrl: './confirmModal.component.scss'
 })
 export class ConfirmationModalComponent {
     modalService = inject(ModalService)
+    translate = inject(TranslateService)
     confirmation = input.required<{
-        name: string,
+        nameId: string,
         nameColor: string,
-        headerText: string,
-        bodyText: string,
+        headerTextId: string,
+        headerDynamicName: string,
+        bodyTextId: string,
+        bodyDynamicName: string,
         confirmFunc: () => void
     }>()
     closeFunc = input<() => void>()
